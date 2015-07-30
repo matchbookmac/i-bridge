@@ -1,2 +1,46 @@
-<h1> Hello world </h1>
-{{message}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bridge Status</title>
+  <meta charset="UTF-8" />
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+  <script>
+    setInterval(function() {
+      $.getJSON("/current-message", function (data) {
+        if (data.message) {
+          $("#bridge").children().text("");
+          $("#message").append(data.message);
+          $("#count").append("Count: " + data.count);
+          if (data.status) {
+            $("#bridge").css("background-color", "green")
+          } else {
+            $("#bridge").css("background-color", "red")
+          }
+        }
+      });
+    }, 1000);
+  </script>
+  <style media="screen">
+    #bridge {
+      margin: 50px;
+      width: 500px;
+      height: 100px;
+    }
+    #message, #count{
+      text-align: center;
+      padding: 10px 0px;
+    }
+  </style>
+</head>
+<body style="background-color:black;">
+  <div id="bridge" style="background-color:white;">
+    <div id="message">
+      Waiting For Signal
+    </div>
+    <div id="count">
+      Count : 0
+    </div>
+  </div>
+</body>
+</html>

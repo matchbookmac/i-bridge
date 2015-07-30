@@ -16,8 +16,16 @@ server.views({
 server.route({
   method: 'GET',
   path: '/',
+  handler: {
+    view: "index"
+  }
+});
+
+server.route({
+  method: 'GET',
+  path: '/current-message',
   handler: function (request, reply) {
-    reply.view('index', { message: currentMessage.message });
+    reply(currentMessage);
   }
 });
 
