@@ -1,4 +1,4 @@
-# Boss level SNMP Listener Relay
+# Boss level SNMP API
 
 A node server to receive post requests made by another node snmp relay
 (https://github.com/matchbookmac/test-snmp-relay.git)
@@ -9,7 +9,7 @@ A node server to receive post requests made by another node snmp relay
 
 @ Epicodus Programming School, Portland, OR
 
-GNU General Public License, version 3 (see below). Copyright (c) 2015 Ian C. MacDonald & Bob Ellis.
+GNU General Public License, version 3. Copyright (c) 2015 Ian C. MacDonald & Bob Ellis.
 
 ## Steps
 1. Setup relay
