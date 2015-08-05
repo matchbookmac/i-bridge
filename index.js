@@ -41,7 +41,7 @@ server.route({
       });
       request.payload.on('end', function (err) {
         currentMessage = JSON.parse(body);
-        console.log(currentMessage.message);
+        console.log(currentMessage);
       });
 
       // currentMessage = request.payload
