@@ -2,7 +2,24 @@ var Hapi = require('hapi');
 var http = require('http');
 var Path = require('path');
 
-var currentMessage = {};
+var bridgeStatuses = {
+  cuevas: {
+    status: false
+  },
+  hawthorne: {
+    status: false
+  },
+  broadway: {
+    status: false
+  },
+  burnside: {
+    status: false
+  },
+  morrison: {
+    status: false
+  },
+
+};
 
 var server = new Hapi.Server();
 server.connection({ port: 3002 });
@@ -23,9 +40,9 @@ server.route({
 
 server.route({
   method: 'GET',
-  path: '/current-message',
+  path: '/bridges',
   handler: function (request, reply) {
-    reply(currentMessage);
+    reply(bridgeStatuses);
   }
 });
 
@@ -40,12 +57,11 @@ server.route({
         body += chunk;
       });
       request.payload.on('end', function (err) {
-        currentMessage = JSON.parse(body);
-        console.log(currentMessage);
+        bridgeStatus = JSON.parse(body);
+        bridgeStatuses[bridgeStatus.bridge].status = bridgeStatus.status;
+        console.log(bridgeStatuses);
       });
 
-      // currentMessage = request.payload
-      // console.log(currentMessage);
       reply("post received");
     },
 

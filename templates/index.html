@@ -7,25 +7,29 @@
   <link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
   <script>
     setInterval(function() {
-      $.getJSON("/current-message", function (data) {
-        if (data.message) {
-          $("#bridge").children().text("");
-          $("#message").append(data.message);
-          $("#count").append("Count: " + data.count);
-          if (data.status) {
-            $("#bridge").css("background-color", "green")
-          } else {
-            $("#bridge").css("background-color", "red")
-          }
+      $("#bridges").text("");
+      $.getJSON("/bridges", function (data) {
+        if (data) {
+          $.each(data, function (bridge) {
+            $("#bridges").append(
+              "<div class='bridge'>" +
+                bridge +
+                ": " +
+                (
+                  data[bridge].status
+                    ? "up"
+                    : "down"
+                ) +
+              "</div><br>"
+            );
+          });
         }
       });
     }, 1000);
   </script>
   <style media="screen">
-    #bridge {
-      margin: 50px;
-      width: 500px;
-      height: 100px;
+    .bridge {
+      background-color: white;
     }
     #message, #count{
       text-align: center;
@@ -34,13 +38,8 @@
   </style>
 </head>
 <body style="background-color:black;">
-  <div id="bridge" style="background-color:white;">
-    <div id="message">
-      Waiting For Signal
-    </div>
-    <div id="count">
-      Count : 0
-    </div>
+  <div id="bridges">
+
   </div>
 </body>
 </html>
