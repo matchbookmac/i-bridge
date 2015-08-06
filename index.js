@@ -69,7 +69,10 @@ server.route({
       });
       request.payload.on('end', function (err) {
         bridgeStatus = JSON.parse(body);
-        bridgeStatuses[bridgeStatus.bridge].status = bridgeStatus.status;
+        var bridge = bridgeStatus.bridge;
+        bridgeStatuses[bridge] = {
+          status: bridgeStatus.status
+        }
         console.log(bridgeStatuses);
         bridgeEventSocket.emit('bridge data', bridgeStatuses);
       });
