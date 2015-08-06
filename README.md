@@ -11,6 +11,11 @@ npm install
 
 Start server:
 
+*Production:*
 ```console
 node index.js
+```
+*Development:*
+```console
+nodemon index.js
 ```
