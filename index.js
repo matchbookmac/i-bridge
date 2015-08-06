@@ -58,14 +58,6 @@ server.route({
 });
 
 server.route({
-  method: 'GET',
-  path: '/bridges',
-  handler: function (request, reply) {
-    reply(bridgeStatuses);
-  }
-});
-
-server.route({
   method: 'POST',
   path: '/incoming-snmp',
   config: {
