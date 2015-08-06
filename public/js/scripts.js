@@ -4,14 +4,15 @@ socket.on('bridge data', function (data) {
   $("#bridges").text("");
   $.each(data, function (bridge) {
     $("#bridges").append(
-      "<div class='bridge'>" +
+      "<div class='bridge' data-role='content'><p>" +
         bridge +
-        ": " +
-        (
-          data[bridge].status
-            ? "up"
-            : "down"
-        ) +
+        "</p><div class='led " +
+          (
+            data[bridge].status
+              ? "led-red"
+              : "led-green"
+          ) +
+        "'></div>" +
       "</div><br>"
     );
   });
