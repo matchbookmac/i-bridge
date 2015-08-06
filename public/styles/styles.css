@@ -1,0 +1,10 @@
+body {
+  background-color: black;
+}
+.bridge {
+  background-color: white;
+}
+#message, #count{
+  text-align: center;
+  padding: 10px 0px;
+}

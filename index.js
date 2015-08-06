@@ -29,7 +29,7 @@ server.views({
   engines: {
     html: require('handlebars')
   },
-  path: Path.join(__dirname, 'templates')
+  path: Path.join(__dirname, 'public/templates')
 });
 
 server.route({
@@ -37,6 +37,18 @@ server.route({
   path: '/',
   handler: {
     view: "index"
+  }
+});
+
+server.route({
+  method: 'GET',
+  path: '/public/{path*}',
+  handler: {
+    directory: {
+      path: Path.join(__dirname, '/public'),
+      listing: false,
+      index: false
+    }
   }
 });
 
