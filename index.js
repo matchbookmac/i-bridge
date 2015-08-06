@@ -1,8 +1,11 @@
 var
-  Hapi = require('hapi'),
-  http = require('http'),
-  Path = require('path')
+  Hapi     = require('hapi'),
+  Path     = require('path')
 ;
+
+var server = new Hapi.Server();
+server.connection({ port: 3002 });
+var io     = require('socket.io')(server.listener);
 
 var bridgeStatuses = {
   cuevas: {
@@ -23,8 +26,10 @@ var bridgeStatuses = {
 
 };
 
-var server = new Hapi.Server();
-server.connection({ port: 3002 });
+var bridgeEventSocket = io.on('connection', function (socket) {
+  socket.emit('bridge data', bridgeStatuses);
+})
+
 server.views({
   engines: {
     html: require('handlebars')
@@ -74,6 +79,7 @@ server.route({
         bridgeStatus = JSON.parse(body);
         bridgeStatuses[bridgeStatus.bridge].status = bridgeStatus.status;
         console.log(bridgeStatuses);
+        bridgeEventSocket.emit('bridge data', bridgeStatuses);
       });
 
       reply("post received");
