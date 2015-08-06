@@ -1,6 +1,8 @@
-var Hapi = require('hapi');
-var http = require('http');
-var Path = require('path');
+var
+  Hapi = require('hapi'),
+  http = require('http'),
+  Path = require('path')
+;
 
 var bridgeStatuses = {
   cuevas: {
