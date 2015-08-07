@@ -4,7 +4,7 @@ var
 ;
 
 var server = new Hapi.Server();
-server.connection({ port: 3002 });
+server.connection({ port: 80 });
 var io     = require('socket.io')(server.listener);
 
 var bridgeStatuses = {
