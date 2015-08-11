@@ -8,7 +8,7 @@ server.connection({ port: 80 });
 var io     = require('socket.io')(server.listener);
 
 var bridgeStatuses = {
-  cuevas: {
+  "cuevas crossing": {
     status: false
   },
   hawthorne: {
