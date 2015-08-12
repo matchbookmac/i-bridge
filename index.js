@@ -98,7 +98,8 @@ server.route({
           host     : 'uatgenrds.clvekbxagtjv.us-west-2.rds.amazonaws.com',
           user     : 'uatbridgeapp',
           password : '2HY4hykACYHmQK8g',
-          port     : 3306
+          port     : 3306,
+          database : 'uatbridgeapp'
         })
         connection.connect(function(err){
           if (err) {
@@ -116,15 +117,19 @@ server.route({
           console.log("(false) bridgeStatus.status = " + bridgeStatus.status);
           for (i = 0; i < bridgeOpenings.length; i++){
             //check to see if there are any open bridge events that correspond with this close event
+
             if (bridgeOpenings[i].name = bridgeName){
               upTime = bridgeOpenings[i].uptime;
               downTime = timeStamp;
               //build sql string
-              var sql = 'INSERT INTO bridgeEvents (trainName, upTime, downTime) VALUES (' + "'" + bridgeName + "'" + ', ' + "'" + upTime + "'" + ', ' + "'" + downTime + "'" + ');';
-              connection.query(sql);
+              var sql = 'INSERT INTO bridge_events (bridge_name, up_time, down_time) VALUES (' + "'" + bridgeName + "'" + ', ' + "'" + upTime + "'" + ', ' + "'" + downTime + "'" + ');';
+              connection.query(sql, function(err){
+                wlog.info("SQL Error when inserting new event:  " + err);
+              });
               bridgeOpenings.splice(i, 1);
             }
           }
+
 
         } else if (bridgeStatus.status == true) {
           console.log("(true) bridgeStatus.status = " + bridgeStatus.status);
