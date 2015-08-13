@@ -38,8 +38,8 @@ module .exports = function receivePost(request, reply) {
         wlog.info("MYSQL connection: successful. ")
       }
     });
-    bridgeName = bridgeStatus.bridge,
-    bridgeName = bridgeName.replace(/\'/g, ""),
+    bridgeName = bridgeStatus.bridge;
+    bridgeName = bridgeName.replace(/\'/g, "");
     timeStamp = moment(bridgeStatus.timeStamp).format("YYYY/MM/DD HH:mm:ss").toString();
     if (bridgeStatus.status == false){
       console.log("(false) bridgeStatus.status = " + bridgeStatus.status);
