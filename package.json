@@ -4,7 +4,7 @@
   "description": "Test API for receiving posts from snmp relay and providing them to a web api",
   "main": "index.js",
   "scripts": {
-    "test": "sudo mocha --reporter nyan",
+    "test": "mocha --reporter nyan",
     "start": "sudo nodemon index.js",
     "prod-start": "sudo forever start index.js",
     "stop": "sudo forever stop index.js"
