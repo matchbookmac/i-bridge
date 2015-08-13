@@ -51,7 +51,6 @@ server.route({
   method: 'POST',
   path: '/incoming-snmp',
   config: {
-// TODO: validate payload
     handler: receivePost,
     validate: {
       payload: joi.object().keys({
@@ -68,6 +67,7 @@ server.start(function(){
 });
 
 function receivePost(request, reply) {
+    // bridgeStatus = request;
     bridgeStatus = request.payload;
     var bridge = bridgeStatus.bridge;
     console.log("bridge: " + bridge);

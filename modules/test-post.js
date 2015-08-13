@@ -10,6 +10,7 @@ var testMessage = {
     bridge: "bailey's bridge",
     status: true,
     timeStamp:timeStamp
+    // other: "bif"
   };
 
 testPost(testMessage);
