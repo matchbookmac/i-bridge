@@ -34,7 +34,7 @@ var bridgeStatuses = {
 
 var bridgeEventSocket = io.on('connection', function (socket) {
   socket.emit('bridge data', bridgeStatuses);
-})
+});
 
 server.views({
   engines: {
@@ -74,7 +74,7 @@ server.route({
       parse: true
     }
   }
-})
+});
 
 server.start(function(){
   console.log('Server running at:', server.info.uri);
