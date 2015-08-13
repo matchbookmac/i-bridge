@@ -72,3 +72,22 @@
 {"level":"info","message":"MYSQL connection error fatal?: true","timestamp":"2015-08-12T18:20:57.585Z"}
 {"level":"info","message":"MYSQL connection error: ETIMEDOUT","timestamp":"2015-08-12T18:25:53.780Z"}
 {"level":"info","message":"MYSQL connection error fatal?: true","timestamp":"2015-08-12T18:25:53.781Z"}
+{"level":"info","message":"MYSQL connection error: ECONNREFUSED","timestamp":"2015-08-13T19:52:19.908Z"}
+{"level":"info","message":"MYSQL connection error fatal?: true","timestamp":"2015-08-13T19:52:19.911Z"}
+{"level":"info","message":"MYSQL connection error: ECONNREFUSED","timestamp":"2015-08-13T19:52:33.611Z"}
+{"level":"info","message":"MYSQL connection error fatal?: true","timestamp":"2015-08-13T19:52:33.612Z"}
+{"level":"info","message":"MYSQL connection error: ETIMEDOUT","timestamp":"2015-08-13T19:52:35.922Z"}
+{"level":"info","message":"MYSQL connection error fatal?: true","timestamp":"2015-08-13T19:52:35.923Z"}
+{"level":"info","message":"MYSQL connection error: ETIMEDOUT","timestamp":"2015-08-13T19:52:38.141Z"}
+{"level":"info","message":"MYSQL connection error fatal?: true","timestamp":"2015-08-13T19:52:38.141Z"}
+{"level":"info","message":"SQL Error when inserting new event:  Error: connect ETIMEDOUT","timestamp":"2015-08-13T19:52:38.142Z"}
+{"level":"info","message":"MYSQL connection error: ETIMEDOUT","timestamp":"2015-08-13T19:52:40.759Z"}
+{"level":"info","message":"MYSQL connection error fatal?: true","timestamp":"2015-08-13T19:52:40.760Z"}
+{"level":"info","message":"SQL Error when inserting new event:  Error: connect ETIMEDOUT","timestamp":"2015-08-13T19:52:40.760Z"}
+{"level":"info","message":"MYSQL connection error: ECONNREFUSED","timestamp":"2015-08-13T20:02:24.818Z"}
+{"level":"info","message":"MYSQL connection error fatal?: true","timestamp":"2015-08-13T20:02:24.821Z"}
+{"level":"info","message":"MYSQL connection error: ECONNREFUSED","timestamp":"2015-08-13T20:02:27.289Z"}
+{"level":"info","message":"MYSQL connection error fatal?: true","timestamp":"2015-08-13T20:02:27.290Z"}
+{"level":"info","message":"MYSQL connection error: ETIMEDOUT","timestamp":"2015-08-13T20:02:38.800Z"}
+{"level":"info","message":"MYSQL connection error fatal?: true","timestamp":"2015-08-13T20:02:38.800Z"}
+{"level":"info","message":"SQL Error when inserting new event:  Error: connect ETIMEDOUT","timestamp":"2015-08-13T20:02:38.801Z"}
