@@ -14,24 +14,6 @@ var server = new Hapi.Server();
 server.connection({ port: 80 });
 var io     = require('socket.io')(server.listener);
 
-var bridgeStatuses = {
-  "cuevas crossing": {
-    status: false
-  },
-  hawthorne: {
-    status: false
-  },
-  broadway: {
-    status: false
-  },
-  burnside: {
-    status: false
-  },
-  morrison: {
-    status: false
-  },
-};
-
 var bridgeEventSocket = io.on('connection', function (socket) {
   socket.emit('bridge data', bridgeStatuses);
 });
