@@ -4,8 +4,10 @@
   "description": "Test API for receiving posts from snmp relay and providing them to a web api",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "test": "sudo mocha --reporter nyan",
+    "start": "sudo nodemon index.js",
+    "prod-start": "sudo forever start index.js",
+    "stop": "sudo forever stop index.js"
   },
   "repository": {
     "type": "git",
@@ -27,6 +29,9 @@
     "moment": "2.10.6"
   },
   "devDependencies": {
+    "chai": "^3.2.0",
+    "mocha": "^2.2.5",
+    "nock": "^2.10.0",
     "nodemon": "^1.4.0"
   },
   "engines": {
