@@ -7,6 +7,24 @@ var
   bridgeOpenings = []
 ;
 
+  var bridgeStatuses = {
+    "cuevas crossing": {
+      status: false
+    },
+    hawthorne: {
+      status: false
+    },
+    broadway: {
+      status: false
+    },
+    burnside: {
+      status: false
+    },
+    morrison: {
+      status: false
+    },
+  };
+
 wlog.add(wlog.transports.File, { filename: 'logs/winstonlog.log'});
 
 var server = new Hapi.Server();
