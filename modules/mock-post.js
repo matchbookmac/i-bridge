@@ -10,8 +10,7 @@ console.log(bridgeData);
   var
     options = {
       hostname: sendOptions.hostname || ip.address(),
-      // "52.26.186.75",
-      // hostname: "127.0.0.1",
+      // "52.26.186.75" for a-bridge
       port:     sendOptions.port     || 80,
       path:     sendOptions.path     || "/incoming-snmp",
       method:   sendOptions.method   || "POST",
@@ -38,8 +37,11 @@ console.log(bridgeData);
   });
 
   req.on("error", function (err) {
-console.log(err);
-    if (callback) callback(err.message, null);
+    if (callback) {
+      callback(err.message, null);
+    } else {
+      wlog.info(err);
+    }
   });
 
   req.write(bridgeData);
