@@ -14,11 +14,10 @@ var server = new Hapi.Server();
 server.connection({ port: 80 });
 var io     = require('socket.io')(server.listener);
 
-
-
 var bridgeEventSocket = io.on('connection', function (socket) {
   socket.emit('bridge data', bridgeStatuses);
 });
+
 
 server.views({
   engines: {
@@ -80,6 +79,7 @@ function receivePost(request, reply) {
     };
     console.log(bridgeStatuses);
     bridgeEventSocket.emit('bridge data', bridgeStatuses);
+
 //write data to AWS
     connection = mysql.createConnection({
       host     : 'uatgenrds.clvekbxagtjv.us-west-2.rds.amazonaws.com',
@@ -104,7 +104,6 @@ function receivePost(request, reply) {
       console.log("(false) bridgeStatus.status = " + bridgeStatus.status);
       for (i = 0; i < bridgeOpenings.length; i++){
         //check to see if there are any open bridge events that correspond with this close event
-
         if (bridgeOpenings[i].name === bridgeName){
           upTime = bridgeOpenings[i].uptime;
           downTime = timeStamp;
