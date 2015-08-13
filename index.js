@@ -4,6 +4,7 @@ var
   wlog    = require('winston'),
   mysql   = require('mysql'),
   moment  = require('moment'),
+  joi     = require('joi'),
   bridgeStatuses = require('./config/bridge-statuses'),
   bridgeOpenings = []
 ;
@@ -52,9 +53,11 @@ server.route({
   config: {
 // TODO: validate payload
     handler: receivePost,
-    payload: {
-      output: 'stream',
-      parse: true
+    validate: {
+      payload: Joi.object({
+        output: 'stream',
+        parse: true
+      })
     }
   }
 });
