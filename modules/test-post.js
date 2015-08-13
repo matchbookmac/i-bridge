@@ -16,6 +16,7 @@ testPost(testMessage);
 
 function testPost(bridgeData, callback){
   bridgeData = JSON.stringify(bridgeData);
+console.log(bridgeData)  ;
   var
     options = {
       hostname: ip.address(),
@@ -47,6 +48,7 @@ function testPost(bridgeData, callback){
   });
 
   req.on("error", function (err) {
+console.log(err);
     if (callback) callback(err.message, null);
   });
 

@@ -54,10 +54,11 @@ server.route({
 // TODO: validate payload
     handler: receivePost,
     validate: {
-      payload: Joi.object({
-        output: 'stream',
-        parse: true
-      })
+      payload: joi.object().keys({
+        "bridge": joi.string().required(),
+        "status": joi.boolean().required(),
+        "timeStamp": joi.date().required()
+      }),
     }
   }
 });
@@ -67,12 +68,7 @@ server.start(function(){
 });
 
 function receivePost(request, reply) {
-  body = "";
-  request.payload.on('data', function (chunk) {
-    body += chunk;
-  });
-  request.payload.on('end', function (err) {
-    bridgeStatus = JSON.parse(body);
+    bridgeStatus = request.payload;
     var bridge = bridgeStatus.bridge;
     console.log("bridge: " + bridge);
     console.log("timestamp: " + bridgeStatus.timeStamp);
@@ -134,7 +130,7 @@ function receivePost(request, reply) {
       }
       bridgeOpenings.push(bridgeEvent);
     }
-  });
+  // });
 
   reply("post received");
 }
