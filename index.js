@@ -61,7 +61,7 @@ server.route({
   method: 'POST',
   path: '/incoming-snmp',
   config: {
-
+// TODO: validate payload
     handler: function (request, reply) {
       body = "";
       request.payload.on('data', function (chunk) {
