@@ -4,7 +4,6 @@ var
   wlog    = require('winston'),
   mysql   = require('mysql'),
   moment  = require('moment'),
-  bridgeStatuses = require('./config/bridge-statuses'),
   bridgeOpenings = []
 ;
 
@@ -150,6 +149,5 @@ function receivePost(request, reply) {
       bridgeOpenings.push(bridgeEvent);
     };
   });
-
   reply("post received");
 }
