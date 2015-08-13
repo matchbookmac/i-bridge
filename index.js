@@ -63,14 +63,6 @@ server.route({
   }
 });
 
-// server.route({
-//   method: 'GET',
-//   path: '/events',
-//   handler: {
-//     view: "events"
-//   }
-// });
-
 server.route({
   method: 'POST',
   path: '/incoming-snmp',
