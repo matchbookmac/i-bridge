@@ -4,30 +4,19 @@ var
   ip       = require('ip')
 ;
 
-var timeStamp = (new Date()).toString();
-
-var testMessage = {
-    bridge: "bailey's bridge",
-    status: true,
-    timeStamp:timeStamp
-    // other: "bif"
-  };
-
-testPost(testMessage);
-
-function testPost(bridgeData, callback){
+module .exports = function testPost(bridgeData, sendOptions, callback){
   bridgeData = JSON.stringify(bridgeData);
-console.log(bridgeData)  ;
+console.log(bridgeData);
   var
     options = {
-      hostname: ip.address(),
+      hostname: sendOptions.hostname || ip.address(),
       // "52.26.186.75",
       // hostname: "127.0.0.1",
-      port: 80,
-      path: "/incoming-snmp",
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+      port:     sendOptions.port     || 80,
+      path:     sendOptions.path     || "/incoming-snmp",
+      method:   sendOptions.method   || "POST",
+      headers:  sendOptions.headers  || {
+        "Content-Type":   "application/json",
         "Content-Length": bridgeData.length
       }
     },
@@ -55,4 +44,4 @@ console.log(err);
 
   req.write(bridgeData);
   req.end();
-}
+};

@@ -1,7 +1,7 @@
 var
   expect      = require('chai').expect,
   nock        = require('nock'),
-  receivePost = require('../modules/receive-bridge-post')
+  receivePost = require('../index')
 ;
 
 describe('receivePost', function () {
