@@ -1,4 +1,4 @@
-module .exports = function () {
+module .exports = (function () {
   var bridgeStatuses = {
     "cuevas crossing": {
       status: false
@@ -17,4 +17,4 @@ module .exports = function () {
     },
   };
   return bridgeStatuses;
-}
+})();

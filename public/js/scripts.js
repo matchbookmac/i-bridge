@@ -8,12 +8,11 @@ socket.on('bridge data', function (data) {
         bridge +
         "</p><div class='led " +
           (
-            data[bridge].status
-              ? "led-red"
-              : "led-green"
+            data[bridge].status ? "led-red"
+                                : "led-green"
           ) +
         "'></div>" +
       "</div><br>"
     );
   });
-})
+});

@@ -13,27 +13,9 @@ var server = new Hapi.Server();
 server.connection({ port: 80 });
 var io     = require('socket.io')(server.listener);
 
-var bridgeStatuses = {
-  "cuevas crossing": {
-    status: false
-  },
-  hawthorne: {
-    status: false
-  },
-  broadway: {
-    status: false
-  },
-  burnside: {
-    status: false
-  },
-  morrison: {
-    status: false
-  },
-};
-
 var bridgeEventSocket = io.on('connection', function (socket) {
   socket.emit('bridge data', bridgeStatuses);
-})
+});
 
 
 server.views({
@@ -74,7 +56,7 @@ server.route({
       parse: true
     }
   }
-})
+});
 
 server.start(function(){
   console.log('Server running at:', server.info.uri);
@@ -93,8 +75,9 @@ function receivePost(request, reply) {
     console.log("status: " + bridgeStatus.status);
     bridgeStatuses[bridge] = {
       status: bridgeStatus.status
-    }
+    };
     console.log(bridgeStatuses);
+    bridgeEventSocket.emit('bridge data', bridgeStatuses);
 
 //write data to AWS
     connection = mysql.createConnection({
@@ -103,25 +86,24 @@ function receivePost(request, reply) {
       password : '2HY4hykACYHmQK8g',
       port     : 3306,
       database : 'uatbridgeapp'
-    })
+    });
     connection.connect(function(err){
       if (err) {
-        wlog.info("MYSQL connection error: " + err.code)
-        wlog.info("MYSQL connection error fatal?: " + err.fatal)
+        wlog.info("MYSQL connection error: " + err.code);
+        wlog.info("MYSQL connection error fatal?: " + err.fatal);
       }
       else{
-        wlog.info("MYSQL connection: successful. ")
+        wlog.info("MYSQL connection: successful. ");
       }
     });
-    bridgeName = bridgeStatus.bridge;
-    bridgeName = bridgeName.replace(/\'/g, "");
+    bridgeName = bridgeStatus.bridge,
+    bridgeName = bridgeName.replace(/\'/g, ""),
     timeStamp = moment(bridgeStatus.timeStamp).format("YYYY/MM/DD HH:mm:ss").toString();
-    if (bridgeStatus.status == false){
+    if (!bridgeStatus.status){
       console.log("(false) bridgeStatus.status = " + bridgeStatus.status);
       for (i = 0; i < bridgeOpenings.length; i++){
         //check to see if there are any open bridge events that correspond with this close event
-
-        if (bridgeOpenings[i].name = bridgeName){
+        if (bridgeOpenings[i].name === bridgeName){
           upTime = bridgeOpenings[i].uptime;
           downTime = timeStamp;
           //build sql string
@@ -133,21 +115,21 @@ function receivePost(request, reply) {
         }
       }
 
-    } else if (bridgeStatus.status == true) {
+    } else if (bridgeStatus.status) {
       console.log("(true) bridgeStatus.status = " + bridgeStatus.status);
 
       var bridgeEvent = {
         name: bridgeName,
         uptime: timeStamp
-      }
+      };
       //check to see if there are any unclosed bridge openings, if so then delete them and replace with this new bridge opening
       for (i = 0; i < bridgeOpenings.length; i++){
-        if(bridgeOpenings[i].name = bridgeName){
+        if(bridgeOpenings[i].name === bridgeName){
           bridgeOpenings.splice(i, 1);
         }
       }
       bridgeOpenings.push(bridgeEvent);
-    };
+    }
   });
   reply("post received");
 }
