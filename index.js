@@ -1,10 +1,10 @@
 var
-  Hapi    = require('hapi'),
-  Path    = require('path'),
-  wlog    = require('winston'),
-  mysql   = require('mysql'),
-  moment  = require('moment'),
-  joi     = require('joi'),
+  Hapi           = require('hapi'),
+  Path           = require('path'),
+  wlog           = require('winston'),
+  mysql          = require('mysql'),
+  strftime       = require('strftime'),
+  joi            = require('joi'),
   bridgeStatuses = require('./config/bridge-statuses'),
   bridgeOpenings = []
 ;
@@ -95,9 +95,9 @@ function receivePost(request, reply) {
       wlog.info("MYSQL connection: successful. ");
     }
   });
-  bridgeName = bridgeStatus.bridge,
-  bridgeName = bridgeName.replace(/\'/g, ""),
-  timeStamp = moment(bridgeStatus.timeStamp).format("YYYY/MM/DD HH:mm:ss").toString();
+  bridgeName = bridgeStatus.bridge;
+  bridgeName = bridgeName.replace(/\'/g, "");
+  timeStamp  = strftime("%Y/%m/%d %I:%M:%S", bridgeStatus.timeStamp);
   if (bridgeStatus.status){
     console.log("(false) bridgeStatus.status = " + bridgeStatus.status);
     for (i = 0; i < bridgeOpenings.length; i++){
@@ -107,13 +107,10 @@ function receivePost(request, reply) {
         downTime = timeStamp;
         //build sql string
         var sql = 'INSERT INTO bridge_events (bridge_name, up_time, down_time) VALUES (' + "'" + bridgeName + "'" + ', ' + "'" + upTime + "'" + ', ' + "'" + downTime + "'" + ');';
-        connection.query(sql, function(err){
-          wlog.info("SQL Error when inserting new event:  " + err);
-        });
+        connection.query(sql, logConnectionErr);
         bridgeOpenings.splice(i, 1);
       }
     }
-
   } else {
     console.log("(true) bridgeStatus.status = " + bridgeStatus.status);
 
@@ -130,4 +127,8 @@ function receivePost(request, reply) {
     bridgeOpenings.push(bridgeEvent);
   }
   reply("post received");
+}
+
+function logConnectionErr(err){
+  wlog.info("SQL Error when inserting new event:  " + err);
 }
