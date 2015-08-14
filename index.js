@@ -5,14 +5,18 @@ var
   mysql          = require('mysql'),
   strftime       = require('strftime'),
   joi            = require('joi'),
-  bridgeStatuses = require('./config/bridge-statuses'),
+  port           = require('./config/config').port,
+  bridgeStatuses = require('./config/config').bridges,
+  mySQLCred      = require('./config/config').mySQL,
+  currentEnv     = require('./config/config').env,
+  envVars        = require('./config/config').envVars,
   bridgeOpenings = []
 ;
 
 wlog.add(wlog.transports.File, { filename: 'logs/winstonlog.log'});
 
 var server = new Hapi.Server();
-server.connection({ port: 80 });
+server.connection({ port: port });
 var io     = require('socket.io')(server.listener);
 
 var bridgeEventSocket = io.on('connection', function (socket) {
@@ -62,9 +66,13 @@ server.route({
   }
 });
 
-server.start(function(){
-  console.log('Server running at:', server.info.uri);
-});
+module .exports = (function () {
+  server.start(function(){
+    console.log('Server running at:', server.info.uri);
+  });
+
+  return server;
+})();
 
 function receivePost(request, reply) {
   bridgeStatus = request.payload;
@@ -80,11 +88,11 @@ function receivePost(request, reply) {
 
 //write data to AWS
   connection = mysql.createConnection({
-    host     : 'uatgenrds.clvekbxagtjv.us-west-2.rds.amazonaws.com',
-    user     : 'uatbridgeapp',
-    password : '2HY4hykACYHmQK8g',
-    port     : 3306,
-    database : 'uatbridgeapp'
+    host     : mySQLCred.host,
+    user     : mySQLCred.user,
+    password : mySQLCred.password,
+    port     : mySQLCred.port,
+    database : mySQLCred.database
   });
   connection.connect(function(err){
     if (err) {

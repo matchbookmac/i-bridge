@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha --reporter nyan",
     "start": "sudo nodemon index.js",
-    "prod-start": "sudo forever start index.js",
+    "prod-start": "sudo forever start index.js -e production",
     "stop": "sudo forever stop index.js"
   },
   "repository": {
@@ -40,7 +40,8 @@
     "nodemon": "^1.4.0"
   },
   "jshintConfig": {
-    "node": true
+    "node": true,
+    "esnext": false
   },
   "engines": {
     "node": "0.12.7"

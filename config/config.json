@@ -1,0 +1,32 @@
+{
+  "mySQL": {
+    "host"     : "uatgenrds.clvekbxagtjv.us-west-2.rds.amazonaws.com",
+    "user"     : "uatbridgeapp",
+    "password" : "2HY4hykACYHmQK8g",
+    "port"     : 3306,
+    "database" : "uatbridgeapp"
+  },
+  "development": {
+    "foo": "bar"
+  },
+  "production": {
+    "foo": "bar"
+  },
+  "bridges": {
+    "cuevas crossing": {
+      "status": false
+    },
+    "hawthorne": {
+      "status": false
+    },
+    "broadway": {
+      "status": false
+    },
+    "burnside": {
+      "status": false
+    },
+    "morrison": {
+      "status": false
+    }
+  }
+}
