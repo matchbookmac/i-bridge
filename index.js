@@ -14,7 +14,12 @@ var
 ;
 
 if (currentEnv !== 'test') {
-  wlog.add(wlog.transports.File, { filename: 'logs/winstonlog.log'});
+  wlog.add(wlog.transports.File, {
+    filename: 'logs/winstonlog.log',
+    timestamp: function () {
+      return (new Date()).toString();
+    }
+  });
 } else {
   wlog.info = function silenceOnTest(args) {
     return;
