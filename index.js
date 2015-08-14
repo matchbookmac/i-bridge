@@ -1,6 +1,7 @@
 var
   Hapi           = require('hapi'),
   Path           = require('path'),
+  util           = require('util'),
   wlog           = require('winston'),
   mysql          = require('mysql'),
   strftime       = require('strftime'),
@@ -89,12 +90,12 @@ function receivePost(request, reply) {
   bridgeStatus = request.payload;
   var bridge = bridgeStatus.bridge;
   wlog.info("bridge: " + bridge);
-  wlog.info("timestamp: " + bridgeStatus.timeStamp);
+  wlog.info("timestamp: " + new Date(bridgeStatus.timeStamp).toString());
   wlog.info("status: " + bridgeStatus.status);
   bridgeStatuses[bridge] = {
     status: bridgeStatus.status
   };
-  wlog.info(bridgeStatuses);
+  wlog.info(util.inspect(bridgeStatuses));
   bridgeEventSocket.emit('bridge data', bridgeStatuses);
 
 //write data to AWS
@@ -118,19 +119,6 @@ function receivePost(request, reply) {
   bridgeName = bridgeName.replace(/\'/g, "");
   timeStamp  = strftime("%Y/%m/%d %I:%M:%S", bridgeStatus.timeStamp);
   if (bridgeStatus.status){
-    wlog.info("(false) bridgeStatus.status = " + bridgeStatus.status);
-    for (i = 0; i < bridgeOpenings.length; i++){
-      //check to see if there are any open bridge events that correspond with this close event
-      if (bridgeOpenings[i].name === bridgeName){
-        upTime = bridgeOpenings[i].uptime;
-        downTime = timeStamp;
-        //build sql string
-        var sql = 'INSERT INTO bridge_events (bridge_name, up_time, down_time) VALUES (' + "'" + bridgeName + "'" + ', ' + "'" + upTime + "'" + ', ' + "'" + downTime + "'" + ');';
-        connection.query(sql, logConnectionErr);
-        bridgeOpenings.splice(i, 1);
-      }
-    }
-  } else {
     wlog.info("(true) bridgeStatus.status = " + bridgeStatus.status);
 
     var bridgeEvent = {
@@ -144,6 +132,19 @@ function receivePost(request, reply) {
       }
     }
     bridgeOpenings.push(bridgeEvent);
+  } else {
+    wlog.info("(false) bridgeStatus.status = " + bridgeStatus.status);
+    for (i = 0; i < bridgeOpenings.length; i++){
+      //check to see if there are any open bridge events that correspond with this close event
+      if (bridgeOpenings[i].name === bridgeName){
+        upTime = bridgeOpenings[i].uptime;
+        downTime = timeStamp;
+        //build sql string
+        var sql = 'INSERT INTO bridge_events (bridge_name, up_time, down_time) VALUES (' + "'" + bridgeName + "'" + ', ' + "'" + upTime + "'" + ', ' + "'" + downTime + "'" + ');';
+        connection.query(sql, logConnectionErr);
+        bridgeOpenings.splice(i, 1);
+      }
+    }
   }
   reply("post received");
 }
