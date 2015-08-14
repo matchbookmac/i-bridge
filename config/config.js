@@ -9,13 +9,15 @@ function port() {
 
 function environment() {
   var
-    argvEnv = argv.e || argv.env,
+    argvEnv = argv.E || argv.env,
     node_env
   ;
   if (argvEnv === 'production' || argvEnv === 'prod') {
     node_env = process.env.NODE_ENV = 'production';
-  } else {
+  } else if (argvEnv === 'dev' || argvEnv === 'development') {
     node_env = process.env.NODE_ENV = 'development';
+  } else {
+    node_env = process.env.NODE_ENV = 'test';
   }
   return node_env;
 }

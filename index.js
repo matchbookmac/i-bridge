@@ -13,7 +13,13 @@ var
   bridgeOpenings = []
 ;
 
-wlog.add(wlog.transports.File, { filename: 'logs/winstonlog.log'});
+if (currentEnv !== 'test') {
+  wlog.add(wlog.transports.File, { filename: 'logs/winstonlog.log'});
+} else {
+  wlog.info = function silenceOnTest(args) {
+    return;
+  };
+}
 
 var server = new Hapi.Server();
 server.connection({ port: port });
@@ -68,7 +74,7 @@ server.route({
 
 module .exports = (function () {
   server.start(function(){
-    console.log('Server running at:', server.info.uri);
+    wlog.info('Server running at:', server.info.uri);
   });
 
   return server;
@@ -77,13 +83,13 @@ module .exports = (function () {
 function receivePost(request, reply) {
   bridgeStatus = request.payload;
   var bridge = bridgeStatus.bridge;
-  console.log("bridge: " + bridge);
-  console.log("timestamp: " + bridgeStatus.timeStamp);
-  console.log("status: " + bridgeStatus.status);
+  wlog.info("bridge: " + bridge);
+  wlog.info("timestamp: " + bridgeStatus.timeStamp);
+  wlog.info("status: " + bridgeStatus.status);
   bridgeStatuses[bridge] = {
     status: bridgeStatus.status
   };
-  console.log(bridgeStatuses);
+  wlog.info(bridgeStatuses);
   bridgeEventSocket.emit('bridge data', bridgeStatuses);
 
 //write data to AWS
@@ -107,7 +113,7 @@ function receivePost(request, reply) {
   bridgeName = bridgeName.replace(/\'/g, "");
   timeStamp  = strftime("%Y/%m/%d %I:%M:%S", bridgeStatus.timeStamp);
   if (bridgeStatus.status){
-    console.log("(false) bridgeStatus.status = " + bridgeStatus.status);
+    wlog.info("(false) bridgeStatus.status = " + bridgeStatus.status);
     for (i = 0; i < bridgeOpenings.length; i++){
       //check to see if there are any open bridge events that correspond with this close event
       if (bridgeOpenings[i].name === bridgeName){
@@ -120,7 +126,7 @@ function receivePost(request, reply) {
       }
     }
   } else {
-    console.log("(true) bridgeStatus.status = " + bridgeStatus.status);
+    wlog.info("(true) bridgeStatus.status = " + bridgeStatus.status);
 
     var bridgeEvent = {
       name: bridgeName,
