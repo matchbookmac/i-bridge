@@ -7,10 +7,25 @@
   <body>
     <h1>Events</h1>
     <ul>
-      <li> Bridge Name </li>
       {{#each bridgeEvents}}
         <li>{{this.bridge_name}}{{this.up_time}}{{this.down_time}}</li>
       {{/each}}
     </ul>
+    <table>
+      <thead>
+        <th>Bridge Name</th>
+        <th>Up Time</th>
+        <th>Down Time</th>
+      </thead>
+      <tbody>
+        {{#each bridgeEvents}}
+        <tr>
+          <td>this.bridge_name</td>
+          <td>this.up_time</td>
+          <td>this.down_time</td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
   </body>
 </html>
