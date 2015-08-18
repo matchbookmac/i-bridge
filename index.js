@@ -70,9 +70,7 @@ server.route({
   config: {
     pre:[{method: pre1, assign: 'data'}],
     handler: function(request, reply) {
-      console.log('foo');
-      console.log("data: " + request.pre.data);
-      reply.view('events', {trainEvents: request.pre.data})
+      reply.view('events', {bridgeEvents: request.pre.data})
     }
   }
 });
