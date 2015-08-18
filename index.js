@@ -11,7 +11,7 @@ var
   mySQLCred      = require('./config/config').mySQL,
   currentEnv     = require('./config/config').env,
   envVars        = require('./config/config').envVars,
-  pre1           = require('./modules/newGetEvents.js'),
+  pre1           = require('./modules/get-bridge-events.js'),
   bridgeOpenings = []
 ;
 
