@@ -1,6 +1,6 @@
 module.exports = function (request, reply) {
     var
-    mySQLCred       = require('./config/config').mySQL,
+    mySQLCred       = require('../config/config').mySQL,
     mysql           = require('mysql'),
     getEventsSQL    = 'SELECT * FROM bridgeEvents',
     connection      = mysql.createConnection({
