@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <h1>Events</h1>
+    <ul>
+      <li> Bridge Name </li>
+      {{#each bridgeEvents}}
+        <li>{{this.bridge_name}}{{this.up_time}}{{this.down_time}}</li>
+      {{/each}}
+    </ul>
+  </body>
+</html>

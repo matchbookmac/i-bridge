@@ -11,6 +11,7 @@ var
   mySQLCred      = require('./config/config').mySQL,
   currentEnv     = require('./config/config').env,
   envVars        = require('./config/config').envVars,
+  pre1           = require('./modules/newGetEvents.js'),
   bridgeOpenings = []
 ;
 
@@ -59,6 +60,19 @@ server.route({
       path: Path.join(__dirname, '/public'),
       listing: false,
       index: false
+    }
+  }
+});
+
+server.route({
+  method: 'GET',
+  path: '/events',
+  config: {
+    pre:[{method: pre1, assign: 'data'}],
+    handler: function(request, reply) {
+      console.log('foo');
+      console.log("data: " + request.pre.data);
+      reply.view('events', {trainEvents: request.pre.data})
     }
   }
 });
