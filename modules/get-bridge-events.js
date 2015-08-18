@@ -1,8 +1,9 @@
 module.exports = function (request, reply) {
     var
     mySQLCred       = require('../config/config').mySQL,
+    wlog           = require('winston'),
     mysql           = require('mysql'),
-    getEventsSQL    = 'SELECT * FROM bridgeEvents',
+    getEventsSQL    = 'SELECT * FROM bridge_events',
     connection      = mysql.createConnection({
       host     : mySQLCred.host,
       user     : mySQLCred.user,
