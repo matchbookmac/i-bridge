@@ -32,7 +32,11 @@ function envVars() {
 }
 
 function mySQL() {
-  return env.mySQL;
+  if (environment() === 'production') {
+    return env.production.mySQL;
+  } else {
+    return env.development.mySQL;
+  }
 }
 
 function bridges() {

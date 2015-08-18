@@ -1,16 +1,24 @@
 {
-  "mySQL": {
-    "host"     : "uatgenrds.clvekbxagtjv.us-west-2.rds.amazonaws.com",
-    "user"     : "uatbridgeapp",
-    "password" : "2HY4hykACYHmQK8g",
-    "port"     : 3306,
-    "database" : "uatbridgeapp"
-  },
   "development": {
-    "foo": "bar"
+    "foo": "bar",
+    "mySQL": {
+      "host"     : "localhost",
+      "user"     : "root",
+      "password" : "",
+      "port"     : 3307,
+      "database" : "uatbridgeapp"
+    }
+
   },
   "production": {
-    "foo": "bar"
+    "foo": "bar",
+    "mySQL": {
+      "host"     : "uatgenrds.clvekbxagtjv.us-west-2.rds.amazonaws.com",
+      "user"     : "uatbridgeapp",
+      "password" : "2HY4hykACYHmQK8g",
+      "port"     : 3306,
+      "database" : "uatbridgeapp"
+    }
   },
   "bridges": {
     "cuevas crossing": {
