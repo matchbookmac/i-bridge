@@ -13,16 +13,16 @@
     "foo": "bar"
   },
   "bridges": {
-    "broadway": {
-      "status": false
-    },
-    "burnside": {
+    "hawthorne": {
       "status": false
     },
     "morrison": {
       "status": false
     },
-    "hawthorne": {
+    "burnside": {
+      "status": false
+    },
+    "broadway": {
       "status": false
     },
     "cuevas crossing": {
