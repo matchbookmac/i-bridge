@@ -41,8 +41,7 @@ server.views({
   engines: {
     html: require('handlebars')
   },
-  path: Path.join(__dirname, 'public/templates'),
-  helpersPath: './public/helpers'
+  path: Path.join(__dirname, 'public/templates')
 });
 
 server.route({
