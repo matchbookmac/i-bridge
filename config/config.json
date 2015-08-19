@@ -13,12 +13,6 @@
     "foo": "bar"
   },
   "bridges": {
-    "cuevas crossing": {
-      "status": false
-    },
-    "hawthorne": {
-      "status": false
-    },
     "broadway": {
       "status": false
     },
@@ -26,6 +20,12 @@
       "status": false
     },
     "morrison": {
+      "status": false
+    },
+    "hawthorne": {
+      "status": false
+    },
+    "cuevas crossing": {
       "status": false
     }
   }
