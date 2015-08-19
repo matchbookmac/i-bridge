@@ -3,7 +3,7 @@ module.exports = function (request, reply) {
     mySQLCred       = require('../config/config').mySQL,
     wlog            = require('winston'),
     mysql           = require('mysql'),
-    getEventsSQL    = 'SELECT bridge_name, CONVERT_TZ(up_time,"+00:00", "-07:00") as up_time, CONVERT_TZ(down_time, "+00:00", "-07:00") as down_time FROM bridge_events ORDER BY up_time;',
+    getEventsSQL    = 'SELECT bridge_name, up_time, down_time FROM bridge_events ORDER BY up_time;',
     connection      = mysql.createConnection({
       host     : mySQLCred.host,
       user     : mySQLCred.user,
