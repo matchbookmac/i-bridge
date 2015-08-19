@@ -7,7 +7,6 @@ var
 module .exports = function testPost(bridgeData, sendOptions, callback){
   bridgeData = JSON.stringify(bridgeData);
   if (!sendOptions) sendOptions = {};
-console.log(bridgeData);
   var
     options = {
       hostname: sendOptions.hostname || ip.address(),
@@ -22,7 +21,6 @@ console.log(bridgeData);
     },
     response = ''
   ;
-console.log(options.hostname);
   var req = http.request(options, function (res) {
     res.setEncoding('utf8');
     var status = res.statusCode;
