@@ -1,3 +1,4 @@
+require('./config/logging');
 var
   Hapi           = require('hapi'),
   Path           = require('path'),
@@ -14,19 +15,6 @@ var
   pre1           = require('./modules/get-bridge-events.js'),
   bridgeOpenings = []
 ;
-
-if (currentEnv !== 'test') {
-  wlog.add(wlog.transports.File, {
-    filename: 'logs/winstonlog.log',
-    timestamp: function () {
-      return (new Date()).toString();
-    }
-  });
-} else {
-  wlog.info = function silenceOnTest(args) {
-    return;
-  };
-}
 
 var server = new Hapi.Server();
 server.connection({ port: port });

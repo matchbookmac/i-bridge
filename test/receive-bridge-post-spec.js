@@ -1,3 +1,4 @@
+require('../config/logging');
 var
   expect      = require('chai').expect,
   nock        = require('nock'),
@@ -55,7 +56,7 @@ describe('receivePost', function () {
       expect(res.statusCode).to.equal(400);
     });
   });
-  
+
   it('returns a 404 error if the path is incorrect', function () {
     var testMessage = {
       bridge:    "bailey's bridge",
