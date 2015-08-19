@@ -129,7 +129,7 @@ function receivePost(request, reply) {
   });
   bridgeName = bridgeStatus.bridge;
   bridgeName = bridgeName.replace(/\'/g, "");
-  timeStamp  = strftime("%Y/%m/%d %I:%M:%S", bridgeStatus.timeStamp);
+  timeStamp  = strftime("%Y/%m/%d %H:%M:%S", bridgeStatus.timeStamp);
   if (bridgeStatus.status){
     wlog.info("(true) bridgeStatus.status = " + bridgeStatus.status);
 
