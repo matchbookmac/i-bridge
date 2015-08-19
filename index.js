@@ -42,7 +42,7 @@ server.views({
     html: require('handlebars')
   },
   path: Path.join(__dirname, 'public/templates'),
-  helpersPath: 'public/helpers'
+  helpersPath: './public/helpers'
 });
 
 server.route({
