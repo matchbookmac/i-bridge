@@ -1,10 +1,10 @@
 module.exports = function (request, reply) {
   var
-    mySQLCred    = require('../config/config').mySQL,
-    wlog         = require('winston'),
-    mysql        = require('mysql'),
-    getEventsSQL = 'SELECT * FROM bridge_events',
-    connection   = mysql.createConnection({
+    mySQLCred       = require('../config/config').mySQL,
+    wlog            = require('winston'),
+    mysql           = require('mysql'),
+    getEventsSQL    = 'SELECT bridge_name, up_time, down_time FROM bridge_events ORDER BY up_time;',
+    connection      = mysql.createConnection({
       host     : mySQLCred.host,
       user     : mySQLCred.user,
       password : mySQLCred.password,
