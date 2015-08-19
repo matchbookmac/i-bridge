@@ -21,19 +21,19 @@
     }
   },
   "bridges": {
-    "cuevas crossing": {
-      "status": false
-    },
     "hawthorne": {
       "status": false
     },
-    "broadway": {
+    "morrison": {
       "status": false
     },
     "burnside": {
       "status": false
     },
-    "morrison": {
+    "broadway": {
+      "status": false
+    },
+    "cuevas crossing": {
       "status": false
     }
   }
