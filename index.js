@@ -58,7 +58,7 @@ server.route({
   config: {
     pre:[{method: pre1, assign: 'data'}],
     handler: function(request, reply) {
-      reply.view('events', {bridgeEvents: request.pre.data})
+      reply.view('events', {bridgeEvents: request.pre.data});
     }
   }
 });
