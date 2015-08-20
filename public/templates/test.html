@@ -3,18 +3,52 @@
 <head>
   <title>Bridge Status</title>
   <meta charset="UTF-8" />
-  <!-- // <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
 
   <!-- Jquery -->
-  <link href="../styles/jquery.mobile-1.0.min.css" rel="stylesheet" type="text/css"/>
-  <script src="../js/jquery-1.6.4.min.js" type="text/javascript"></script>
-  <script src="../js/jquery.mobile-1.0.min.js" type="text/javascript"></script>
+  <link href="https://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.css" rel="stylesheet" type="text/css"/>
+  <script src="http://code.jquery.com/jquery-1.6.4.min.js" type="text/javascript"></script>
+  <!-- // <script src="https://code.jquery.com/jquery-1.11.3.min.js" type="text/javascript"></script> -->
+  <script src="https://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.js" type="text/javascript"></script>
 
-  <!-- LEDs -->
-  <link rel="stylesheet" href="../styles/led.css" media="screen" title="no title" charset="utf-8">
+  <style media="screen">
+    .bridge p {
+      text-align: center;
+    }
 
-  <!-- General Styling -->
-  <link rel="stylesheet" href="../styles/styles.css" media="screen" title="no title" charset="utf-8">
+    .led {
+        margin: 20px auto;
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.25);
+        box-shadow: #000 0 -1px 6px 1px;
+    }
+
+    .led-red {
+        background-color: #F00;
+        box-shadow: #000 0 -1px 6px 1px, inset #600 0 -1px 8px, #F00 0 3px 11px;
+    }
+
+    .led-orange {
+        background-color: #FF7000;
+        box-shadow: #000 0 -1px 6px 1px, inset #630 0 -1px 8px, #FF7000 0 3px 11px;
+    }
+
+    .led-yellow {
+        background-color: #FF0;
+        box-shadow: #000 0 -1px 6px 1px, inset #660 0 -1px 8px, #FF0 0 3px 11px;
+    }
+
+    .led-green {
+        background-color: #80FF00;
+        box-shadow: #000 0 -1px 6px 1px, inset #460 0 -1px 8px, #80FF00 0 3px 11px;
+    }
+
+    .led-blue {
+        background-color: #06F;
+        box-shadow: #000 0 -1px 6px 1px, inset #006 0 -1px 8px, #06F 0 3px 11px;
+    }
+  </style>
 
   <!-- Page behavior -->
   <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
