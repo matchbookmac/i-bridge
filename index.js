@@ -20,30 +20,30 @@ var options = {
   // }
 };
 
+var plugins = [
+  { register: inert },
+  { register: vision },
+  { register: lout,
+    options: {
+      filterRoutes: function (route) {
+        return !/^\/public\/.+/.test(route.path);
+      }
+    }
+  }
+];
+
 var server = new Hapi.Server();
 server.connection(options);
 var io = require('socket.io')(server.listener);
 
 var bridgeEventSocket = io.on('connection', function (socket) {
   socket.emit('bridge data', bridgeStatuses);
+  console.log("hi!");
 });
 
-server.register(
-  [
-    { register: inert,
-      options: {
-        filterRoutes: function (route) {
-          return !/^\/public\/.+/.test(route.path);
-        }
-      }
-    },
-    { register: vision },
-    { register: lout }
-  ], function (err) {
-    if (err) wlog.error(err);
+server.register(plugins, function (err) {
+  if (err) wlog.error(err);
 });
-
-server.route(require('./routes'));
 
 server.views({
   engines: {
@@ -52,11 +52,11 @@ server.views({
   path: Path.join(__dirname, 'public/templates')
 });
 
+server.route(require('./routes')(bridgeEventSocket));
 
 module .exports = (function () {
   server.start(function(){
     wlog.info('Server running at:', server.info.uri);
   });
-
   return server;
 })();

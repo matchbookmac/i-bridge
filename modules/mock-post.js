@@ -1,6 +1,7 @@
 var
   http     = require('http'),
   wlog     = require('winston'),
+  port     = require('../config/config').port,
   ip       = require('ip')
 ;
 
@@ -11,7 +12,7 @@ module .exports = function testPost(bridgeData, sendOptions, callback){
     options = {
       hostname: sendOptions.hostname || ip.address(),
       // "52.26.186.75" for a-bridge
-      port:     sendOptions.port     || 80,
+      port:     sendOptions.port     || port,
       path:     sendOptions.path     || "/incoming-snmp",
       method:   sendOptions.method   || "POST",
       headers:  sendOptions.headers  || {
