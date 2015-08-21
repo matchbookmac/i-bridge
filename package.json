@@ -23,6 +23,7 @@
   "dependencies": {
     "handlebars": "^3.0.3",
     "hapi": ">= 9.x.x",
+    "hapi-auth-bearer-token": "^3.1.1",
     "inert": "^3.0.1",
     "ip": "^0.3.3",
     "joi": "^6.6.1",

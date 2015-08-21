@@ -1,15 +1,16 @@
 require('./config/logging');
 var
-  Hapi           = require('hapi'),
-  Path           = require('path'),
-  fs             = require('fs'),
-  inert          = require('inert'),
-  vision         = require('vision'),
-  util           = require('util'),
-  lout           = require('lout'),
-  wlog           = require('winston'),
-  port           = require('./config/config').port,
-  bridgeStatuses = require('./config/config').bridges
+  Hapi            = require('hapi'),
+  Path            = require('path'),
+  fs              = require('fs'),
+  inert           = require('inert'),
+  vision          = require('vision'),
+  lout            = require('lout'),
+  hapiBearerToken = require('hapi-auth-bearer-token'),
+  util            = require('util'),
+  wlog            = require('winston'),
+  port            = require('./config/config').port,
+  bridgeStatuses  = require('./config/config').bridges
 ;
 var options = {
   port: port
@@ -23,6 +24,7 @@ var options = {
 var plugins = [
   { register: inert },
   { register: vision },
+  { register: hapiBearerToken },
   { register: lout,
     options: {
       filterRoutes: function (route) {
@@ -31,6 +33,7 @@ var plugins = [
     }
   }
 ];
+
 
 var server = new Hapi.Server();
 server.connection(options);
@@ -43,6 +46,23 @@ var bridgeEventSocket = io.on('connection', function (socket) {
 
 server.register(plugins, function (err) {
   if (err) wlog.error(err);
+});
+
+server.auth.strategy('simple', 'bearer-access-token', {
+  validateFunc: function (token, callback) {
+    var request = this;
+    // User.findWithToken(token);
+    // if (user) {
+    //   callback(null, true, { user: user.email, token: token });
+    // } else {
+    //   callback(null, false, { user: null, token: token });
+    // }
+    if (token === '1234') {
+      callback(null, true, { token: token });
+    } else {
+      callback(null, false, { token: token });
+    }
+  }
 });
 
 server.views({

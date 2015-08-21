@@ -16,8 +16,10 @@ module.exports = function (bridgeEventSocket) {
     {
       method: 'GET',
       path: '/',
-      handler: {
-        view: "index"
+      config: {
+        handler: {
+          view: "index"
+        }
       }
     },
 
@@ -35,7 +37,7 @@ module.exports = function (bridgeEventSocket) {
 
     {
       method: 'GET',
-      path: '/events',
+      path: '/bridges/events/actual',
       config: {
         pre:[{method: pre1, assign: 'data'}],
         handler: function(request, reply) {
@@ -46,21 +48,51 @@ module.exports = function (bridgeEventSocket) {
 
     {
       method: 'POST',
-      path: '/incoming-snmp',
+      path: '/bridges/events/actual',
       config: {
-        handler: receivePost,
+        handler: receiveActualPost,
         validate: {
           payload: joi.object().keys({
             "bridge": joi.string().required(),
             "status": joi.boolean().required(),
             "timeStamp": joi.date().required()
           }),
-        }
+        },
+        auth: 'simple'
+      }
+    },
+
+    {
+      method: 'GET',
+      path: '/bridges/events/scheduled',
+      config: {
+        handler: function(request, reply) {
+          reply('scheduled events coming soon!');
+        },
+        auth: 'simple'
+      }
+    },
+
+    {
+      method: 'POST',
+      path: '/bridges/events/scheduled',
+      config: {
+        handler: function (request, reply) {
+          reply('thanks! but we aren\'t accepting scheduled events yet');
+        },
+        validate: {
+          payload: joi.object().keys({
+            "bridge": joi.string().required(),
+            "status": joi.boolean().required(),
+            "timeStamp": joi.date().required()
+          }),
+        },
+        auth: 'simple'
       }
     }
   ];
 
-  function receivePost(request, reply) {
+  function receiveActualPost(request, reply) {
     bridgeStatus = request.payload;
     var bridge = bridgeStatus.bridge;
     wlog.info("bridge: " + bridge);
