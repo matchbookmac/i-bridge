@@ -28,9 +28,22 @@ var bridgeEventSocket = io.on('connection', function (socket) {
   socket.emit('bridge data', bridgeStatuses);
 });
 
-server.register([inert, vision, lout], function (err) {
-  if (err) wlog.error(err);
+server.register(
+  [
+    { register: inert,
+      options: {
+        filterRoutes: function (route) {
+          return !/^\/public\/.+/.test(route.path);
+        }
+      }
+    },
+    { register: vision },
+    { register: lout }
+  ], function (err) {
+    if (err) wlog.error(err);
 });
+
+server.route(require('./routes'));
 
 server.views({
   engines: {
@@ -39,7 +52,6 @@ server.views({
   path: Path.join(__dirname, 'public/templates')
 });
 
-server.route(require('./routes'));
 
 module .exports = (function () {
   server.start(function(){
