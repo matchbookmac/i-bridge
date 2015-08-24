@@ -38,7 +38,10 @@
   },
   "devDependencies": {
     "chai": "^3.2.0",
+    "gulp": "^3.9.0",
+    "gulp-shell": "^0.4.2",
     "jshint": "^2.8.0",
+    "manage-database": "^0.1.3",
     "minimist": "^1.1.3",
     "mocha": "^2.2.5",
     "nock": "^2.10.0",

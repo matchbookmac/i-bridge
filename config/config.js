@@ -31,14 +31,14 @@ function envVars() {
   }
 }
 
-function mySQL() {
-  if (environment() === 'production') {
-    return env.production.mySQL;
-  } else {
-    return env.development.mySQL;
-  }
-}
-
+// function mySQL() {
+//   if (environment() === 'production') {
+//     return env.production.mySQL;
+//   } else {
+//     return env.development.mySQL;
+//   }
+// }
+//
 function bridges() {
   return env.bridges;
 }
@@ -47,6 +47,6 @@ module .exports = {
   port: port(),
   env: environment(),
   envVars: envVars(),
-  mySQL: mySQL(),
+  // mySQL: mySQL(),
   bridges: bridges()
 };

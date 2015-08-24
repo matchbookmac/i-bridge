@@ -16,6 +16,8 @@ git clone https://multco.git.beanstalkapp.com/a-bridgeapp.git
 cd a-bridgeapp
 npm install
 npm install -g forever nodemon jshint sequelize-cli
+gulp db:create
+gulp db:migrate
 ```
 
 ### Start server:
@@ -33,6 +35,14 @@ npm start
 ### Testing:
 
 #### Run test suite:
+
+If running for the first time, or on a new instance of the server:
+```console
+gulp db:test:prepare
+```
+
+Then
+
 ```console
 npm test
 ```
