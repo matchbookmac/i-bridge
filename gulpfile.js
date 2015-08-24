@@ -47,3 +47,7 @@ gulp.task('db:drop', function () {
 
 gulp.task('db:migrate', shell.task('sequelize db:migrate --config db/database.json --env development'));
 gulp.task('db:test:prepare', shell.task('sequelize db:migrate --config db/database.json --env test'));
+
+gulp.task('db:seed', function () {
+  require('./db/seeds');
+});

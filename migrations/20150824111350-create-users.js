@@ -12,11 +12,19 @@ module.exports = {
         },
         email: {
           type: Sequelize.STRING,
-          allowNull: false
+          allowNull: false,
+          unique: true
         },
         token: {
           type: Sequelize.STRING,
-          allowNull: false
+          allowNull: false,
+          unique: true
+        },
+        createdAt: {
+          type: Sequelize.DATE
+        },
+        updatedAt: {
+          type: Sequelize.DATE
         }
       }
     );

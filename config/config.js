@@ -14,10 +14,10 @@ function environment() {
   ;
   if (argvEnv === 'production' || argvEnv === 'prod') {
     node_env = process.env.NODE_ENV = 'production';
-  } else if (argvEnv === 'dev' || argvEnv === 'development') {
-    node_env = process.env.NODE_ENV = 'development';
-  } else {
+  } else if (argvEnv === 'test') {
     node_env = process.env.NODE_ENV = 'test';
+  } else {
+    node_env = process.env.NODE_ENV = 'development';
   }
   return node_env;
 }
