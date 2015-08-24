@@ -14,7 +14,7 @@ var
   sslConfig      = require('ssl-config')('intermediate')
 ;
 var options = {
-  port: 3000
+  port: port
   // tls: {
   //   key: fs.readFileSync(Path.join(__dirname + '/keys/server.key')),
   //   cert: fs.readFileSync(Path.join(__dirname + '/keys/server.crt')),
