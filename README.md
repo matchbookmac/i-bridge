@@ -1,16 +1,24 @@
+## Requirements
+
+- Node.js >= 0.10.x
+  - `sudo apt-get nodejs` on ubuntu
+- npm >= 1.4.28
+- mySQL 5.6
+
+## Deployment
+
 For "deploying" on a-bridge (a-bridge.internal.mcix.us)
 
 if starting from scratch:
 
 ```console
-sudo apt-get nodejs
 git clone https://multco.git.beanstalkapp.com/a-bridgeapp.git
 cd a-bridgeapp
 npm install
-npm install -g forever nodemon jshint
+npm install -g forever nodemon jshint sequelize-cli
 ```
 
-###Start server:
+### Start server:
 
 *Production (no jshint):*
 ```console
@@ -22,14 +30,14 @@ npm run-script prod-start
 npm start
 ```
 
-###Testing:
+### Testing:
 
-####Run test suite:
+#### Run test suite:
 ```console
 npm test
 ```
 
-####To send a test post to a-bridge:
+#### To send a test post to a-bridge:
 
 *Bridge Up*
 ```console
