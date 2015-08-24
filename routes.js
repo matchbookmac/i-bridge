@@ -44,6 +44,17 @@ module.exports = [
   },
 
   {
+    method: 'GET',
+    path: '/events2',
+    config: {
+      pre:[{method: pre1, assign: 'data'}],
+      handler: function(request, reply) {
+        reply.view('events2', {bridgeEvents: request.pre.data});
+      }
+    }
+  },
+
+  {
     method: 'POST',
     path: '/incoming-snmp',
     config: {
