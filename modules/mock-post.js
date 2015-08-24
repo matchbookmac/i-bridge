@@ -13,7 +13,7 @@ module .exports = function testPost(bridgeData, sendOptions, callback){
       hostname: sendOptions.hostname || ip.address(),
       // "52.26.186.75" for a-bridge
       port:     sendOptions.port     || port,
-      path:     sendOptions.path     || "/incoming-snmp",
+      path:     sendOptions.path     || "/bridges/events/actual",
       method:   sendOptions.method   || "POST",
       headers:  sendOptions.headers  || {
         "Content-Type":   "application/json",

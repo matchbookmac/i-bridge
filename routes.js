@@ -1,15 +1,12 @@
-var
-  Path           = require('path'),
-  util           = require('util'),
-  wlog           = require('winston'),
-  mysql          = require('mysql'),
-  strftime       = require('strftime'),
-  joi            = require('joi'),
-  bridgeStatuses = require('./config/config').bridges,
-  mySQLCred      = require('./config/config').mySQL,
-  pre1           = require('./modules/get-bridge-events.js'),
-  bridgeOpenings = []
-;
+var Path           = require('path');
+var wlog           = require('winston');
+var strftime       = require('strftime');
+var joi            = require('joi');
+var notifyUsers    = require('./modules/notify-users');
+var bridgeStatuses = require('./config/config').bridges;
+var mySQLCred      = require('./config/config').mySQL;
+var pre1           = require('./modules/get-bridge-events.js');
+var bridgeOpenings = [];
 
 module.exports = function (bridgeEventSocket) {
   var routes = [
@@ -50,15 +47,19 @@ module.exports = function (bridgeEventSocket) {
       method: 'POST',
       path: '/bridges/events/actual',
       config: {
-        handler: receiveActualPost,
+        handler: function (request, reply) {
+          notifyUsers(request, bridgeStatuses, bridgeEventSocket);
+          receiveActualPost(request, reply, bridgeOpenings);
+        },
         validate: {
           payload: joi.object().keys({
             "bridge": joi.string().required(),
             "status": joi.boolean().required(),
             "timeStamp": joi.date().required()
           }),
-        },
-        auth: 'simple'
+        }
+        // ,
+        // auth: 'simple'
       }
     },
 
@@ -93,38 +94,11 @@ module.exports = function (bridgeEventSocket) {
     }
   ];
 
-  function receiveActualPost(request, reply) {
-    bridgeStatus = request.payload;
-    var bridge = bridgeStatus.bridge;
-    wlog.info("bridge: " + bridge);
-    wlog.info("timestamp: " + new Date(bridgeStatus.timeStamp).toString());
-    wlog.info("status: " + bridgeStatus.status);
-    bridgeStatuses[bridge] = {
-      status: bridgeStatus.status
-    };
-    wlog.info(util.inspect(bridgeStatuses));
-    bridgeEventSocket.emit('bridge data', bridgeStatuses);
 
-  //write data to AWS
-    connection = mysql.createConnection({
-      host     : mySQLCred.host,
-      user     : mySQLCred.user,
-      password : mySQLCred.password,
-      port     : mySQLCred.port,
-      database : mySQLCred.database
-    });
-    connection.connect(function(err){
-      if (err) {
-        wlog.info("MYSQL connection error: " + err.code);
-        wlog.info("MYSQL connection error fatal?: " + err.fatal);
-      }
-      else{
-        wlog.info("MYSQL connection: successful. ");
-      }
-    });
-    bridgeName = bridgeStatus.bridge;
-    bridgeName = bridgeName.replace(/\'/g, "");
-    timeStamp  = strftime("%Y/%m/%d %H:%M:%S", bridgeStatus.timeStamp);
+  function receiveActualPost(request, reply, bridgeOpenings) {
+    var bridgeStatus = request.payload;
+    var bridgeName = bridgeStatus.bridge.replace(/\'/g, "");
+    var timeStamp  = strftime("%Y/%m/%d %H:%M:%S", bridgeStatus.timeStamp);
     if (bridgeStatus.status){
       wlog.info("(true) bridgeStatus.status = " + bridgeStatus.status);
 
@@ -144,11 +118,14 @@ module.exports = function (bridgeEventSocket) {
       for (i = 0; i < bridgeOpenings.length; i++){
         //check to see if there are any open bridge events that correspond with this close event
         if (bridgeOpenings[i].name === bridgeName){
-          upTime = bridgeOpenings[i].uptime;
-          downTime = timeStamp;
-          //build sql string
-          var sql = 'INSERT INTO bridge_events (bridge_name, up_time, down_time) VALUES (' + "'" + bridgeName + "'" + ', ' + "'" + upTime + "'" + ', ' + "'" + downTime + "'" + ');';
-          connection.query(sql, logConnectionErr);
+console.log('boop');
+          // TODO use sequelize to make new event
+          // TODO These are global????
+          // upTime = bridgeOpenings[i].uptime;
+          // downTime = timeStamp;
+          // //build sql string
+          // var sql = 'INSERT INTO bridge_events (bridge_name, up_time, down_time) VALUES (' + "'" + bridgeName + "'" + ', ' + "'" + upTime + "'" + ', ' + "'" + downTime + "'" + ');';
+          // connection.query(sql, logConnectionErr);
           bridgeOpenings.splice(i, 1);
         }
       }
