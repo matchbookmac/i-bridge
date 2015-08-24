@@ -83,8 +83,9 @@ module.exports = function (bridgeEventSocket) {
         validate: {
           payload: joi.object().keys({
             "bridge": joi.string().required(),
-            "status": joi.boolean().required(),
-            "timeStamp": joi.date().required()
+            "type": joi.string().required(),
+            "requestTime": joi.date().required(),
+            "estimatedLiftTime": joi.date().required()
           }),
         },
         auth: 'simple'
