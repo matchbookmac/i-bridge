@@ -1,10 +1,14 @@
-var
-  env  = require('./config.json'),
-  argv = require('minimist')(process.argv.slice(2))
-;
+var env     = require('./config.json');
+var argv    = require('minimist')(process.argv.slice(2));
 
 function port() {
-  return argv.p || argv.port || 80;
+  return argv.p || argv.port || env.aBridge.port || 80;
+}
+
+function aBridge() {
+  var tmpABridge = env.aBridge;
+  if (environment() === 'test') tmpABridge.hostname = ip.address();
+  return tmpABridge;
 }
 
 function environment() {
@@ -47,6 +51,7 @@ module .exports = {
   port: port(),
   env: environment(),
   envVars: envVars(),
+  aBridge: aBridge(),
   // mySQL: mySQL(),
   bridges: bridges()
 };

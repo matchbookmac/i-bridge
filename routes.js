@@ -2,10 +2,10 @@ var Path           = require('path');
 var wlog           = require('winston');
 var joi            = require('joi');
 var notifyUsers    = require('./modules/notify-users');
-var receiveActualPost    = require('./modules/receive-actual-post');
 var bridgeStatuses = require('./config/config').bridges;
 var pre1           = require('./modules/get-bridge-events.js');
 var bridgeOpenings = [];
+var receiveActualBridgeEvent = require('./modules/receive-actual-bridge-event');
 
 module.exports = function (bridgeEventSocket) {
   var routes = [
@@ -47,8 +47,9 @@ module.exports = function (bridgeEventSocket) {
       path: '/bridges/events/actual',
       config: {
         handler: function (request, reply) {
+          console.log("asdf");
           notifyUsers(request, bridgeStatuses, bridgeEventSocket);
-          receiveActualPost(request, reply, bridgeOpenings);
+          receiveActualBridgeEvent(request, reply, bridgeOpenings);
         },
         validate: {
           payload: joi.object().keys({
@@ -56,9 +57,8 @@ module.exports = function (bridgeEventSocket) {
             "status": joi.boolean().required(),
             "timeStamp": joi.date().required()
           }),
-        }
-        // ,
-        // auth: 'simple'
+        },
+        auth: 'simple'
       }
     },
 
