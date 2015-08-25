@@ -2,11 +2,6 @@ require('./config/logging');
 var Hapi            = require('hapi');
 var Path            = require('path');
 var fs              = require('fs');
-var inert           = require('inert');
-var vision          = require('vision');
-var lout            = require('lout');
-var hapiBearerToken = require('hapi-auth-bearer-token');
-var util            = require('util');
 var wlog            = require('winston');
 var User            = require('./models/index').User;
 var port            = require('./config/config').port;
@@ -24,10 +19,10 @@ var options         = {
   // }
 };
 var plugins = [
-  { register: inert },
-  { register: vision },
-  { register: hapiBearerToken },
-  { register: lout,
+  { register: require('inert') },
+  { register: require('vision') },
+  { register: require('hapi-auth-bearer-token') },
+  { register: require('lout'),
     options: {
       filterRoutes: function (route) {
         return !/^\/public\/.+/.test(route.path);
