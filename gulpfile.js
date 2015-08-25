@@ -65,3 +65,7 @@ gulp.task('db:test:prepare', shell.task('sequelize db:migrate --config db/databa
 gulp.task('db:seed', function () {
   require('./db/seeds');
 });
+gulp.task('db:seed:production', function () {
+  process.env.NODE_ENV = 'production';
+  require('./db/seeds');
+});
