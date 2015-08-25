@@ -18,6 +18,7 @@
   "production": {
     "username": "uatbridgeapp",
     "password": "2HY4hykACYHmQK8g",
+    "port": 3306,
     "database": "uatbridgeapp",
     "host": "uatgenrds.clvekbxagtjv.us-west-2.rds.amazonaws.com",
     "dialect": "mysql"
