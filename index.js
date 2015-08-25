@@ -1,21 +1,19 @@
 require('./config/logging');
-var
-
-  Hapi            = require('hapi'),
-  Path            = require('path'),
-  fs              = require('fs'),
-  inert           = require('inert'),
-  vision          = require('vision'),
-  lout            = require('lout'),
-  hapiBearerToken = require('hapi-auth-bearer-token'),
-  util            = require('util'),
-  wlog            = require('winston'),
-  port            = require('./config/config').port,
-  bridgeStatuses  = require('./config/config').bridges,
-  https          = require('https'),
-  sslConfig      = require('ssl-config')('intermediate')
-;
-var options = {
+var Hapi            = require('hapi');
+var Path            = require('path');
+var fs              = require('fs');
+var inert           = require('inert');
+var vision          = require('vision');
+var lout            = require('lout');
+var hapiBearerToken = require('hapi-auth-bearer-token');
+var util            = require('util');
+var wlog            = require('winston');
+var port            = require('./config/config').port;
+var bridgeStatuses  = require('./config/config').bridges;
+var User            = require('./models/index').User;
+var https           = require('https');
+var sslConfig       = require('ssl-config')('intermediate');
+var options         = {
   port: port
   // tls: {
   //   key: fs.readFileSync(Path.join(__dirname + '/keys/server.key')),
@@ -25,7 +23,6 @@ var options = {
   //   rejectUnauthorized: false
   // }
 };
-
 var plugins = [
   { register: inert },
   { register: vision },
@@ -38,7 +35,6 @@ var plugins = [
     }
   }
 ];
-
 
 var server = new Hapi.Server();
 server.connection(options);
@@ -56,17 +52,13 @@ server.register(plugins, function (err) {
 server.auth.strategy('simple', 'bearer-access-token', {
   validateFunc: function (token, callback) {
     var request = this;
-    // User.findWithToken(token);
-    // if (user) {
-    //   callback(null, true, { user: user.email, token: token });
-    // } else {
-    //   callback(null, false, { user: null, token: token });
-    // }
-    if (token === '1234') {
-      callback(null, true, { token: token });
-    } else {
-      callback(null, false, { token: token });
-    }
+    var user    = User.findWithToken(token, function (user) {
+      if (user) {
+        callback(null, true, { user: user.email, token: token });
+      } else {
+        callback(null, false, { user: null, token: token });
+      }
+    });
   }
 });
 

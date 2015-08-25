@@ -2,6 +2,7 @@ var
   http     = require('http'),
   wlog     = require('winston'),
   port     = require('../config/config').port,
+  aBridge  = require('../config/config').aBridge,
   ip       = require('ip')
 ;
 
@@ -10,18 +11,16 @@ module .exports = function testPost(bridgeData, sendOptions, callback){
   if (!sendOptions) sendOptions = {};
   var
     options = {
-      hostname: sendOptions.hostname || ip.address(),
+      hostname: sendOptions.hostname || aBridge.hostname || ip.address(),
       // "52.26.186.75" for a-bridge
       port:     sendOptions.port     || port,
-      path:     sendOptions.path     || "/incoming-snmp",
-      method:   sendOptions.method   || "POST",
-      headers:  sendOptions.headers  || {
-        "Content-Type":   "application/json",
-        "Content-Length": bridgeData.length
-      }
+      path:     sendOptions.path     || aBridge.path,
+      method:   sendOptions.method   || aBridge.method,
+      headers:  sendOptions.headers  || aBridge.headers
     },
     response = ''
   ;
+  options.headers["Content-Length"] = bridgeData.length;
   var req = http.request(options, function (res) {
     res.setEncoding('utf8');
     var status = res.statusCode;

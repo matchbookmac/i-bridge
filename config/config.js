@@ -1,10 +1,14 @@
-var
-  env  = require('./config.json'),
-  argv = require('minimist')(process.argv.slice(2))
-;
+var env     = require('./config.json');
+var argv    = require('minimist')(process.argv.slice(2));
 
 function port() {
-  return argv.p || argv.port || 80;
+  return argv.p || argv.port || env.aBridge.port || 80;
+}
+
+function aBridge() {
+  var tmpABridge = env.aBridge;
+  if (environment() === 'test') tmpABridge.hostname = ip.address();
+  return tmpABridge;
 }
 
 function environment() {
@@ -14,10 +18,10 @@ function environment() {
   ;
   if (argvEnv === 'production' || argvEnv === 'prod') {
     node_env = process.env.NODE_ENV = 'production';
-  } else if (argvEnv === 'dev' || argvEnv === 'development') {
-    node_env = process.env.NODE_ENV = 'development';
-  } else {
+  } else if (argvEnv === 'test') {
     node_env = process.env.NODE_ENV = 'test';
+  } else {
+    node_env = process.env.NODE_ENV = 'development';
   }
   return node_env;
 }
@@ -31,14 +35,14 @@ function envVars() {
   }
 }
 
-function mySQL() {
-  if (environment() === 'production') {
-    return env.production.mySQL;
-  } else {
-    return env.development.mySQL;
-  }
-}
-
+// function mySQL() {
+//   if (environment() === 'production') {
+//     return env.production.mySQL;
+//   } else {
+//     return env.development.mySQL;
+//   }
+// }
+//
 function bridges() {
   return env.bridges;
 }
@@ -47,6 +51,7 @@ module .exports = {
   port: port(),
   env: environment(),
   envVars: envVars(),
-  mySQL: mySQL(),
+  aBridge: aBridge(),
+  // mySQL: mySQL(),
   bridges: bridges()
 };

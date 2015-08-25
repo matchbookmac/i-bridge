@@ -1,16 +1,37 @@
+## Requirements
+
+- Node.js >= 0.10.x
+  - `sudo apt-get nodejs` on ubuntu
+- npm >= 1.4.28
+- mySQL 5.6
+
+## Deployment
+
 For "deploying" on a-bridge (a-bridge.internal.mcix.us)
 
 if starting from scratch:
 
 ```console
-sudo apt-get nodejs
 git clone https://multco.git.beanstalkapp.com/a-bridgeapp.git
 cd a-bridgeapp
 npm install
-npm install -g forever nodemon jshint
+npm install -g forever nodemon jshint sequelize-cli
 ```
 
-###Start server:
+### Setup Database
+*development*
+```console
+gulp db:create
+gulp db:migrate
+```
+
+*production*
+```console
+gulp db:create -E production
+gulp db:migrate -E production
+```
+
+### Start server:
 
 *Production (no jshint):*
 ```console
@@ -22,14 +43,22 @@ npm run-script prod-start
 npm start
 ```
 
-###Testing:
+### Testing:
 
-####Run test suite:
+#### Run test suite:
+
+If running for the first time, or on a new instance of the server:
+```console
+gulp db:test:prepare
+```
+
+Then
+
 ```console
 npm test
 ```
 
-####To send a test post to a-bridge:
+#### To send a test post to a-bridge:
 
 *Bridge Up*
 ```console
@@ -76,3 +105,8 @@ Any other arguments without `-` or `--` will be sent as an array of values assig
 
 Extraneous options with `-` or `--` that are not listed above will be ignored.
 ```
+
+
+Testing auth strategy
+
+curl -H "Content-Type: application/json" -H "Authorization: Bearer 1234" -X POST -d '{"bridge":"ian","status":true,"timeStamp":"Tue Aug 25 2015 09:18:38 GMT-0700 (PDT)"}' http://localhost:80/bridges/events/actual

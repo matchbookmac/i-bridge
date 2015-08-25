@@ -1,34 +1,15 @@
+var db             = require('../models/index');
+var BridgeEvent    = db.BridgeEvent;
+var wlog           = require('winston');
+
 module.exports = function (request, reply) {
-  var
-    mySQLCred       = require('../config/config').mySQL,
-    wlog            = require('winston'),
-    mysql           = require('mysql'),
-    getEventsSQL    = 'SELECT bridge_name, up_time, down_time FROM bridge_events ORDER BY up_time;',
-    connection      = mysql.createConnection({
-      host     : mySQLCred.host,
-      user     : mySQLCred.user,
-      password : mySQLCred.password,
-      port     : mySQLCred.port,
-      database : mySQLCred.database
-    })
-  ;
-  connection.connect(function(err) {
-    if (err) {
-      wlog.error('error connecting: ' + err.stack);
-      return;
-    } else{
-      wlog.info('connected as id ' + connection.threadId);
-      var results = connection.query(
-        getEventsSQL,
-        function(err, rows) {
-          if(err){
-            wlog.info("error: " + err );
-          } else {
-            console.log('foo');
-            reply(rows);
-          }
-        }
-      );
-    }
-  });
+  var getEventsSQL    = 'SELECT bridge_name, up_time, down_time FROM bridge_events ORDER BY up_time;';
+  BridgeEvent.findAll({ order: 'up_time DESC'})
+              .then(function (rows) {
+                reply(rows);
+              })
+              .catch(function (err) {
+                reply(err);
+                wlog.error('There was an error finding bridge events: ' + err);
+              });
 };

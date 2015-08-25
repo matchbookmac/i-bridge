@@ -1,23 +1,18 @@
 {
   "development": {
-    "foo": "bar",
-    "mySQL": {
-      "host"     : "localhost",
-      "user"     : "root",
-      "password" : "",
-      "port"     : 3307,
-      "database" : "uatbridgeapp"
-    }
-
+    "foo": "bar"
   },
   "production": {
-    "foo": "bar",
-    "mySQL": {
-      "host"     : "uatgenrds.clvekbxagtjv.us-west-2.rds.amazonaws.com",
-      "user"     : "uatbridgeapp",
-      "password" : "2HY4hykACYHmQK8g",
-      "port"     : 3306,
-      "database" : "uatbridgeapp"
+    "foo": "bar"
+  },
+  "aBridge": {
+    "port": 80,
+    "path": "/bridges/events/actual",
+    "method": "POST",
+    "headers": {
+      "Content-Type": "application/json",
+      "Content-Length": 1,
+      "Authorization": "Bearer 1234"
     }
   },
   "bridges": {
