@@ -3,22 +3,26 @@
 module.exports = {
   up: function (queryInterface, Sequelize) {
     return queryInterface.createTable(
-      'bridgeEvents',
+      'scheduledEvents',
       {
         id: {
           type: Sequelize.INTEGER,
           primaryKey: true,
           autoIncrement: true
         },
-        name: {
+        bridge: {
           type: Sequelize.STRING,
           allowNull: false
         },
-        up_time: {
+        type: {
+          type: Sequelize.STRING,
+          allowNull: false
+        },
+        requestTime: {
           type: Sequelize.DATE,
           allowNull: false
         },
-        down_time: {
+        estimatedLiftTime: {
           type: Sequelize.DATE,
           allowNull: false
         },
@@ -33,6 +37,6 @@ module.exports = {
   },
 
   down: function (queryInterface, Sequelize) {
-    return queryInterface.dropTable('bridgeEvents');
+    return queryInterface.dropTable('scheduledEvents');
   }
 };
