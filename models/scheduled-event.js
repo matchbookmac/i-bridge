@@ -1,6 +1,6 @@
 module.exports = function (sequelize, DataTypes) {
-  var BridgeEvent = sequelize.define(
-    'BridgeEvent',
+  var ScheduledEvent = sequelize.define(
+    'ScheduledEvent',
     {
       id: {
         type: DataTypes.INTEGER,
@@ -11,11 +11,15 @@ module.exports = function (sequelize, DataTypes) {
         type: DataTypes.STRING,
         allowNull: false
       },
-      up_time: {
+      type: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      requestTime: {
         type: DataTypes.DATE,
         allowNull: false
       },
-      down_time: {
+      estimatedLiftTime: {
         type: DataTypes.DATE,
         allowNull: false
       },
@@ -27,5 +31,5 @@ module.exports = function (sequelize, DataTypes) {
       }
     }
   );
-  return BridgeEvent;
+  return ScheduledEvent;
 };
