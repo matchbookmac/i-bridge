@@ -27,6 +27,19 @@ gulp.task('default', function() {
   console.log(env);
 });
 
+gulp.task('test', function () {
+  process.env.NODE_ENV = 'test';
+});
+
+// gulp.task('test', shell.task(
+//   'mocha --reporter nyan',
+//   {
+//     env: {
+//       NODE_ENV: 'test'
+//     }
+//   }
+// ));
+
 gulp.task('db:create', function () {
   dbManager.create(testDbName, function (err) {
     if (err) console.error("There was a problem creating " + testDbName + ": " + err);

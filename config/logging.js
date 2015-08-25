@@ -2,7 +2,7 @@ var
   wlog       = require('winston'),
   fs         = require('fs'),
   path       = require('path'),
-  currentEnv = require('./config').env
+  currentEnv = process.env.NODE_ENV
 ;
 
 wlog.remove(wlog.transports.Console);

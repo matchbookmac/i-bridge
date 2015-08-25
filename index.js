@@ -8,9 +8,9 @@ var lout            = require('lout');
 var hapiBearerToken = require('hapi-auth-bearer-token');
 var util            = require('util');
 var wlog            = require('winston');
+var User            = require('./models/index').User;
 var port            = require('./config/config').port;
 var bridgeStatuses  = require('./config/config').bridges;
-var User            = require('./models/index').User;
 var https           = require('https');
 var sslConfig       = require('ssl-config')('intermediate');
 var options         = {
@@ -35,7 +35,6 @@ var plugins = [
     }
   }
 ];
-
 var server = new Hapi.Server();
 server.connection(options);
 var io = require('socket.io')(server.listener);
