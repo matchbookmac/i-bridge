@@ -3,7 +3,7 @@
 module.exports = {
   up: function (queryInterface, Sequelize) {
     return queryInterface.createTable(
-      'bridge_events',
+      'bridgeEvents',
       {
         id: {
           type: Sequelize.INTEGER,
