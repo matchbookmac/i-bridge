@@ -47,7 +47,6 @@ module.exports = function (bridgeEventSocket) {
       path: '/bridges/events/actual',
       config: {
         handler: function (request, reply) {
-          console.log("asdf");
           notifyUsers(request, bridgeStatuses, bridgeEventSocket);
           receiveActualBridgeEvent(request, reply, bridgeOpenings);
         },
@@ -92,10 +91,6 @@ module.exports = function (bridgeEventSocket) {
       }
     }
   ];
-
-  function logConnectionErr(err){
-    wlog.info("SQL Error when inserting new event:  " + err);
-  }
 
   return routes;
 };
