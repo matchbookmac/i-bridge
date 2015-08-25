@@ -1,5 +1,6 @@
 require('./config/logging');
 var
+
   Hapi            = require('hapi'),
   Path            = require('path'),
   fs              = require('fs'),
@@ -10,14 +11,18 @@ var
   util            = require('util'),
   wlog            = require('winston'),
   port            = require('./config/config').port,
-  bridgeStatuses  = require('./config/config').bridges
+  bridgeStatuses  = require('./config/config').bridges,
+  https          = require('https'),
+  sslConfig      = require('ssl-config')('intermediate')
 ;
 var options = {
   port: port
   // tls: {
   //   key: fs.readFileSync(Path.join(__dirname + '/keys/server.key')),
-  //   cert: fs.readFileSync(Path.join(__dirname + '/keys/server.crt'))
-  //   // ca: fs.readFileSync(Path.join(__dirname + '/keys/server.csr'))
+  //   cert: fs.readFileSync(Path.join(__dirname + '/keys/server.crt')),
+  //   ca: fs.readFileSync(Path.join(__dirname + '/keys/cs.crt'), 'utf8'),
+  //   requestCert: true,
+  //   rejectUnauthorized: false
   // }
 };
 

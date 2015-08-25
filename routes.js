@@ -46,6 +46,7 @@ module.exports = function (bridgeEventSocket) {
       }
     },
 
+
     {
       method: 'POST',
       path: '/bridges/events/actual',
@@ -61,6 +62,17 @@ module.exports = function (bridgeEventSocket) {
         auth: 'simple'
       }
     },
+
+  {
+    method: 'GET',
+    path: '/events2',
+    config: {
+      pre:[{method: pre1, assign: 'data'}],
+      handler: function(request, reply) {
+        reply.view('events2', {bridgeEvents: request.pre.data});
+      }
+    }
+  },
 
     {
       method: 'GET',
