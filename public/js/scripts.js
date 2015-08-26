@@ -3,8 +3,10 @@ var socket = io();
 socket.on('bridge data', function (data) {
   $("#bridges").text("");
   $.each(data, function (bridge) {
+    var name = bridge.split(" ");
+    name = name[0];
     $("#bridges").append(
-      "<div class='bridge' data-role='content'><p>" +
+      "<div class='bridge' id='" + name + "' data-role='content'><p>" +
         bridge +
         "</p><div class='led " +
           (
@@ -15,6 +17,18 @@ socket.on('bridge data', function (data) {
       "</div><br>"
     );
   });
+});
+
+socket.on('scheduled event', function (data) {
+  var name = data.bridge.split(" ");
+  name = name[0];
+  var date = new Date(data.estimatedLiftTime);
+  $("#" + name + " p").append(
+    "<div>potential lift at: "+
+      date.getHours() + ":" +
+      date.getMinutes() +
+    "</div>"
+  );
 });
 
 var DateFormats = {

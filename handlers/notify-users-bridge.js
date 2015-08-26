@@ -1,9 +1,9 @@
 var wlog = require('winston');
 var util = require('util');
 
-module .exports = function notifyUsers(request, bridgeStatuses, bridgeEventSocket) {
+module .exports = function notifyUsersBridge(request, bridgeStatuses, bridgeEventSocket) {
   var bridgeStatus = request.payload;
-  var bridge = bridgeStatus.bridge;
+  var bridge = bridgeStatus.bridge.replace(/\'/g, "");
   bridgeStatuses[bridge] = {
     status: bridgeStatus.status
   };

@@ -1,11 +1,12 @@
 var Path           = require('path');
 var wlog           = require('winston');
 var joi            = require('joi');
-var notifyUsers    = require('./handlers/notify-users');
 var bridgeStatuses = require('./config/config').bridges;
 var pre1           = require('./handlers/get-bridge-events');
 var bridgeOpenings = [];
+var notifyUsersBridge  = require('./handlers/notify-users-bridge');
 var receiveBridgeEvent = require('./handlers/receive-bridge-event');
+var notifyUsersScheduled  = require('./handlers/notify-users-scheduled');
 var receiveScheduledEvent = require('./handlers/receive-scheduled-event');
 
 module.exports = function (bridgeEventSocket) {
@@ -49,7 +50,7 @@ module.exports = function (bridgeEventSocket) {
       path: '/bridges/events/actual',
       config: {
         handler: function (request, reply) {
-          notifyUsers(request, bridgeStatuses, bridgeEventSocket);
+          notifyUsersBridge(request, bridgeStatuses, bridgeEventSocket);
           receiveBridgeEvent(request, reply, bridgeOpenings);
         },
         validate: {
@@ -89,7 +90,10 @@ module.exports = function (bridgeEventSocket) {
       method: 'POST',
       path: '/bridges/events/scheduled',
       config: {
-        handler: receiveScheduledEvent,
+        handler: function (request, reply) {
+          notifyUsersScheduled(request, bridgeEventSocket);
+          receiveScheduledEvent(request, reply);
+        },
         validate: {
           payload: joi.object().keys({
             "bridge": joi.string().required(),

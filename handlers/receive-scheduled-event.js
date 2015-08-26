@@ -1,4 +1,3 @@
-var strftime       = require('strftime');
 var boom           = require('boom');
 var ScheduledEvent = require('../models/index').ScheduledEvent;
 var db = require('../models/index');
