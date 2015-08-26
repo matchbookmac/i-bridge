@@ -28,7 +28,7 @@ gulp db:migrate
 *production*
 ```console
 gulp db:create -E production
-gulp db:migrate -E production
+gulp db:migrate:production
 ```
 
 ### Start server:

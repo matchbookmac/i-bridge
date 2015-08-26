@@ -1,6 +1,6 @@
 module.exports = function (sequelize, DataTypes) {
   var ScheduledEvent = sequelize.define(
-    'ScheduledEvent',
+    'scheduledEvents',
     {
       id: {
         type: DataTypes.INTEGER,
