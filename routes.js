@@ -28,6 +28,18 @@ module.exports = function (bridgeEventSocket) {
 
     {
       method: 'GET',
+      path: '/mobile',
+      config: {
+        handler: {
+          view: "mobile-index"
+        },
+        description: 'Renders page for the user to watch real-time bridge lifts.',
+        tags: ['notification']
+      }
+    },
+
+    {
+      method: 'GET',
       path: '/public/{path*}',
       handler: {
         directory: {
