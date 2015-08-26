@@ -36,14 +36,6 @@ function envVars() {
   }
 }
 
-// function mySQL() {
-//   if (environment() === 'production') {
-//     return env.production.mySQL;
-//   } else {
-//     return env.development.mySQL;
-//   }
-// }
-//
 function bridges() {
   return env.bridges;
 }
@@ -53,6 +45,5 @@ module .exports = {
   env: environment(),
   envVars: envVars(),
   aBridge: aBridge(),
-  // mySQL: mySQL(),
   bridges: bridges()
 };

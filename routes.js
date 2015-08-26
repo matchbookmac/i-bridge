@@ -4,12 +4,11 @@ var joi            = require('joi');
 var bridgeStatuses = require('./config/config').bridges;
 var bridgeOpenings = [];
 var getBridges = require('./handlers/get-bridges');
+var notifyUsers = require('./handlers/notify-users');
 var getAllEvents = require('./handlers/get-all-events');
 var getBridgeEvents = require('./handlers/get-bridge-events');
 var getScheduledEvents = require('./handlers/get-scheduled-events');
-var notifyUsersBridge  = require('./handlers/notify-users-bridge');
 var receiveBridgeEvent = require('./handlers/receive-bridge-event');
-var notifyUsersScheduled  = require('./handlers/notify-users-scheduled');
 var receiveScheduledEvent = require('./handlers/receive-scheduled-event');
 
 module.exports = function (bridgeEventSocket) {
@@ -92,13 +91,12 @@ module.exports = function (bridgeEventSocket) {
       }
     },
 
-
     {
       method: 'POST',
       path: '/bridges/events/actual',
       config: {
         handler: function (request, reply) {
-          notifyUsersBridge(request, bridgeStatuses, bridgeEventSocket);
+          notifyUsers(request, bridgeStatuses, bridgeEventSocket);
           receiveBridgeEvent(request, reply, bridgeOpenings);
         },
         validate: {
@@ -135,7 +133,7 @@ module.exports = function (bridgeEventSocket) {
       path: '/bridges/events/scheduled',
       config: {
         handler: function (request, reply) {
-          notifyUsersScheduled(request, bridgeEventSocket);
+          notifyUsers(request, bridgeStatuses, bridgeEventSocket);
           receiveScheduledEvent(request, reply);
         },
         validate: {

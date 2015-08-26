@@ -17,19 +17,24 @@
   },
   "bridges": {
     "hawthorne": {
-      "status": false
+      "status": false,
+      "scheduledLift": null
     },
     "morrison": {
-      "status": false
+      "status": false,
+      "scheduledLift": null
     },
     "burnside": {
-      "status": false
+      "status": false,
+      "scheduledLift": null
     },
     "broadway": {
-      "status": false
+      "status": false,
+      "scheduledLift": null
     },
     "cuevas crossing": {
-      "status": false
+      "status": false,
+      "scheduledLift": null
     }
   }
 }
