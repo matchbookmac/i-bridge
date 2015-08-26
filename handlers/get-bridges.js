@@ -1,14 +1,14 @@
 var db             = require('../models/index');
-var BridgeEvent    = db.BridgeEvent;
+var sequelize      = db.sequelize;
 var wlog           = require('winston');
 
 module.exports = function (request, reply) {
-  BridgeEvent.findAll({ order: 'up_time DESC'})
+  sequelize.query('SELECT DISTINCT bridge FROM bridgeEvents', { type: sequelize.QueryTypes.SELECT })
               .then(function (rows) {
                 reply(rows);
               })
               .catch(function (err) {
                 reply(err);
-                wlog.error('There was an error finding bridge events: ' + err);
+                wlog.error('There was an error finding bridges: ' + err);
               });
 };

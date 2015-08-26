@@ -15,19 +15,15 @@
     <title></title>
   </head>
   <body>
-    <h1>Events</h1>
+    <h1>Bridges</h1>
     <div class="container-fluid" style="border: solid 1px black">
       <div class="row-fluid">
-        <div class="strong col-xs-4 col-sm-4 col-md-4 col-lg-4">Bridge name</div>
-        <div class="strong col-xs-4 col-sm-4 col-md-4 col-lg-4">Up Time</div>
-        <div class="strong col-xs-4 col-sm-4 col-md-4 col-lg-4">Down Time</div>
+        <div class="strong col-xs-12 col-sm-12 col-md-12 col-lg-12">Bridge name</div>
       </div>
       <div class="row-fluid">
-        {{#each bridgeEvents}}
+        {{#each bridges}}
           <div class="row-fluid">
-            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">{{this.bridge}}</div>
-            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">{{this.up_time}}</div>
-            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">{{this.down_time}}</div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">{{this.bridge}}</div>
           </div>
         {{/each}}
       </div>
