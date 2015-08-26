@@ -3,7 +3,7 @@
 module.exports = {
   up: function (queryInterface, Sequelize) {
     return queryInterface.createTable(
-      'scheduledEvents',
+      'ScheduledEvents',
       {
         id: {
           type: Sequelize.INTEGER,
@@ -37,6 +37,6 @@ module.exports = {
   },
 
   down: function (queryInterface, Sequelize) {
-    return queryInterface.dropTable('scheduledEvents');
+    return queryInterface.dropTable('ScheduledEvents');
   }
 };
