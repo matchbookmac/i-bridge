@@ -3,7 +3,7 @@ var sequelize      = db.sequelize;
 var wlog           = require('winston');
 
 module.exports = function (request, reply) {
-  sequelize.query('SELECT DISTINCT bridge FROM bridgeEvents', { type: sequelize.QueryTypes.SELECT })
+  sequelize.query('SELECT DISTINCT bridge FROM BridgeEvents', { type: sequelize.QueryTypes.SELECT })
               .then(function (rows) {
                 reply(rows);
               })
