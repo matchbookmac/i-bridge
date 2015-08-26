@@ -166,3 +166,5 @@ Extraneous options with `-` or `--` that are not listed above will be ignored.
 Testing auth strategy
 
 curl -H "Content-Type: application/json" -H "Authorization: Bearer 1234" -X POST -d '{"bridge":"ian","status":true,"timeStamp":"Tue Aug 25 2015 09:18:38 GMT-0700 (PDT)"}' http://localhost:80/bridges/events/actual
+
+curl -H "Content-Type: application/json" -H "Authorization: Bearer 1234" -X POST -d '{"bridge":"cuevas crossing","type":"testing","requestTime":"Tue Aug 25 2015 13:52:38 GMT-0700 (PDT)","estimatedLiftTime":"Tue Aug 25 2015 15:52:38 GMT-0700 (PDT)"}' http://52.26.186.75:80/bridges/events/scheduled
