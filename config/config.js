@@ -3,13 +3,7 @@ var ip      = require('ip');
 var argv    = require('minimist')(process.argv.slice(2));
 
 function port() {
-  return argv.p || argv.port || env.aBridge.port || 80;
-}
-
-function aBridge() {
-  var tmpABridge = env.aBridge;
-  if (environment() === 'test') tmpABridge.hostname = ip.address();
-  return tmpABridge;
+  return argv.p || argv.port || 80;
 }
 
 function environment() {
@@ -36,14 +30,8 @@ function envVars() {
   }
 }
 
-function bridges() {
-  return env.bridges;
-}
-
 module .exports = {
   port: port(),
   env: environment(),
-  envVars: envVars(),
-  aBridge: aBridge(),
-  bridges: bridges()
+  envVars: envVars()
 };

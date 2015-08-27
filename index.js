@@ -1,19 +1,17 @@
 require('./config/logging');
 var Hapi            = require('hapi');
-var Path            = require('path');
+var path            = require('path');
 var fs              = require('fs');
 var wlog            = require('winston');
 var User            = require('./models/index').User;
 var port            = require('./config/config').port;
-var bridgeStatuses  = require('./config/config').bridges;
 var https           = require('https');
-var sslConfig       = require('ssl-config')('intermediate');
 var options         = {
   port: port
   // tls: {
-  //   key: fs.readFileSync(Path.join(__dirname + '/keys/server.key')),
-  //   cert: fs.readFileSync(Path.join(__dirname + '/keys/server.crt')),
-  //   ca: fs.readFileSync(Path.join(__dirname + '/keys/cs.crt'), 'utf8'),
+  //   key: fs.readFileSync(path.join(__dirname + '/keys/server.key')),
+  //   cert: fs.readFileSync(path.join(__dirname + '/keys/server.crt')),
+  //   ca: fs.readFileSync(path.join(__dirname + '/keys/cs.crt'), 'utf8'),
   //   requestCert: true,
   //   rejectUnauthorized: false
   // }
@@ -32,12 +30,6 @@ var plugins = [
 ];
 var server = new Hapi.Server();
 server.connection(options);
-var io = require('socket.io')(server.listener);
-
-var bridgeEventSocket = io.on('connection', function (socket) {
-  socket.emit('bridge data', bridgeStatuses);
-  console.log("hi!");
-});
 
 server.register(plugins, function (err) {
   if (err) wlog.error(err);
@@ -60,10 +52,10 @@ server.views({
   engines: {
     html: require('handlebars')
   },
-  path: Path.join(__dirname, 'public/templates')
+  path: path.join(__dirname, 'public/templates')
 });
 
-server.route(require('./routes')(bridgeEventSocket));
+server.route(require('./routes'));
 
 module .exports = (function () {
   server.start(function(){
