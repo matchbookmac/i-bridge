@@ -1,4 +1,4 @@
-var socket = io('http://172.20.150.140');
+var socket = io('http://52.26.186.75');
 
 socket.on('bridge data', function (data) {
   updateBridgeStatus(data, '#bridges-1');
@@ -45,7 +45,7 @@ function updateBridgeStatus(data, div) {
 //   );
 // });
 
-var evtSource = new EventSource("http://172.20.150.140/sse");
+var evtSource = new EventSource("http://52.26.186.75/sse");
 evtSource.addEventListener("bridge data", function(e) {
   var data = JSON.parse(e.data);
   updateBridgeStatus(data, '#bridges-2');
