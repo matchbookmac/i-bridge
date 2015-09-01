@@ -3,7 +3,12 @@ var BridgeEvent    = db.BridgeEvent;
 var wlog           = require('winston');
 
 module.exports = function (request, reply) {
-  BridgeEvent.findAll({ order: 'up_time DESC'})
+  var limit = parseInt(request.params.limit);
+  var params = {
+    order: 'up_time DESC'
+  };
+  if (limit) params.limit = limit;
+  BridgeEvent.findAll(params)
               .then(function (rows) {
                 reply(rows);
               })

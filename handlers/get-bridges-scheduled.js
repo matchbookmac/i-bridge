@@ -3,7 +3,12 @@ var ScheduledEvent = db.ScheduledEvent;
 var wlog           = require('winston');
 
 module.exports = function (request, reply) {
-  ScheduledEvent.findAll({ order: 'estimatedLiftTime DESC'})
+  var limit = parseInt(request.params.limit);
+  var params = {
+    order: 'estimatedLiftTime DESC'
+  };
+  if (limit) params.limit = limit;
+  ScheduledEvent.findAll(params)
               .then(function (rows) {
                 reply(rows);
               })
