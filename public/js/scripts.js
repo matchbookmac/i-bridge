@@ -1,11 +1,10 @@
-var socket = io();
+var socket = io('http://172.20.150.140');
 
 socket.on('bridge data', function (data) {
   $("#bridges").text("");
   $.each(data, function (bridge) {
     var name = bridge.split(" ");
     name = name[0];
-console.log(data[bridge].status);
     var scheduledLift = data[bridge].scheduledLift;
     var date = scheduledLift ? new Date(scheduledLift.estimatedLiftTime) : new Date();
     $("#bridges").append(
@@ -41,6 +40,17 @@ socket.on('scheduled event', function (data) {
     "</div>"
   );
 });
+
+var evtSource = new EventSource("http://172.20.150.140/sse");
+evtSource.addEventListener("bridge data", function(e) {
+  var message = JSON.parse(e.data);
+  $("body").append("<li>"+ message +"</li>");
+}, false);
+evtSource.onmessage = function(e) {
+  var message = JSON.parse(e.data);
+  $("body").append("<li>"+ message +"</li>");
+};
+
 
 var DateFormats = {
   short: "DD MMMM - YYYY",

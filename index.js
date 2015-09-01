@@ -33,6 +33,14 @@ server.connection(options);
 
 server.register(plugins, function (err) {
   if (err) wlog.error(err);
+  server.on('response', function (request) {
+    wlog.info("[%s] %s %s - %s",
+                  request.info.remoteAddress,
+                  request.method,
+                  request.url.path,
+                  request.response.statusCode
+    );
+  });
 });
 
 server.auth.strategy('simple', 'bearer-access-token', {

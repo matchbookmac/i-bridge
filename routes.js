@@ -1,6 +1,7 @@
 var path               = require('path');
 var wlog               = require('winston');
 var getBridges         = require('./handlers/get-bridges');
+var getBridgeLatest    = require('./handlers/get-bridge-latest');
 var getAllEvents       = require('./handlers/get-all-events');
 var getBridgeEvents    = require('./handlers/get-bridge-events');
 var getScheduledEvents = require('./handlers/get-scheduled-events');
@@ -70,6 +71,18 @@ module.exports = (function () {
         description: 'Lists actual bridge lift events',
         notes: 'Array of objects with the keys `bridge`, `upTime`, and `downTime`',
         tags: ['api']
+      }
+    },
+
+    {
+      method: 'GET',
+      path: '/bridges/{bridge}/events/actual/latest',
+      config: {
+        handler: getBridgeLatest,
+        // auth: 'simple',
+        description: 'Returns last 5 events for given bridge',
+        notes: 'Authentication is specified by an access token as a query parameter, i.e. `/bridges/events/actual?access_token=1234`.',
+        tags: ['api', 'secure', 'notification']
       }
     },
 
