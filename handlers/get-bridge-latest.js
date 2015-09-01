@@ -1,19 +1,20 @@
+var              _ = require('lodash');
 var db             = require('../models/index');
 var BridgeEvent    = db.BridgeEvent;
 var wlog           = require('winston');
 
 module.exports = function (request, reply) {
-  var bridge = request.params.bridge;
+  var bridge = '%';
+  _.forIn(request.params.bridge.split(/[\W\d]+/), function (bridgeName) {
+    bridge += (bridgeName+'%');
+  });
   BridgeEvent.findAll({ limit: 5,
                         order: 'up_time DESC',
                         where: {
-                          bridge: bridge
-                          // {
-                          //   $iLike: '%'+bridge+'%'
-                          // }
+                          bridge: {
+                            $like: bridge
+                          }
                         }
-                        // ,
-                        // order: 'up_time DESC'
                       })
               .then(function (rows) {
                 reply(rows);
@@ -22,4 +23,5 @@ module.exports = function (request, reply) {
                 reply(err);
                 wlog.error('There was an error finding bridge events for '+ bridge +': '+ err);
               });
+
 };
