@@ -12,38 +12,74 @@
   </head>
   <body>
 
-    <div class="container">
-      <div class="row">
-        <div class="col s4 offset-s4">
-          <img src="/public/img/logo.png" alt="Multnomah County Logo" class="brand-logo center"/>
+      <div class="row valign-wrapper">
+        <div class="col s3">
+
+          <img src="/public/img/logo.png" alt="Multnomah County Logo" class="brand-logo center valign"/>
+        </div>
+        <div class="col s6">
+          <h3 style="text-align:center">Bridge Data API</h3>
+          <h4 style="text-align:center">User Registration</h4>
         </div>
       </div>
-      <div class="row">
-        <h3 style="text-align:center">Bridge Data API</h3>
-        <h4 style="text-align:center">User Registration</h4>
-      </div>
-      <div class="row">
-        {{#if message}}
+    <div class="container">
+      {{#if message}}
+        <div class="row">
           <div class="col s6 offset-s3 ">
             <div class="card-panel red darken-1 center-align">{{message}}</div>
           </div>
-        {{/if}}
-      </div>
-      <form name="user-registration" action="/users/create" method="post">
-        <div class="row">
-          <div class="col s12">
-            <div class="row">
-              <div class="input-field col s6 offset-s3">
-                <i class="material-icons prefix">email</i>
-                <input id="email" type="email" name="email" class="validate">
-                <label for="email">Email</label>
+        </div>
+      {{else}}
+        {{#if user}}
+          <div class="row">
+            <div class="col s10 offset-s1">
+              <div class="card">
+                <div class="card-content">
+                  <span class="card-title black-text">Directions</span>
+                  <p>
+                    Save the token below and include it in every API request in either a header: <br><br>
+                    "Authorization": "Bearer &lt;your token&gt;" <br><br>
+                    Or as a parameter in the path: <br><br>
+                    "/bridges/events?access_token=&lt;your token&gt;"
+                  </p>
+                </div>
               </div>
             </div>
-            <button class="btn btn-large waves-effect waves-light col s6 offset-s3" type="submit">Submit<i class="material-icons right">send</i>
-            </button>
           </div>
-        </div>
-      </form>
+          <div class="row">
+            <div class="col s10 offset-s1">
+              <ul class="collection">
+                <li class="collection-item avatar hoverable">
+                  <i class="material-icons circle">perm_identity</i>
+                  <span class="title">Email: </span>
+                  <p>{{user.email}}</p>
+                </li>
+                <li class="collection-item avatar hoverable">
+                  <i class="material-icons circle">lock_outline</i>
+                  <span class="title">Token: </span>
+                  <p>{{user.token}}</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        {{else}}
+          <form name="user-registration" action="/users/create" method="post">
+            <div class="row">
+              <div class="col s12">
+                <div class="row">
+                  <div class="input-field col s6 offset-s3">
+                    <i class="material-icons prefix">email</i>
+                    <input id="email" type="email" name="email" class="validate">
+                    <label for="email">Email</label>
+                  </div>
+                </div>
+                <button class="btn btn-large waves-effect waves-light col s6 offset-s3" type="submit">Submit<i class="material-icons right">send</i>
+                </button>
+              </div>
+            </div>
+          </form>
+        {{/if}}
+      {{/if}}
     </div>
   </body>
 </html>
