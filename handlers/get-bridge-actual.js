@@ -20,7 +20,8 @@ module.exports = function (request, reply) {
   if (limit) params.limit = limit;
   BridgeEvent.findAll(params)
               .then(function (rows) {
-                reply(rows);
+                var response = reply(rows);
+                response.header('Access-Control-Allow-Origin', '*');
               })
               .catch(function (err) {
                 reply(err);

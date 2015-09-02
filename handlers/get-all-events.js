@@ -8,10 +8,11 @@ module.exports = function (request, reply) {
               .then(function (events) {
                 ScheduledEvent.findAll({ order: 'estimatedLiftTime DESC'})
                             .then(function (scheduled) {
-                              reply({
+                              var response = reply({
                                 bridgeEvents: events,
                                 scheduledEvents: scheduled
                               });
+                              response.header('Access-Control-Allow-Origin', '*');
                             })
                             .catch(function (err) {
                               reply(err);
