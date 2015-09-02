@@ -12,16 +12,21 @@
   </head>
   <body>
 
-      <div class="row valign-wrapper">
-        <div class="col s3">
-
-          <img src="/public/img/logo.png" alt="Multnomah County Logo" class="brand-logo center valign"/>
-        </div>
-        <div class="col s6">
-          <h3 style="text-align:center">Bridge Data API</h3>
-          <h4 style="text-align:center">User Registration</h4>
+    <div class="row">
+      <div class="col hide-on-small-only m3 l3">
+        <div class="card hoverable">
+          <div class="card-image">
+            <a href="https://multco.us/"><img src="/public/img/logo.png" alt="Multnomah County Logo" class=""/></a>
+          </div>
         </div>
       </div>
+      <div class="col s12 m6 l6 card-panel hoverable">
+        <a href="/docs">
+          <h3 class="center-align">Bridge Data API</h3>
+          <h4 class="center-align">User Registration</h4>
+        </a>
+      </div>
+    </div>
     <div class="container">
       {{#if message}}
         <div class="row">
@@ -48,13 +53,13 @@
           </div>
           <div class="row">
             <div class="col s10 offset-s1">
-              <ul class="collection">
-                <li class="collection-item avatar hoverable">
+              <ul class="collection hoverable">
+                <li class="collection-item avatar">
                   <i class="material-icons circle">perm_identity</i>
                   <span class="title">Email: </span>
                   <p>{{user.email}}</p>
                 </li>
-                <li class="collection-item avatar hoverable">
+                <li class="collection-item avatar">
                   <i class="material-icons circle">lock_outline</i>
                   <span class="title">Token: </span>
                   <p>{{user.token}}</p>
@@ -80,6 +85,15 @@
           </form>
         {{/if}}
       {{/if}}
+      <div class="row">
+        <div class="col hide-on-med-and-up s6 offset-s3">
+          <div class="card hoverable">
+            <div class="card-image">
+              <a href="https://multco.us/"><img src="/public/img/logo.png" alt="Multnomah County Logo" class=""/></a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </body>
 </html>
