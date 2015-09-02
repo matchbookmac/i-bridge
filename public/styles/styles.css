@@ -5,3 +5,51 @@
 .strong {
   font-weight: bold;
 }
+
+.header {
+  background-color: #5E8DC4;
+}
+
+.nav-wrapper {
+  height: 130px;
+}
+
+.btn {
+  background-color: #2C4A6F;
+}
+
+.btn:hover {
+  background-color: #5E8DC4;
+}
+
+/* label color */
+.input-field label {
+  color: #49773B;
+}
+/* label focus color */
+.input-field input[type=email]:focus + label {
+  color: #49773B;
+}
+/* label underline focus color */
+.input-field input[type=email]:focus {
+  border-bottom: 1px solid #49773B;
+  box-shadow: 0 1px 0 0 #49773B;
+}
+/* valid color */
+.input-field input[type=email].valid {
+  border-bottom: 1px solid #49773B;
+  box-shadow: 0 1px 0 0 #49773B;
+}
+/* invalid color */
+.input-field input[type=email].invalid {
+  border-bottom: 1px solid #F00;
+  box-shadow: 0 1px 0 0 #F00;
+}
+/* icon prefix focus color */
+.input-field .prefix.active {
+  color: #49773B;
+}
+/* icon prefix focus color */
+.input-field .prefix {
+  color: #49773B;
+}
