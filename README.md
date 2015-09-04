@@ -162,6 +162,13 @@ Any other arguments without `-` or `--` will be sent as an array of values assig
 Extraneous options with `-` or `--` that are not listed above will be ignored.
 ```
 
+<!-- TODO
+push notifications for cordova
+move sockets to i-bridge
+lock up i and a bridge
+async functions for l-bridge and others
+rip out mobile, users, and index routes
+create splash or re-route index page -->
 
 Testing auth strategy
 
