@@ -1,10 +1,11 @@
-var
-  wlog       = require('winston'),
-  fs         = require('fs'),
-  path       = require('path'),
-  currentEnv = process.env.NODE_ENV
-;
+var wlog       = require('winston');
+var fs         = require('fs');
+var path       = require('path');
+var currentEnv = process.env.NODE_ENV;
 
+fs.mkdir(path.resolve(__dirname, '../logs'), function (err) {
+  return;
+});
 wlog.remove(wlog.transports.Console);
 if (currentEnv !== 'test') {
   wlog.add(wlog.transports.Console, {

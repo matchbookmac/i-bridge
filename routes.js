@@ -2,7 +2,6 @@ var path                = require('path');
 var wlog                = require('winston');
 var joi                 = require('joi');
 var notifyUsers         = require('./handlers/notify-users');
-var createUser          = require('./handlers/create-user');
 var getBridges          = require('./handlers/get-bridges');
 var getBridgeActual     = require('./handlers/get-bridge-actual');
 var getBridgesActual    = require('./handlers/get-bridges-actual');
@@ -10,61 +9,53 @@ var getAllEvents        = require('./handlers/get-all-events');
 var getBridgeScheduled  = require('./handlers/get-bridge-scheduled');
 var getBridgesScheduled = require('./handlers/get-bridges-scheduled');
 
-module.exports = (function () {
+module.exports = (function (eventEmitters) {
   var routes = [
     {
       method: 'GET',
-      path: '/',
-      handler: {
-        view: "index"
-      },
+      path: '/sse',
       config: {
-        description: 'Renders page for the user to watch real-time bridge lifts.',
-        tags: ['notification']
-      }
-    },
+        handler: function (request, reply) {
+          var response = reply(eventEmitters.bridgeSSE);
+          response.code(200)
+                  .type('text/event-stream')
+                  .header('Connection', 'keep-alive')
+                  .header('Cache-Control', 'no-cache')
+                  .header('Content-Encoding', 'identity')
+                  .header('Access-Control-Allow-Origin', '*');
 
-    {
-      method: 'GET',
-      path: '/public/{path*}',
-      handler: {
-        directory: {
-          path: path.join(__dirname, '/public'),
-          listing: false,
-          index: false
+          setTimeout(function () {
+            eventEmitters.bridgeSSE.write('event: bridge data\ndata: ' + JSON.stringify(bridgeStatuses) + '\n\nretry: 1000\n');
+          }, 1000);
+
+          var interval = setInterval(function () {
+            eventEmitters.bridgeSSE.write(': stay-alive\n\n');
+          }, 20000);
+          request.once('disconnect', function () {
+            clearInterval(interval);
+          });
         }
       }
     },
 
     {
-      method: 'GET',
-      path: '/users/new',
-      handler: {
-        view: "new-user"
+      method: 'POST',
+      path: '/bridges/statuses',
+      handler: function (request, reply) {
+        notifyUsers(request, eventEmitters);
       },
       config: {
-        description: 'Renders form for a user to register',
-        tags: ['registration', 'users']
-      }
-    },
-
-    {
-      method: 'POST',
-      path: '/users/create',
-      handler: createUser,
-      config: {
-        payload: {
-          output: 'data',
-          parse: true,
-          allow: 'application/x-www-form-urlencoded'
-        },
         validate: {
           payload: joi.object().keys({
-            email: joi.string().email().required()
-          })
+            "bridge": joi.string().required(),
+            "status": joi.boolean().required(),
+            "timeStamp": joi.date().required()
+          }),
         },
-        description: 'Creates a user with an email and token',
-        tags: ['registration', 'users']
+        auth: 'simple',
+        description: 'Endpoint to receive status updates from a-bridge',
+        notes: 'Requires an object with the keys `bridge`, `status`, and `timeStamp` that are a string, boolean, and date respectively Authentication is specified by an access token as a query parameter, i.e. `/bridges/events/actual?access_token=1234`.',
+        tags: ['auth', 'notification']
       }
     },
 
