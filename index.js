@@ -30,6 +30,29 @@ var plugins = [
 ];
 var server = new Hapi.Server();
 server.connection(options);
+var io = require('socket.io')(server.listener);
+var bridgeEventSocket = io.on('connection', function (socket) {
+  // disconnect users who try to send us data
+  socket.conn.on('data', function (chunk) {
+    socket.disconnect();
+    wlog.warn("[%s] tried to send data and was disconnected",
+                this.remoteAddress
+    );
+  });
+
+  socket.emit('bridge data', serverConfig.bridgeStatuses);
+  wlog.info("[%s] %s sent from %s",
+                socket.handshake.address,
+                "socket",
+                socket.handshake.headers.referer
+  );
+});
+
+var eventEmitters = {
+  bridgeEventSocket:  bridgeEventSocket,
+  bridgeSSE:          new stream.PassThrough()
+};
+eventEmitters.bridgeSSE.setMaxListeners(0);
 
 server.register(plugins, function (err) {
   if (err) wlog.error(err);
@@ -63,7 +86,7 @@ server.views({
   path: path.join(__dirname, 'public/templates')
 });
 
-server.route(require('./routes'));
+server.route(require('./routes')(eventEmitters));
 
 module .exports = (function () {
   server.start(function(){

@@ -1,6 +1,7 @@
 var path                = require('path');
 var wlog                = require('winston');
 var joi                 = require('joi');
+var notifyUsers         = require('./handlers/notify-users');
 var createUser          = require('./handlers/create-user');
 var getBridges          = require('./handlers/get-bridges');
 var getBridgeActual     = require('./handlers/get-bridge-actual');
