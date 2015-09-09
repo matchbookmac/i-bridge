@@ -9,7 +9,7 @@ var getAllEvents        = require('./handlers/get-all-events');
 var getBridgeScheduled  = require('./handlers/get-bridge-scheduled');
 var getBridgesScheduled = require('./handlers/get-bridges-scheduled');
 
-module.exports = (function (eventEmitters) {
+module.exports = function (eventEmitters) {
   var routes = [
     {
       method: 'GET',
@@ -43,18 +43,28 @@ module.exports = (function (eventEmitters) {
       path: '/bridges/statuses',
       handler: function (request, reply) {
         notifyUsers(request, eventEmitters);
+        wlog.info(require('util').inspect(request.payload));
+        reply('statuses received');
       },
       config: {
         validate: {
-          payload: joi.object().keys({
-            "bridge": joi.string().required(),
-            "status": joi.boolean().required(),
-            "timeStamp": joi.date().required()
-          }),
+          payload: joi.object()
+                      // .min(1)
+                      // .pattern(/\w+/, joi.object({
+                      //   "status": joi.boolean.required(),
+                      //   "scheduledLift": joi.any().valid(
+                      //     null,
+                      //     joi.object({
+                      //       "type": joi.string(),
+                      //       "estimatedLiftTime": joi.date(),
+                      //       "requestTime": joi.date()
+                      //     }).and('type', 'estimatedLiftTime', 'requestTime')
+                      //   )
+                      // }))
         },
         auth: 'simple',
         description: 'Endpoint to receive status updates from a-bridge',
-        notes: 'Requires an object with the keys `bridge`, `status`, and `timeStamp` that are a string, boolean, and date respectively Authentication is specified by an access token as a query parameter, i.e. `/bridges/events/actual?access_token=1234`.',
+        notes: 'Requires an object with one or more keys, where each key is an object with the keys `status` and `scheduledLift`. `status` is a boolean, and `scheduledLift` is an object with the keys `type`, `estimatedLiftTime`, and `requestTime` Authentication is specified by an access token as a query parameter, i.e. `/bridges/events/actual?access_token=1234`.',
         tags: ['auth', 'notification']
       }
     },
@@ -180,4 +190,4 @@ module.exports = (function (eventEmitters) {
   ];
 
   return routes;
-})();
+};

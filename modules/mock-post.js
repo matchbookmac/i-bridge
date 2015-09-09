@@ -1,22 +1,20 @@
-var
-  http     = require('http'),
-  wlog     = require('winston'),
-  port     = require('../config/config').port,
-  aBridge  = require('../config/config').aBridge,
-  ip       = require('ip')
-;
+var http     = require('http');
+var wlog     = require('winston');
+var port     = require('../config/config').port;
+var iBridge  = require('../config/config').iBridge;
+var ip       = require('ip');
 
 module .exports = function testPost(bridgeData, sendOptions, callback){
   bridgeData = JSON.stringify(bridgeData);
   if (!sendOptions) sendOptions = {};
   var
     options = {
-      hostname: sendOptions.hostname || aBridge.hostname || ip.address(),
-      // "52.26.186.75" for a-bridge
+      hostname: sendOptions.hostname || iBridge.hostname || ip.address(),
+      // "54.191.150.69" for i-bridge
       port:     sendOptions.port     || port,
-      path:     sendOptions.path     || aBridge.path,
-      method:   sendOptions.method   || aBridge.method,
-      headers:  sendOptions.headers  || aBridge.headers
+      path:     sendOptions.path     || iBridge.path,
+      method:   sendOptions.method   || iBridge.method,
+      headers:  sendOptions.headers  || iBridge.headers
     },
     response = ''
   ;

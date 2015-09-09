@@ -1,44 +1,49 @@
-var
-  argv     = require('minimist')(process.argv.slice(2)),
-  testPost = require('./mock-post'),
-  options  = {}
-;
-var
-  bridge      = argv.b || argv.bridge,
-  defaultPath = argv.d || argv.defaultPath,
-  hostname    = argv.h || argv.hostname,
-  headers     = argv.H || argv.headers,
-  liftTime    = argv.l || argv.liftTime,
-  method      = argv.m || argv.method,
-  port        = argv.p || argv.port,
-  path        = argv.P || argv.path,
-  timeStamp   = argv.t || argv.timestamp || new Date(),
-  status      = argv.s || argv.status,
-  scheduled   = argv.S || argv.scheduled,
-  type        = argv.T || argv.type,
-  othMsgVals  = argv._
-;
-var message;
+var argv     = require('minimist')(process.argv.slice(2));
+var testPost = require('./mock-post');
+var options  = {};
+var bridges  = require('../config/config').bridges;
+
+var bridge      = argv.b || argv.bridge;
+var hostname    = argv.h || argv.hostname;
+var headers     = argv.H || argv.headers;
+var liftTime    = argv.l || argv.liftTime;
+var method      = argv.m || argv.method;
+var port        = argv.p || argv.port;
+var path        = argv.P || argv.path;
+var timeStamp   = argv.t || argv.timestamp || new Date();
+var status      = argv.s || argv.status;
+var scheduled   = argv.S || argv.scheduled;
+var type        = argv.T || argv.type;
+var othMsgVals  = argv._;
+
+var message = bridges;
+
+if (status) {
+  if (bridge) {
+    message[bridge] = {
+      status: status,
+      scheduledLift: null
+    };
+  } else {
+    message['baileys bridge'] = {
+      status: status,
+      scheduledLift: null
+    };
+  }
+}
+
 if (scheduled) {
-  if (defaultPath) path = '/bridges/events/scheduled';
   var todayUTC = Date.now() + 1000 * 60 * 60 * 2;
   var defaultLiftTime = new Date(0);
   defaultLiftTime.setUTCMilliseconds(todayUTC);
-  message = {
-    bridge:            bridge   ? bridge   : "bailey's bridge",
-    type:              status   ? status   : "testing",
-    requestTime:       timeStamp.toString(),
-    estimatedLiftTime: liftTime ? liftTime : defaultLiftTime
-  };
-} else {
-  if (defaultPath) path = '/bridges/events/actual';
-  message = {
-    bridge:    bridge    ? bridge    : "bailey's bridge",
-    status:    status    ? status    : true,
-    timeStamp: timeStamp ? timeStamp : (new Date()).toString()
-  };
+  if (bridge) {
+    message[bridge].scheduledLift =   {
+      type:              status   ? status   : "testing",
+      requestTime:       timeStamp.toString(),
+      estimatedLiftTime: liftTime ? liftTime : defaultLiftTime
+    };
+  }
 }
-
 if (othMsgVals.length > 0) {
   message.othMsgVals = othMsgVals;
 }

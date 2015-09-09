@@ -2,12 +2,12 @@ require('./config/logging');
 var Hapi            = require('hapi');
 var path            = require('path');
 var fs              = require('fs');
+var stream          = require('stream');
 var wlog            = require('winston');
 var User            = require('./models/index').User;
-var port            = require('./config/config').port;
-var https           = require('https');
+var serverConfig    = require('./config/config');
 var options         = {
-  port: port
+  port: serverConfig.port
   // tls: {
   //   key: fs.readFileSync(path.join(__dirname + '/keys/server.key')),
   //   cert: fs.readFileSync(path.join(__dirname + '/keys/server.crt')),
@@ -20,13 +20,7 @@ var plugins = [
   { register: require('inert') },
   { register: require('vision') },
   { register: require('hapi-auth-bearer-token') },
-  { register: require('lout'),
-    options: {
-      filterRoutes: function (route) {
-        return !/^\/public\/.+/.test(route.path);
-      }
-    }
-  }
+  { register: require('lout') }
 ];
 var server = new Hapi.Server();
 server.connection(options);
@@ -40,7 +34,7 @@ var bridgeEventSocket = io.on('connection', function (socket) {
     );
   });
 
-  socket.emit('bridge data', serverConfig.bridgeStatuses);
+  socket.emit('bridge data', serverConfig.bridges);
   wlog.info("[%s] %s sent from %s",
                 socket.handshake.address,
                 "socket",

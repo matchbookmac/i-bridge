@@ -1,8 +1,9 @@
 var wlog = require('winston');
 var util = require('util');
+var bridgeStatuses = require('../config/config').bridges;
 
 module .exports = function notifyUsers(request, eventEmitters) {
-  var bridgeStatuses = request.payload;
+  bridgeStatuses = request.payload;
   // Websockets endpoint notification
   eventEmitters.bridgeEventSocket.emit('bridge data', bridgeStatuses);
   // server sent events endpoint notification

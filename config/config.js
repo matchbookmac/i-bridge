@@ -30,8 +30,18 @@ function envVars() {
   }
 }
 
+function iBridge() {
+  var tmpIBridge = env.iBridge;
+  if (environment() === 'test') tmpIBridge.hostname = ip.address();
+  return tmpIBridge;
+}
+
+var bridges = env.bridges;
+
 module .exports = {
   port: port(),
   env: environment(),
-  envVars: envVars()
+  envVars: envVars(),
+  iBridge: iBridge(),
+  bridges: bridges
 };

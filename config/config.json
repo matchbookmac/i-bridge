@@ -1,4 +1,36 @@
 {
+  "iBridge": {
+    "port": 80,
+    "path": "/bridges/statuses",
+    "method": "POST",
+    "headers": {
+      "Content-Type": "application/json",
+      "Content-Length": 1,
+      "Authorization": "Bearer 1234"
+    }
+  },
+  "bridges": {
+    "hawthorne": {
+      "status": false,
+      "scheduledLift": null
+    },
+    "morrison": {
+      "status": false,
+      "scheduledLift": null
+    },
+    "burnside": {
+      "status": false,
+      "scheduledLift": null
+    },
+    "broadway": {
+      "status": false,
+      "scheduledLift": null
+    },
+    "cuevas crossing": {
+      "status": false,
+      "scheduledLift": null
+    }
+  },
   "development": {
     "foo": "bar"
   },
