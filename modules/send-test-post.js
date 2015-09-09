@@ -16,6 +16,8 @@ var scheduled   = argv.S || argv.scheduled;
 var type        = argv.T || argv.type;
 var othMsgVals  = argv._;
 
+status = (status !== 'false') || false;
+
 var message = bridges;
 
 if (status) {
