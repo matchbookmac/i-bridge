@@ -2,3 +2,4 @@
 logs/*.log
 /keys
 .DS_Store
+/pid
