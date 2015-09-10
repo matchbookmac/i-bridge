@@ -36,7 +36,7 @@ var bridgeEventSocket = io.on('connection', function (socket) {
 
   socket.emit('bridge data', serverConfig.bridges);
   wlog.info("[%s] %s sent from %s",
-                socket.handshake.address,
+                socket.handshake.headers['x-forwarded-for'] || socket.handshake.address,
                 "socket",
                 socket.handshake.headers.referer
   );
