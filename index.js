@@ -30,7 +30,7 @@ var bridgeEventSocket = io.on('connection', function (socket) {
   socket.conn.on('data', function (chunk) {
     socket.disconnect();
     wlog.warn("[%s] tried to send data and was disconnected",
-                this.remoteAddress
+                socket.handshake.headers['x-forwarded-for'] || this.remoteAddress
     );
   });
 
@@ -52,7 +52,7 @@ server.register(plugins, function (err) {
   if (err) wlog.error(err);
   server.on('response', function (request) {
     wlog.info("[%s] %s %s - %s",
-                  request.info.remoteAddress,
+                  request.headers['x-forwarded-for'] || request.info.remoteAddress,
                   request.method,
                   request.url.path,
                   request.response.statusCode

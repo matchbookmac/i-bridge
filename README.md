@@ -18,28 +18,15 @@ npm install
 npm install -g forever nodemon jshint sequelize-cli gulp
 ```
 
-### Setup Database
-*development*
-```console
-gulp db:create
-gulp db:migrate
-gulp db:seed
-```
-
-*production*
-
-The database should be already setup in prod. If it isn't, you can make a gulp task similar to the deve db:migrate that will set it up for you.
-For changes to the db:
-```console
-gulp db:migrate:production
-gulp db:seed:production
-```
-
 ### Start server:
 
-*Production (no jshint):*
+*Production:*
 ```console
-npm run-script prod-start
+sudo service node-i-bridge start
+```
+or after making changes:
+```console
+sudo service node-i-bridge restart
 ```
 
 *Development (with jshint):*
