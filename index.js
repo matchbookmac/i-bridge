@@ -2,20 +2,14 @@ require('./config/logging');
 var Hapi            = require('hapi');
 var path            = require('path');
 var fs              = require('fs');
+var util            = require('util');
 var stream          = require('stream');
 var wlog            = require('winston');
 var User            = require('./models/index').User;
 var serverConfig    = require('./config/config');
-var options         = {
-  port: serverConfig.port
-  // tls: {
-  //   key: fs.readFileSync(path.join(__dirname + '/keys/server.key')),
-  //   cert: fs.readFileSync(path.join(__dirname + '/keys/server.crt')),
-  //   ca: fs.readFileSync(path.join(__dirname + '/keys/cs.crt'), 'utf8'),
-  //   requestCert: true,
-  //   rejectUnauthorized: false
-  // }
-};
+
+var options         = { port: serverConfig.port };
+
 var plugins = [
   { register: require('inert') },
   { register: require('vision') },
@@ -29,19 +23,23 @@ var bridgeEventSocket = io.on('connection', function (socket) {
   // disconnect users who try to send us data
   socket.conn.on('data', function (chunk) {
     socket.disconnect();
-    wlog.warn("[%s:%s] tried to send data and was disconnected",
-                (new Date()).getTime(),
-                socket.handshake.headers['x-forwarded-for'] || this.remoteAddress
+    var logString = util.format("%s [%s] tried to send data and was disconnected",
+      (new Date()).getTime(),
+      socket.handshake.headers['x-forwarded-for'] || this.remoteAddress
     );
+    // console.log is for fail2ban, leave both in
+    console.log(logString);
+    wlog.warn(logString);
   });
 
   socket.emit('bridge data', serverConfig.bridges);
-  wlog.info("[%s:%s] %s sent from %s",
-                (new Date()).getTime(),
-                socket.handshake.headers['x-forwarded-for'] || socket.handshake.address,
-                "socket",
-                socket.handshake.headers.referer
+  var logString = util.format("%s [%s] %s sent from %s",
+    (new Date()).getTime(),
+    socket.handshake.headers['x-forwarded-for'] || socket.handshake.address,
+    "socket",
+    socket.handshake.headers.referer
   );
+  wlog.info(logString);
 });
 
 var eventEmitters = {
@@ -53,13 +51,14 @@ eventEmitters.bridgeSSE.setMaxListeners(0);
 server.register(plugins, function (err) {
   if (err) wlog.error(err);
   server.on('response', function (request) {
-    wlog.info("[%s:%s] %s %s - %s",
-                  (new Date()).getTime(),
-                  request.headers['x-forwarded-for'] || request.info.remoteAddress,
-                  request.method,
-                  request.url.path,
-                  request.response.statusCode
+    var logString = util.format("%s [%s] %s %s - %s",
+      (new Date()).getTime(),
+      request.headers['x-forwarded-for'] || request.info.remoteAddress,
+      request.method,
+      request.url.path,
+      request.response.statusCode
     );
+    wlog.info(logString);
   });
 });
 
