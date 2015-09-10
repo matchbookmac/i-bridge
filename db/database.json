@@ -16,11 +16,11 @@
     "dialect": "mysql"
   },
   "production": {
-    "username": "uatbridgeapp",
+    "username": "bridgeapp",
     "password": "2HY4hykACYHmQK8g",
     "port": 3306,
-    "database": "uatbridgeapp",
-    "host": "uatgenrds.clvekbxagtjv.us-west-2.rds.amazonaws.com",
+    "database": "bridgeapp",
+    "host": "api-rds-bridges.clvekbxagtjv.us-west-2.rds.amazonaws.com",
     "dialect": "mysql"
   }
 }
