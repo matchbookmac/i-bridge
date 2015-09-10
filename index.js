@@ -29,13 +29,15 @@ var bridgeEventSocket = io.on('connection', function (socket) {
   // disconnect users who try to send us data
   socket.conn.on('data', function (chunk) {
     socket.disconnect();
-    wlog.warn("[%s] tried to send data and was disconnected",
+    wlog.warn("[%s:%s] tried to send data and was disconnected",
+                (new Date()).getTime(),
                 socket.handshake.headers['x-forwarded-for'] || this.remoteAddress
     );
   });
 
   socket.emit('bridge data', serverConfig.bridges);
-  wlog.info("[%s] %s sent from %s",
+  wlog.info("[%s:%s] %s sent from %s",
+                (new Date()).getTime(),
                 socket.handshake.headers['x-forwarded-for'] || socket.handshake.address,
                 "socket",
                 socket.handshake.headers.referer
@@ -51,7 +53,8 @@ eventEmitters.bridgeSSE.setMaxListeners(0);
 server.register(plugins, function (err) {
   if (err) wlog.error(err);
   server.on('response', function (request) {
-    wlog.info("[%s] %s %s - %s",
+    wlog.info("[%s:%s] %s %s - %s",
+                  (new Date()).getTime(),
                   request.headers['x-forwarded-for'] || request.info.remoteAddress,
                   request.method,
                   request.url.path,

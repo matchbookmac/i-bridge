@@ -1,4 +1,4 @@
-var socket = require('socket.io-client')('http://localhost:9000');
+var socket = require('socket.io-client')('http://54.191.150.69');
 socket.on('bridge data', function (data) {
   console.log(data);
 });
