@@ -4,7 +4,6 @@ var serverConfig = require('../config/config');
 
 module .exports = function notifyUsers(request, eventEmitters) {
   var bridgeStatuses = serverConfig.bridges = request.payload;
-console.log(bridgeStatuses);  
   // Websockets endpoint notification
   eventEmitters.bridgeEventSocket.emit('bridge data', bridgeStatuses);
   // server sent events endpoint notification
