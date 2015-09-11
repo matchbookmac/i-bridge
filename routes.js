@@ -49,6 +49,7 @@ module.exports = function (eventEmitters) {
       config: {
         validate: {
           payload: joi.object()
+                      // { changed: joi.string() }
                       // .min(1)
                       // .pattern(/\w+/, joi.object({
                       //   "status": joi.boolean.required(),

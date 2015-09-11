@@ -1,6 +1,7 @@
 var wlog = require('winston');
 var util = require('util');
 var serverConfig = require('../config/config');
+var postToParse = require('./postToParse');
 
 module .exports = function notifyUsers(request, eventEmitters) {
   var bridgeStatuses = serverConfig.bridges = request.payload;
@@ -9,4 +10,5 @@ module .exports = function notifyUsers(request, eventEmitters) {
   // server sent events endpoint notification
   eventEmitters.bridgeSSE.write('event: bridge data\n');
   eventEmitters.bridgeSSE.write('data: ' + JSON.stringify(bridgeStatuses) + '\n\n');
+  postToParse(bridgeStatuses);
 };
