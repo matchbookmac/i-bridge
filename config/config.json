@@ -29,6 +29,10 @@
     "cuevas crossing": {
       "status": false,
       "scheduledLift": null
+    },
+    "changed": {
+      "bridge": null,
+      "item": null
     }
   },
   "development": {

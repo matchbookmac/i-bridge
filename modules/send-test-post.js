@@ -21,20 +21,24 @@ status = (status !== 'false') || false;
 var message = bridges;
 
 if (status) {
+  message.changed.type = 'status';
   if (bridge) {
     message[bridge] = {
       status: status,
       scheduledLift: null
     };
+    message.changed.bridge = bridge;
   } else {
     message['baileys bridge'] = {
       status: status,
       scheduledLift: null
     };
+    message.changed.bridge = 'baileys bridge';
   }
 }
 
 if (scheduled) {
+  message.changed.item = 'scheduledLift';
   var todayUTC = Date.now() + 1000 * 60 * 60 * 2;
   var defaultLiftTime = new Date(0);
   defaultLiftTime.setUTCMilliseconds(todayUTC);

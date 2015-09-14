@@ -1,20 +1,22 @@
 var request = require('request');
 var wlog = require('winston');
 var _ = require('lodash');
+var strftime = require('strftime');
 
 module .exports = function (bridgeStatuses) {
   var changedBridge = bridgeStatuses.changed.bridge;
   var changedItem = bridgeStatuses.changed.item;
-  var alert, status;
+  var alert, status, alertDate;
   if (changedItem === 'status') {
     if (bridgeStatuses[changedBridge].status) {
-      status = 'started to raise.';
+      status = ' : lift started, traffic blocked.';
     } else {
-      status = 'lowered.';
+      status = ' : lift complete, open for traffic.';
     }
     alert = _.startCase(changedBridge)+ ' has ' +status;
   } else {
-    alert = _.startCase(changedBridge)+ 'is scheduled to lift at ' + bridgeStatuses[changedBridge].scheduledLift.estimatedLiftTime;
+    alertDate = new Date(bridgeStatuses[changedBridge].scheduledLift.estimatedLiftTime);
+    alert = _.startCase(changedBridge)+ ': lift scheduled for ' + strftime('%b %e, %Y at %I:%M %p',alertDate);
   }
   var data = JSON.stringify({
     "channels": [
@@ -24,7 +26,7 @@ module .exports = function (bridgeStatuses) {
       "alert": alert
     }
   });
-  console.log(data);
+  // TODO: Pull out keys into config.
   var options = {
     uri: 'https://api.parse.com/1/push',
     headers: {
