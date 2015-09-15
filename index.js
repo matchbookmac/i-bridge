@@ -79,13 +79,6 @@ server.auth.strategy('simple', 'bearer-access-token', {
   }
 });
 
-// server.views({
-//   engines: {
-//     html: require('handlebars')
-//   },
-//   path: path.join(__dirname, 'public/templates')
-// });
-
 server.route(require('./routes')(eventEmitters));
 
 module .exports = (function () {

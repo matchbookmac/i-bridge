@@ -1,6 +1,0 @@
-event: bridge data
-data: {"hawthorne":{"status":false,"scheduledLift":null},"morrison":{"status":false,"scheduledLift":null},"burnside":{"status":false,"scheduledLift":null},"broadway":{"status":false,"scheduledLift":null},"cuevas crossing":{"status":false,"scheduledLift":null},"changed":{"bridge":null,"item":null}}
-
-retry: 1000
-: stay-alive
-

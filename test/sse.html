@@ -10,14 +10,8 @@
     </ul>
     <script type="text/javascript">
       var eventList = document.getElementById("list");
-      var evtSource = new EventSource("http://172.20.165.57:8000/bridges/sse");
-      evtSource.onmessage = function(e) {
-        var newElement = document.createElement("li");
-
-        newElement.innerHTML = "message: " + e.data;
-        eventList.appendChild(newElement);
-      }
-
+      var evtSource = new EventSource("https://api.multco.us/bridges/sse");
+      // var evtSource = new EventSource("http://172.20.165.57/bridges/sse");
       evtSource.addEventListener("bridge data", function(e) {
         var newElement = document.createElement("li");
         var obj = e.data;

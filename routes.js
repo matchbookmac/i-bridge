@@ -68,11 +68,8 @@ module.exports = function (eventEmitters) {
     {
       method: 'GET',
       path: '/bridges/events',
-      handler: function (request, reply) {
-        reply.view('all-events', { events: request.pre.data });
-      },
+      handler: getAllEvents,
       config: {
-        pre: [{ method: getAllEvents, assign: 'data' }],
         description: 'Lists all events, both scheduled and actual',
         notes: 'An object with the keys: bridgeEvents and scheduledEvents, their values are what is generated from /bridges/events/actual, and /bridge/events/scheduled',
         tags: ['api', 'view']
@@ -100,11 +97,8 @@ module.exports = function (eventEmitters) {
     {
       method: 'GET',
       path: '/bridges/events/actual',
-      handler: function(request, reply) {
-        reply.view('events', { bridgeEvents: request.pre.data });
-      },
+      handler: getBridgesActual,
       config: {
-        pre:[{ method: getBridgesActual, assign: 'data' }],
         description: 'Lists actual bridge lift events in a fancy view',
         notes: 'Array of objects with the keys `bridge`, `upTime`, and `downTime`',
         tags: ['api', 'view']
@@ -137,11 +131,8 @@ module.exports = function (eventEmitters) {
     {
       method: 'GET',
       path: '/bridges/events/scheduled',
-      handler: function(request, reply) {
-        reply.view('scheduled', { scheduledEvents: request.pre.data });
-      },
+      handler: getBridgesScheduled,
       config: {
-        pre:[{ method: getBridgesScheduled, assign: 'data' }],
         // auth: 'simple',
         description: 'Lists scheduled bridge lift events from l-bridge in fancy view',
         notes: 'Array of objects with the keys `bridge`, `type`, `requestTime`, and `estimatedLiftTime`',
