@@ -20,8 +20,8 @@ status = (status !== 'false') || false;
 
 var message = bridges;
 
+message.changed.item = 'status';
 if (status) {
-  message.changed.type = 'status';
   if (bridge) {
     message[bridge] = {
       status: status,

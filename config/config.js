@@ -36,6 +36,13 @@ function iBridge() {
   return tmpIBridge;
 }
 
+function parse() {
+  if (environment() === 'test') {
+    return env.parse.production;
+  } else {
+    return env.parse.development;
+  }
+}
 var bridges = env.bridges;
 
 module .exports = {
@@ -43,5 +50,6 @@ module .exports = {
   env: environment(),
   envVars: envVars(),
   iBridge: iBridge(),
+  parse: parse(),
   bridges: bridges
 };

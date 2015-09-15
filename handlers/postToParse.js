@@ -9,11 +9,11 @@ module .exports = function (bridgeStatuses) {
   var alert, status, alertDate;
   if (changedItem === 'status') {
     if (bridgeStatuses[changedBridge].status) {
-      status = ' : lift started, traffic blocked.';
+      status = ': lift started, traffic blocked.';
     } else {
-      status = ' : lift complete, open for traffic.';
+      status = ': lift complete, open for traffic.';
     }
-    alert = _.startCase(changedBridge)+ ' has ' +status;
+    alert = _.startCase(changedBridge) + status;
   } else {
     alertDate = new Date(bridgeStatuses[changedBridge].scheduledLift.estimatedLiftTime);
     alert = _.startCase(changedBridge)+ ': lift scheduled for ' + strftime('%b %e, %Y at %I:%M %p',alertDate);
@@ -26,16 +26,8 @@ module .exports = function (bridgeStatuses) {
       "alert": alert
     }
   });
-  // TODO: Pull out keys into config.
-  var options = {
-    uri: 'https://api.parse.com/1/push',
-    headers: {
-      'X-Parse-Application-Id': '3auqJUgZz2edaX8bUDrB1TRoUaVxPaWZ4gSAFzYq',
-      'X-Parse-REST-API-Key': '3MRH51tSlpsIcfUB2sFuS6o8YLaTSCJuX8NHtl2P',
-      'Content-Type': 'application/json'
-    },
-    form: data
-  };
+  var options = require('../config/config').parse;
+  options.form = data;
 
   function callback(error, response, body) {
     if (!error && response.statusCode == 200) {
