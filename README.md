@@ -18,6 +18,8 @@ npm install
 npm install -g forever nodemon jshint sequelize-cli gulp
 ```
 
+We are using upstart to run the node server as a daemon in production. Those commands are used for `npm run {start/stop}`.
+
 ### Start server:
 
 *Production:*

@@ -6,9 +6,9 @@
   "scripts": {
     "test": "gulp test && mocha --reporter nyan",
     "start": "nodemon index.js -E development",
-    "prod-start": "sudo service node-i-bridge start",
-    "restart": "sudo service node-i-bridge restart",
-    "stop": "sudo forever stop index.js"
+    "prod-start": "sudo start i-bridge",
+    "restart": "sudo stop i-bridge && sudo start i-bridge",
+    "stop": "sudo stop i-bridge"
   },
   "repository": {
     "type": "git",
