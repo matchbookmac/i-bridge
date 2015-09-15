@@ -1,4 +1,7 @@
+var serverConfig = require('../config/config');
+
 module.exports = function (request, reply, eventEmitters) {
+  var bridgeStatuses = serverConfig.bridges;
   var response = reply(eventEmitters.bridgeSSE);
   response.code(200)
           .type('text/event-stream')
