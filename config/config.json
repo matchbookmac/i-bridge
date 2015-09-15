@@ -1,6 +1,6 @@
 {
   "iBridge": {
-    "port": 80,
+    "port": 8000,
     "path": "/bridges/statuses",
     "method": "POST",
     "headers": {

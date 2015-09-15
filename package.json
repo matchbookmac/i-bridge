@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "gulp test && mocha --reporter nyan",
-    "start": "sudo nodemon index.js -E development",
-    "prod-start": "sudo forever start index.js -E production",
+    "start": "nodemon index.js -E development",
+    "prod-start": "sudo service node-i-bridge start",
+    "restart": "sudo service node-i-bridge restart",
     "stop": "sudo forever stop index.js"
   },
   "repository": {

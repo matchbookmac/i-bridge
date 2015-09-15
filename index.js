@@ -14,7 +14,11 @@ var plugins = [
   { register: require('inert') },
   { register: require('vision') },
   { register: require('hapi-auth-bearer-token') },
-  { register: require('lout') }
+  { register: require('lout'),
+    options: {
+      endpoint: '/bridges/docs'
+    }
+  }
 ];
 var server = new Hapi.Server();
 server.connection(options);
