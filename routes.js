@@ -32,20 +32,23 @@ module.exports = function (eventEmitters) {
       },
       config: {
         validate: {
-          payload: joi.object()
-          // { changed: joi.string() }
-          //               .min(1)
-          //               .pattern(/\w+/, joi.object({
-          //                 "status": joi.boolean().required(),
-          //                 "scheduledLift": joi.any().valid(
-          //                   null,
-          //                   joi.object({
-          //                     "type": joi.string(),
-          //                     "estimatedLiftTime": joi.date(),
-          //                     "requestTime": joi.date()
-          //                   }).and('type', 'estimatedLiftTime', 'requestTime')
-          //                 )
-          //               }))
+          payload: joi.object({
+            changed: joi.object({
+              item: joi.string().required(),
+              bridge: joi.string().required()
+            })
+          }).min(1)
+            .pattern(/\w+/, joi.object({
+              "status": joi.boolean().required(),
+              "scheduledLift": joi.alternatives().try(
+                null,
+                joi.object({
+                  type: joi.string(),
+                  requestTime: joi.date().required(),
+                  estimatedLiftTime: joi.date().required()
+                })
+              )
+            }))
         },
         auth: 'simple',
         description: 'Endpoint to receive status updates from a-bridge',

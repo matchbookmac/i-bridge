@@ -21,20 +21,18 @@ status = (status !== 'false') || false;
 var message = bridges;
 
 message.changed.item = 'status';
-if (status) {
-  if (bridge) {
-    message[bridge] = {
-      status: status,
-      scheduledLift: null
-    };
-    message.changed.bridge = bridge;
-  } else {
-    message['baileys bridge'] = {
-      status: status,
-      scheduledLift: null
-    };
-    message.changed.bridge = 'baileys bridge';
-  }
+message.changed.bridge = 'baileys bridge';
+if (bridge) {
+  message[bridge] = {
+    status: status,
+    scheduledLift: null
+  };
+  message.changed.bridge = bridge;
+} else {
+  message['baileys bridge'] = {
+    status: status,
+    scheduledLift: null
+  };
 }
 
 if (scheduled) {
@@ -43,8 +41,14 @@ if (scheduled) {
   var defaultLiftTime = new Date(0);
   defaultLiftTime.setUTCMilliseconds(todayUTC);
   if (bridge) {
-    message[bridge].scheduledLift =   {
-      type:              status   ? status   : "testing",
+    message[bridge].scheduledLift = {
+      type:              !status   ? status   : "testing",
+      requestTime:       timeStamp.toString(),
+      estimatedLiftTime: liftTime ? liftTime : defaultLiftTime
+    };
+  } else {
+    message['baileys bridge'].scheduledLift = {
+      type:              !status   ? status   : "testing",
       requestTime:       timeStamp.toString(),
       estimatedLiftTime: liftTime ? liftTime : defaultLiftTime
     };
