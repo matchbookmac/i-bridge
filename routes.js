@@ -2,12 +2,6 @@ var path                = require('path');
 var wlog                = require('winston');
 var joi                 = require('joi');
 var notifyUsers         = require('./handlers/notify-users');
-var getSSE              = require('./handlers/get-sse');
-var getBridges          = require('./handlers/get-bridges');
-var getBridgeActual     = require('./handlers/get-bridge-actual');
-var getBridgesActual    = require('./handlers/get-bridges-actual');
-var getAllEvents        = require('./handlers/get-all-events');
-var getBridgeScheduled  = require('./handlers/get-bridge-scheduled');
 var getBridgesScheduled = require('./handlers/get-bridges-scheduled');
 
 module.exports = function (eventEmitters) {
@@ -17,7 +11,7 @@ module.exports = function (eventEmitters) {
       path: '/bridges/sse',
       config: {
         handler: function (request, response) {
-          getSSE(request, response, eventEmitters);
+          require('./handlers/get-sse')(request, response, eventEmitters);
         }
       }
     },
@@ -60,7 +54,7 @@ module.exports = function (eventEmitters) {
     {
       method: 'GET',
       path: '/bridges',
-      handler: getBridges,
+      handler: require('./handlers/get-bridges'),
       config: {
         description: 'Array of all bridges',
         notes: 'Derived from unique entries for bridge name in bridge events',
@@ -71,11 +65,11 @@ module.exports = function (eventEmitters) {
     {
       method: 'GET',
       path: '/bridges/events',
-      handler: getAllEvents,
+      handler: require('./handlers/get-all-events'),
       config: {
         description: 'Lists all events, both scheduled and actual',
         notes: 'An object with the keys: bridgeEvents and scheduledEvents, their values are what is generated from /bridges/events/actual, and /bridge/events/scheduled',
-        tags: ['api', 'view']
+        tags: ['api']
       }
     },
 
@@ -100,18 +94,18 @@ module.exports = function (eventEmitters) {
     {
       method: 'GET',
       path: '/bridges/events/actual',
-      handler: getBridgesActual,
+      handler: require('./handlers/get-bridges-actual'),
       config: {
         description: 'Lists actual bridge lift events in a fancy view',
         notes: 'Array of objects with the keys `bridge`, `upTime`, and `downTime`',
-        tags: ['api', 'view']
+        tags: ['api']
       }
     },
 
     {
       method: 'GET',
       path: '/bridges/events/actual/{limit*}',
-      handler: getBridgesActual,
+      handler: require('./handlers/get-bridges-actual'),
       config: {
         description: 'Lists actual bridge lift events in json',
         notes: 'Array of objects with the keys `bridge`, `upTime`, and `downTime`',
@@ -121,8 +115,19 @@ module.exports = function (eventEmitters) {
 
     {
       method: 'GET',
+      path: '/bridges/{bridge}/events',
+      handler: require('./handlers/get-bridge-events'),
+      config: {
+        description: 'Lists all events, both scheduled and actual for a given bridge',
+        notes: 'An object with the keys: bridgeEvents and scheduledEvents, their values are what is generated returned',
+        tags: ['api']
+      }
+    },
+
+    {
+      method: 'GET',
       path: '/bridges/{bridge}/events/actual/{limit*}',
-      handler: getBridgeActual,
+      handler: require('./handlers/get-bridge-actual'),
       config: {
         // auth: 'simple',
         description: 'Returns last x lift events for given bridge if limit param is provided. If limit param is not provided, it returns all entries. Non-numbers are ignored',
@@ -134,19 +139,19 @@ module.exports = function (eventEmitters) {
     {
       method: 'GET',
       path: '/bridges/events/scheduled',
-      handler: getBridgesScheduled,
+      handler: require('./handlers/get-bridges-scheduled'),
       config: {
         // auth: 'simple',
         description: 'Lists scheduled bridge lift events from l-bridge in fancy view',
         notes: 'Array of objects with the keys `bridge`, `type`, `requestTime`, and `estimatedLiftTime`',
-        tags: ['api', 'view']
+        tags: ['api']
       }
     },
 
     {
       method: 'GET',
       path: '/bridges/events/scheduled/{limit*}',
-      handler: getBridgesScheduled,
+      handler: require('./handlers/get-bridges-scheduled'),
       config: {
         // auth: 'simple',
         description: 'Lists scheduled bridge lift events from l-bridge in json',
@@ -158,7 +163,7 @@ module.exports = function (eventEmitters) {
     {
       method: 'GET',
       path: '/bridges/{bridge}/events/scheduled/{limit*}',
-      handler: getBridgeScheduled,
+      handler: require('./handlers/get-bridge-scheduled'),
       config: {
         // auth: 'simple',
         description: 'Returns last x scheduled lift events for given bridge if limit param is provided. If limit param is not provided, it returns all entries. Non-numbers are ignored',
