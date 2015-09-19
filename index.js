@@ -5,7 +5,7 @@ var fs              = require('fs');
 var util            = require('util');
 var stream          = require('stream');
 var wlog            = require('winston');
-var User            = require('./models/index').User;
+var User            = require('./models/index').user;
 var serverConfig    = require('./config/config');
 
 var options         = { port: serverConfig.port };
