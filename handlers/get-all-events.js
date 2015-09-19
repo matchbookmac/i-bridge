@@ -1,10 +1,10 @@
 var db             = require('../models/index');
-var BridgeEvent    = db.BridgeEvent;
-var ScheduledEvent = db.ScheduledEvent;
+var ActualEvent    = db.actualEvent;
+var ScheduledEvent = db.scheduledEvent;
 var wlog           = require('winston');
 
 module.exports = function (request, reply) {
-  BridgeEvent.findAll({ order: 'up_time DESC'})
+  ActualEvent.findAll({ order: 'upTime DESC'})
     .then(function (events) {
       ScheduledEvent.findAll({ order: 'estimatedLiftTime DESC'})
         .then(function (scheduled) {

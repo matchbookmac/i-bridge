@@ -73,7 +73,6 @@ module.exports = function (eventEmitters) {
       }
     },
 
-    // path: '/bridges/{bridge}/events'
     // path: '/bridges/{bridge}/uptime'
     // path: '/bridges/{bridge}/downtime'
     // path: '/bridges/{bridge}/uptime/avg'

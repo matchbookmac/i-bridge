@@ -1,14 +1,14 @@
 var db             = require('../models/index');
-var BridgeEvent    = db.BridgeEvent;
+var ActualEvent    = db.actualEvent;
 var wlog           = require('winston');
 
 module.exports = function (request, reply) {
   var limit = parseInt(request.params.limit);
   var params = {
-    order: 'up_time DESC'
+    order: 'upTime DESC'
   };
   if (limit) params.limit = limit;
-  BridgeEvent.findAll(params)
+  ActualEvent.findAll(params)
               .then(function (rows) {
                 var response = reply(rows);
                 response.header('Access-Control-Allow-Origin', '*');

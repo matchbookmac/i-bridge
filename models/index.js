@@ -7,6 +7,7 @@ var basename  = path.basename(module.filename);
 var env       = process.env.NODE_ENV || require('../config/config').env || 'development';
 console.log(env);
 var dbConfig  = require(__dirname + '/../db/database.json')[env];
+if (env === 'development') dbConfig.logging = require('../config/logging').debug;
 var sequelize = new Sequelize(dbConfig.database, dbConfig.username, dbConfig.password, dbConfig);
 var db        = {};
 
@@ -29,5 +30,11 @@ Object.keys(db).forEach(function(modelName) {
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
+
+var Bridge = db.bridge;
+var ActualEvent = db.actualEvent;
+var ScheduledEvent = db.scheduledEvent;
+Bridge.hasMany(ActualEvent);
+Bridge.hasMany(ScheduledEvent);
 
 module.exports = db;

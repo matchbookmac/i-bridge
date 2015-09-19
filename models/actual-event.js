@@ -1,21 +1,21 @@
 module.exports = function (sequelize, DataTypes) {
-  var BridgeEvent = sequelize.define(
-    'BridgeEvent',
+  var ActualEvent = sequelize.define(
+    'actualEvent',
     {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
       },
-      bridge: {
-        type: DataTypes.STRING,
+      bridgeId: {
+        type: DataTypes.INTEGER,
         allowNull: false
       },
-      up_time: {
+      upTime: {
         type: DataTypes.DATE,
         allowNull: false
       },
-      down_time: {
+      downTime: {
         type: DataTypes.DATE,
         allowNull: false
       },
@@ -27,5 +27,5 @@ module.exports = function (sequelize, DataTypes) {
       }
     }
   );
-  return BridgeEvent;
+  return ActualEvent;
 };

@@ -1,26 +1,32 @@
+var wlog = require('winston');
+
 module.exports = function (sequelize, DataTypes) {
-  var ScheduledEvent = sequelize.define(
-    'scheduledEvent',
+  var Bridge = sequelize.define(
+    'bridge',
     {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
       },
-      bridgeId: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-      },
-      type: {
+      name: {
         type: DataTypes.STRING,
         allowNull: false
       },
-      requestTime: {
-        type: DataTypes.DATE,
+      totalUpTime: {
+        type: DataTypes.FLOAT,
+        defaultVaule: 0.0
+      },
+      avgUpTime: {
+        type: DataTypes.FLOAT,
+        defaultVaule: 0.0
+      },
+      actualCount: {
+        type: DataTypes.INTEGER,
         allowNull: false
       },
-      estimatedLiftTime: {
-        type: DataTypes.DATE,
+      scheduledCount: {
+        type: DataTypes.INTEGER,
         allowNull: false
       },
       createdAt: {
@@ -31,5 +37,5 @@ module.exports = function (sequelize, DataTypes) {
       }
     }
   );
-  return ScheduledEvent;
+  return Bridge;
 };

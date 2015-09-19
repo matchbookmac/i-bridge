@@ -1,5 +1,5 @@
 var db             = require('../models/index');
-var ScheduledEvent = db.ScheduledEvent;
+var ScheduledEvent = db.scheduledEvent;
 var wlog           = require('winston');
 
 module.exports = function (request, reply) {
