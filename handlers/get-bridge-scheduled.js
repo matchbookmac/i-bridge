@@ -1,4 +1,5 @@
 var              _ = require('lodash');
+var boom           = require('boom');
 var db             = require('../models/index');
 var Bridge         = db.bridge;
 var ScheduledEvent = db.scheduledEvent;
@@ -6,19 +7,11 @@ var logger         = require('../config/logging');
 
 module.exports = function (request, reply) {
   var limit = parseInt(request.params.limit);
-  var bridge = '%';
-  _.forIn(request.params.bridge.split(/[\W\d]+/), function (bridgeName) {
-    bridge += (bridgeName+'%');
-  });
-  Bridge.findOne({
-    where: {
-      name: {
-        $like: bridge
-      }
-    }
-  }).then(findScheduledEvents).catch(errorResponse);
 
-  function findScheduledEvents(bridge) {
+  require('../modules/find-bridge')(request, findScheduledEvents);
+
+  function findScheduledEvents(err, bridge) {
+    if (err) return errorResponse(err);
     var params = {
       order: 'estimatedLiftTime DESC',
       where: {
@@ -35,6 +28,6 @@ module.exports = function (request, reply) {
   }
   function errorResponse(err) {
     reply(boom.badRequest(err));
-    logger.error('There was an error finding events for '+ bridge +': '+ err);
+    logger.error('There was an error finding events for '+ request.params.bridge +': '+ err);
   }
 };

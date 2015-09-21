@@ -1,4 +1,5 @@
 var              _ = require('lodash');
+var boom           = require('boom');
 var db             = require('../models/index');
 var Bridge         = db.bridge;
 var ActualEvent    = db.actualEvent;
