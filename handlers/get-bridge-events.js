@@ -8,20 +8,12 @@ var logger         = require('../config/logging');
 
 module.exports = function (request, reply) {
   var limit = parseInt(request.params.limit);
-  var bridge = '%';
-  _.forIn(request.params.bridge.split(/[\W\d]+/), function (bridgeName) {
-    bridge += (bridgeName+'%');
-  });
-  
-  Bridge.findOne({
-    where: {
-      name: {
-        $like: bridge
-      }
-    }
-  }).then(findEvents).catch(errorResponse);
 
-  function findEvents(bridge) {
+  require('../modules/find-bridge')(request, findEvents);
+
+  function findEvents(err, bridge) {
+    if (err) return errorResponse(err);
+
     var actualParams = {
       order: 'upTime DESC',
       where: {
@@ -34,7 +26,9 @@ module.exports = function (request, reply) {
         bridgeId: bridge.id
       }
     };
+
     if (limit) params.limit = limit;
+
     Promise.all([
       ActualEvent.findAll(actualParams),
       ScheduledEvent.findAll(scheduledParams)

@@ -26,9 +26,9 @@ module.exports = function (request, reply) {
       })
       .catch(errorResponse);
   }
-  
+
   function errorResponse(err) {
     reply(boom.badRequest(err));
-    logger.error('There was an error finding bridge events for '+ bridge +': '+ err);
+    logger.error('There was an error finding events for %s: %s', request.params.bridge, err);
   }
 };
