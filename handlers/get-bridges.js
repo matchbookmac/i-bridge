@@ -12,7 +12,14 @@ module.exports = function (request, reply) {
     }
   }).then(function (rows) {
     var response = reply(_.map(rows, function (bridge) {
-      return bridge.name;
+      return {
+        name: bridge.name,
+        id: bridge.id,
+        totalUpTime: bridge.totalUpTime,
+        avgUpTime: bridge.avgUpTime,
+        actualCount: bridge.actualCount,
+        scheduledCount: bridge.scheduledCount
+      };
     }));
     response.header('Access-Control-Allow-Origin', '*');
   })
