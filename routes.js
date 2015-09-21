@@ -12,7 +12,10 @@ module.exports = function (eventEmitters) {
       config: {
         handler: function (request, response) {
           require('./handlers/get-sse')(request, response, eventEmitters);
-        }
+        },
+        description: 'Server-Sent events outlet',
+        notes: 'Follows: https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events.\n Emits an `event: bridge data` when first connected to, and a `bridge data` event when the status of a bridge changes. The `bridge data` event is followed by a `data: {JSON}` line containing the bridge event data. There is a stay-alive event every 20s as: `: stay-alive\n\n`.',
+        tags: ['auth', 'notification']
       }
     },
 
@@ -47,7 +50,10 @@ module.exports = function (eventEmitters) {
         auth: 'simple',
         description: 'Endpoint to receive status updates from a-bridge',
         notes: 'Requires an object with one or more keys, where each key is an object with the keys `status` and `scheduledLift`. `status` is a boolean, and `scheduledLift` is an object with the keys `type`, `estimatedLiftTime`, and `requestTime` Authentication is specified by an access token as a query parameter, i.e. `/bridges/events/actual?access_token=1234`.',
-        tags: ['auth', 'notification']
+        tags: ['auth', 'notification'],
+        plugins: {
+          lout: false
+        }
       }
     },
 
@@ -69,7 +75,7 @@ module.exports = function (eventEmitters) {
       config: {
         description: 'Lists all events, both scheduled and actual',
         notes: 'An object with the keys: actualEvents and scheduledEvents, their values are what is generated from /bridges/events/actual, and /bridges/events/scheduled',
-        tags: ['api']
+        tags: ['api', 'json']
       }
     },
 
@@ -80,7 +86,7 @@ module.exports = function (eventEmitters) {
       config: {
         description: 'Lists actual bridge lift events in a fancy view',
         notes: 'Array of objects with the keys `bridge`, `upTime`, and `downTime`',
-        tags: ['api']
+        tags: ['api', 'json']
       }
     },
 
@@ -135,7 +141,7 @@ module.exports = function (eventEmitters) {
       config: {
         description: 'Lists data for a specified bridge',
         notes: 'An object with the keys: name, id, totalUpTime, avgUpTime, actualCount, and scheduledCount.\n - totalUpTime is the cumulative time the bridge has been in a lifted state since the start of recording.\n - avgUpTime is the totalUpTime divided by the actualCount.\n - actualCount is the total number of recorded lift events.\n - scheduledCount is the number of lifts that have been scheduled for this bridge',
-        tags: ['api']
+        tags: ['api', 'json']
       }
     },
 
@@ -146,7 +152,7 @@ module.exports = function (eventEmitters) {
       config: {
         description: 'Lists all events, both scheduled and actual for a given bridge',
         notes: 'An object with the keys: bridgeEvents and scheduledEvents, their values are what is generated returned',
-        tags: ['api']
+        tags: ['api', 'json']
       }
     },
 
@@ -203,7 +209,7 @@ module.exports = function (eventEmitters) {
         // auth: 'simple',
         description: 'Lists scheduled bridge lift events from l-bridge in fancy view',
         notes: 'Array of objects with the keys `bridgeId`, `type`, `requestTime`, and `estimatedLiftTime`',
-        tags: ['api']
+        tags: ['api', 'json']
       }
     },
 
