@@ -73,10 +73,6 @@ module.exports = function (eventEmitters) {
       }
     },
 
-    // path: '/bridges/{bridge}/uptime'
-    // path: '/bridges/{bridge}/downtime'
-    // path: '/bridges/{bridge}/uptime/avg'
-    // path: '/bridges/{bridge}/downtime/avg'
     // path: '/bridges/events/actual/before/{date*}',
     // path: '/bridges/events/actual/after/{date*}',
     // path: '/bridges/events/actual/between/{date*}/{date*}',
@@ -109,6 +105,17 @@ module.exports = function (eventEmitters) {
         description: 'Lists actual bridge lift events in json',
         notes: 'Array of objects with the keys `bridge`, `upTime`, and `downTime`',
         tags: ['api', 'json']
+      }
+    },
+
+    {
+      method: 'GET',
+      path: '/bridges/{bridge}',
+      handler: require('./handlers/get-bridge'),
+      config: {
+        description: 'Lists data for a specified bridge',
+        notes: 'An object with the keys: name, id, totalUpTime, avgUpTime, actualCount, and scheduledCount.\n - totalUpTime is the cumulative time the bridge has been in a lifted state since the start of recording.\n - avgUpTime is the totalUpTime divided by the actualCount.\n - actualCount is the total number of recorded lift events.\n - scheduledCount is the number of lifts that have been scheduled for this bridge',
+        tags: ['api']
       }
     },
 
