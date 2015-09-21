@@ -68,7 +68,7 @@ module.exports = function (eventEmitters) {
       handler: require('./handlers/get-all-events'),
       config: {
         description: 'Lists all events, both scheduled and actual',
-        notes: 'An object with the keys: bridgeEvents and scheduledEvents, their values are what is generated from /bridges/events/actual, and /bridge/events/scheduled',
+        notes: 'An object with the keys: actualEvents and scheduledEvents, their values are what is generated from /bridges/events/actual, and /bridges/events/scheduled',
         tags: ['api']
       }
     },
@@ -104,6 +104,39 @@ module.exports = function (eventEmitters) {
       config: {
         description: 'Lists actual bridge lift events in json',
         notes: 'Array of objects with the keys `bridge`, `upTime`, and `downTime`',
+        tags: ['api', 'json']
+      }
+    },
+
+    {
+      method: 'GET',
+      path: '/bridges/events/actual/before/{date*}',
+      handler: require('./handlers/get-bridges-actual'),
+      config: {
+        description: 'Lists actual bridge lift events in before given date (non-inclusive).',
+        notes: 'Array of objects with the keys `bridgeId`, `upTime`, and `downTime`. Date must be given in a format that `new Date()` can parse.',
+        tags: ['api', 'json']
+      }
+    },
+
+    {
+      method: 'GET',
+      path: '/bridges/events/actual/after/{date*}',
+      handler: require('./handlers/get-bridges-actual'),
+      config: {
+        description: 'Lists actual bridge lift events in after given date (non-inclusive).',
+        notes: 'Array of objects with the keys `bridgeId`, `upTime`, and `downTime`. Date must be given in a format that `new Date()` can parse.',
+        tags: ['api', 'json']
+      }
+    },
+
+    {
+      method: 'GET',
+      path: '/bridges/events/actual/between/{startDate}/{endDate*}',
+      handler: require('./handlers/get-bridges-actual'),
+      config: {
+        description: 'Lists actual bridge lift events between two given dates (non-inclusive).',
+        notes: 'Array of objects with the keys `bridgeId`, `upTime`, and `downTime`. Date must be given in a format that `new Date()` can parse.',
         tags: ['api', 'json']
       }
     },

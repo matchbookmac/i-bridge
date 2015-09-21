@@ -35,7 +35,7 @@ module.exports = function (request, reply) {
       ScheduledEvent.findAll(scheduledParams)
     ]).then(function (results) {
       var response = reply({
-        bridgeEvents: results[0],
+        actualEvents: results[0],
         scheduledEvents: results[1]
       });
       response.header('Access-Control-Allow-Origin', '*');

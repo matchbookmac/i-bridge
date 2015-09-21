@@ -9,7 +9,7 @@ module.exports = function (request, reply) {
       ScheduledEvent.findAll({ order: 'estimatedLiftTime DESC'})
         .then(function (scheduled) {
           var response = reply({
-            bridgeEvents: events,
+            actualEvents: events,
             scheduledEvents: scheduled
           });
           response.header('Access-Control-Allow-Origin', '*');

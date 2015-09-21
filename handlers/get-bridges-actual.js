@@ -6,6 +6,7 @@ module.exports = function (request, reply) {
   var limit = parseInt(request.params.limit);
   var params = { order: 'upTime DESC' };
   if (limit) params.limit = limit;
+  params = require('../modules/create-date-params')(params, request);
   ActualEvent.findAll(params)
     .then(function (rows) {
       var response = reply(rows);
