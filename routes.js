@@ -201,6 +201,39 @@ module.exports = function (eventEmitters) {
 
     {
       method: 'GET',
+      path: '/bridges/events/scheduled/before/{date*}',
+      handler: require('./handlers/get-bridges-scheduled'),
+      config: {
+        description: 'Lists scheduled bridge lift events in before given date (non-inclusive).',
+        notes: 'Array of objects with the keys `bridgeId`, `upTime`, and `downTime`. Date must be given in a format that `new Date()` can parse.',
+        tags: ['api', 'json']
+      }
+    },
+
+    {
+      method: 'GET',
+      path: '/bridges/events/scheduled/after/{date*}',
+      handler: require('./handlers/get-bridges-scheduled'),
+      config: {
+        description: 'Lists scheduled bridge lift events in after given date (non-inclusive).',
+        notes: 'Array of objects with the keys `bridgeId`, `upTime`, and `downTime`. Date must be given in a format that `new Date()` can parse.',
+        tags: ['api', 'json']
+      }
+    },
+
+    {
+      method: 'GET',
+      path: '/bridges/events/scheduled/between/{startDate}/{endDate*}',
+      handler: require('./handlers/get-bridges-scheduled'),
+      config: {
+        description: 'Lists scheduled bridge lift events between two given dates (non-inclusive).',
+        notes: 'Array of objects with the keys `bridgeId`, `upTime`, and `downTime`. Date must be given in a format that `new Date()` can parse.',
+        tags: ['api', 'json']
+      }
+    },
+
+    {
+      method: 'GET',
       path: '/bridges/{bridge}/events/scheduled/{limit*}',
       handler: require('./handlers/get-bridge-scheduled'),
       config: {
