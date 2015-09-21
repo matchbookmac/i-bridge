@@ -6,12 +6,13 @@ module.exports = function createDateParams(params, request) {
   var date = new Date(request.params.date);
   var startDate = new Date(request.params.startDate);
   var endDate = new Date(request.params.endDate);
+  console.log(date);
   var parameterName;
   if (filter[0] == 'actual') {
-    params.where = { upTime: {} };
+    params.where = params.where || { upTime: {} };
     parameterName = 'upTime';
   } else if (filter[0] == 'scheduled') {
-    params.where = { requestTime: {} };
+    params.where = params.where || { requestTime: {} };
     parameterName = 'requestTime';
   }
   switch (filter[1]) {

@@ -29,7 +29,8 @@ module.exports = function (request, reply) {
     };
 
     if (limit) params.limit = limit;
-
+    params = require('../modules/create-date-params')(params, request);
+    
     Promise.all([
       ActualEvent.findAll(actualParams),
       ScheduledEvent.findAll(scheduledParams)

@@ -19,6 +19,7 @@ module.exports = function (request, reply) {
       }
     };
     if (limit) params.limit = limit;
+    params = require('../modules/create-date-params')(params, request);
     ActualEvent.findAll(params)
       .then(function (rows) {
         var response = reply(rows);
