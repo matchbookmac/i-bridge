@@ -7,18 +7,11 @@ var logger         = require('../config/logging');
 
 module.exports = function (request, reply) {
   var limit = parseInt(request.params.limit);
-  var bridge = '%';
-  _.forIn(request.params.bridge.split(/[\W\d]+/), function (bridgeName) {
-    bridge += (bridgeName+'%');
-  });
-  Bridge.findOne({
-    where: {
-      name: {
-        $like: bridge
-      }
-    }
-  }).then(findActualEvents).catch(errorResponse);
-  function findActualEvents(bridge) {
+
+  require('../modules/find-bridge')(request, findActualEvents);
+
+  function findActualEvents(err, bridge) {
+    if (err) return errorResponse(err);
     var params = {
       order: 'upTime DESC',
       where: {
@@ -33,6 +26,7 @@ module.exports = function (request, reply) {
       })
       .catch(errorResponse);
   }
+  
   function errorResponse(err) {
     reply(boom.badRequest(err));
     logger.error('There was an error finding bridge events for '+ bridge +': '+ err);
