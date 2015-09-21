@@ -2,7 +2,7 @@ var              _ = require('lodash');
 var db             = require('../models/index');
 var ActualEvent    = db.actualEvent;
 var ScheduledEvent = db.scheduledEvent;
-var wlog           = require('winston');
+var logger         = require('../config/logging');
 
 module.exports = function (request, reply) {
   var limit = parseInt(request.params.limit);
@@ -39,11 +39,11 @@ module.exports = function (request, reply) {
         })
         .catch(function (err) {
           reply(err);
-          wlog.error('There was an error finding scheduled events for %s: %s', request.params.bridge, err);
+          logger.error('There was an error finding scheduled events for %s: %s', request.params.bridge, err);
         });
     })
     .catch(function (err) {
       reply(err);
-      wlog.error('There was an error finding scheduled events for %s: %s', request.params.bridge, err);
+      logger.error('There was an error finding scheduled events for %s: %s', request.params.bridge, err);
     });
 };

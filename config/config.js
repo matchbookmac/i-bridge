@@ -7,10 +7,8 @@ function port() {
 }
 
 function environment() {
-  var
-    argvEnv = argv.E || argv.env,
-    node_env
-  ;
+  var argvEnv = argv.E || argv.env || process.env.NODE_ENV;
+  var node_env;
   if (argvEnv === 'production' || argvEnv === 'prod') {
     node_env = process.env.NODE_ENV = 'production';
   } else if (argvEnv === 'test') {

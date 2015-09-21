@@ -1,5 +1,5 @@
 var path                = require('path');
-var wlog                = require('winston');
+var logger              = require('./config/logging');
 var joi                 = require('joi');
 var notifyUsers         = require('./handlers/notify-users');
 var getBridgesScheduled = require('./handlers/get-bridges-scheduled');
@@ -21,7 +21,7 @@ module.exports = function (eventEmitters) {
       path: '/bridges/statuses',
       handler: function (request, reply) {
         notifyUsers(request, eventEmitters);
-        wlog.info(require('util').inspect(request.payload));
+        logger.info(require('util').inspect(request.payload));
         reply('statuses received');
       },
       config: {

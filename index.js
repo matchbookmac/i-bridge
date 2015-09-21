@@ -4,7 +4,7 @@ var path            = require('path');
 var fs              = require('fs');
 var util            = require('util');
 var stream          = require('stream');
-var wlog            = require('winston');
+var logger          = require('./config/logging');
 var User            = require('./models/index').user;
 var serverConfig    = require('./config/config');
 
@@ -33,7 +33,7 @@ var bridgeEventSocket = io.on('connection', function (socket) {
     );
     // console.log is for fail2ban, leave both in
     console.log(logString);
-    wlog.warn(logString);
+    logger.warn(logString);
   });
 
   socket.emit('bridge data', serverConfig.bridges);
@@ -43,7 +43,7 @@ var bridgeEventSocket = io.on('connection', function (socket) {
     "socket",
     socket.handshake.headers.referer
   );
-  wlog.info(logString);
+  logger.info(logString);
 });
 
 var eventEmitters = {
@@ -53,7 +53,7 @@ var eventEmitters = {
 eventEmitters.bridgeSSE.setMaxListeners(0);
 
 server.register(plugins, function (err) {
-  if (err) wlog.error(err);
+  if (err) logger.error(err);
   server.on('response', function (request) {
     var logString = util.format("%s [%s] %s %s - %s",
       (new Date()).getTime(),
@@ -62,7 +62,7 @@ server.register(plugins, function (err) {
       request.url.path,
       request.response.statusCode
     );
-    wlog.info(logString);
+    logger.info(logString);
   });
 });
 
@@ -83,7 +83,7 @@ server.route(require('./routes')(eventEmitters));
 
 module .exports = (function () {
   server.start(function(){
-    wlog.info('Server running at:', server.info.uri);
+    logger.info('Server running at:', server.info.uri);
   });
   return server;
 })();

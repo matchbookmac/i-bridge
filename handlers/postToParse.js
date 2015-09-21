@@ -1,6 +1,6 @@
-var request = require('request');
-var wlog = require('winston');
-var _ = require('lodash');
+var request  = require('request');
+var logger   = require('../config/logging');
+var _        = require('lodash');
 var strftime = require('strftime');
 
 module .exports = function (bridgeStatuses) {
@@ -32,11 +32,11 @@ module .exports = function (bridgeStatuses) {
   function callback(error, response, body) {
     if (!error && response.statusCode == 200) {
       var info = JSON.parse(body);
-      wlog.info('Parse notification:', info, response.statusCode);
+      logger.info('Parse notification:', info, response.statusCode);
     } else if (error) {
-      wlog.error("problem sending notification to Parse", error);
+      logger.error("problem sending notification to Parse", error);
     } else {
-      wlog.info('Parse notification:', body, response.statusCode);
+      logger.info('Parse notification:', body, response.statusCode);
     }
 
   }

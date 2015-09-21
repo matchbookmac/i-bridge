@@ -1,5 +1,5 @@
 var http     = require('http');
-var wlog     = require('winston');
+var logger   = require('../config/logging');
 var port     = require('../config/config').port;
 var iBridge  = require('../config/config').iBridge;
 var ip       = require('ip');
@@ -29,7 +29,7 @@ module .exports = function testPost(bridgeData, sendOptions, callback){
 
     res.on('end', function () {
       if (callback) callback(response, status);
-      wlog.info("Request Status: " + status, response);
+      logger.info("Request Status: " + status, response);
     });
   });
 
@@ -37,7 +37,7 @@ module .exports = function testPost(bridgeData, sendOptions, callback){
     if (callback) {
       callback(err.message, null);
     } else {
-      wlog.info(err);
+      logger.info(err);
     }
   });
 

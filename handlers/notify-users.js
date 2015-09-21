@@ -1,4 +1,3 @@
-var wlog = require('winston');
 var util = require('util');
 var serverConfig = require('../config/config');
 var postToParse = require('./postToParse');
