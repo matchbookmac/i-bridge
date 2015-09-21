@@ -12,6 +12,7 @@ module.exports = function (request, reply) {
   _.forIn(request.params.bridge.split(/[\W\d]+/), function (bridgeName) {
     bridge += (bridgeName+'%');
   });
+  
   Bridge.findOne({
     where: {
       name: {
@@ -19,6 +20,7 @@ module.exports = function (request, reply) {
       }
     }
   }).then(findEvents).catch(errorResponse);
+
   function findEvents(bridge) {
     var actualParams = {
       order: 'upTime DESC',
@@ -44,6 +46,7 @@ module.exports = function (request, reply) {
       response.header('Access-Control-Allow-Origin', '*');
     }).catch(errorResponse);
   }
+
   function errorResponse(err) {
     reply(boom.badRequest(err));
     logger.error('There was an error finding events for %s: %s', request.params.bridge, err);
