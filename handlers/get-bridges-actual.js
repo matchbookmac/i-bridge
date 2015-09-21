@@ -4,17 +4,15 @@ var logger         = require('../config/logging');
 
 module.exports = function (request, reply) {
   var limit = parseInt(request.params.limit);
-  var params = {
-    order: 'upTime DESC'
-  };
+  var params = { order: 'upTime DESC' };
   if (limit) params.limit = limit;
   ActualEvent.findAll(params)
-              .then(function (rows) {
-                var response = reply(rows);
-                response.header('Access-Control-Allow-Origin', '*');
-              })
-              .catch(function (err) {
-                reply(err);
-                logger.error('There was an error finding bridge events: ' + err);
-              });
+    .then(function (rows) {
+      var response = reply(rows);
+      response.header('Access-Control-Allow-Origin', '*');
+    })
+    .catch(function (err) {
+      reply(err);
+      logger.error('There was an error finding bridge events: ' + err);
+    });
 };
