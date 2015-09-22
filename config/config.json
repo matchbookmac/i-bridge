@@ -123,7 +123,7 @@
       "headers": {
         "Content-Type": "application/json",
         "Content-Length": 1,
-        "Authorization": "Bearer user@example.com:1234"
+        "Authorization": "abridge@api.multco.us:b0927125dc1dcd8226abf4282feb7d95"
       }
     },
     "bridges": {
