@@ -81,6 +81,39 @@ module.exports = function (eventEmitters) {
 
     {
       method: 'GET',
+      path: '/bridges/events/before/{date*}',
+      handler: require('./handlers/get-bridge-events'),
+      config: {
+        description: 'Lists all bridge lift and scheduled events before given date (non-inclusive).',
+        notes: 'An object with the keys: actualEvents and scheduledEvents, their values are what is generated from /bridges/events/actual, and /bridges/events/scheduled',
+        tags: ['api', 'json']
+      }
+    },
+
+    {
+      method: 'GET',
+      path: '/bridges/events/after/{date*}',
+      handler: require('./handlers/get-bridge-events'),
+      config: {
+        description: 'Lists all bridge lift and scheduled after given date (non-inclusive).',
+        notes: 'An object with the keys: actualEvents and scheduledEvents, their values are what is generated from /bridges/events/actual, and /bridges/events/scheduled',
+        tags: ['api', 'json']
+      }
+    },
+
+    {
+      method: 'GET',
+      path: '/bridges/events/between/{startDate}/{endDate*}',
+      handler: require('./handlers/get-bridge-events'),
+      config: {
+        description: 'Lists all bridge lift and scheduled events between two given dates (non-inclusive).',
+        notes: 'An object with the keys: actualEvents and scheduledEvents, their values are what is generated from /bridges/events/actual, and /bridges/events/scheduled',
+        tags: ['api', 'json']
+      }
+    },
+
+    {
+      method: 'GET',
       path: '/bridges/events/actual',
       handler: require('./handlers/get-bridges-actual'),
       config: {
