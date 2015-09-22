@@ -1,24 +1,21 @@
 var http     = require('http');
 var logger   = require('../config/logging');
-var port     = require('../config/config').port;
 var iBridge  = require('../config/config').iBridge;
 var ip       = require('ip');
 
-module .exports = function testPost(bridgeData, sendOptions, callback){
+module .exports = function testPost(bridgeData, options, callback){
   bridgeData = JSON.stringify(bridgeData);
-  if (!sendOptions) sendOptions = {};
-  var
-    options = {
-      hostname: sendOptions.hostname || iBridge.hostname || ip.address(),
-      // "54.191.150.69" for i-bridge
-      port:     sendOptions.port     || port,
-      path:     sendOptions.path     || iBridge.path,
-      method:   sendOptions.method   || iBridge.method,
-      headers:  sendOptions.headers  || iBridge.headers
-    },
-    response = ''
-  ;
+  var response = '';
+
+  if (!options) options = {};
+  options.hostname = options.hostname || iBridge.hostname || ip.address();
+    // "54.191.150.69" for i-bridge
+  options.port     = options.port     || iBridge.port;
+  options.path     = options.path     || iBridge.path ;
+  options.method   = options.method   || iBridge.method;
+  options.headers  = options.headers  || iBridge.headers;
   options.headers["Content-Length"] = bridgeData.length;
+
   var req = http.request(options, function (res) {
     res.setEncoding('utf8');
     var status = res.statusCode;

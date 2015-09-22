@@ -2,11 +2,7 @@ var env     = require('./config.json');
 var ip      = require('ip');
 var argv    = require('minimist')(process.argv.slice(2));
 
-function port() {
-  return argv.p || argv.port || process.env.PORT || 8000;
-}
-
-function environment() {
+var currentEnv = (function environment() {
   var argvEnv = argv.E || argv.env || process.env.NODE_ENV;
   var node_env;
   if (argvEnv === 'production' || argvEnv === 'prod') {
@@ -18,36 +14,34 @@ function environment() {
   }
   return node_env;
 }
+)();
 
-function envVars() {
-  if (process.env.NODE_ENV) {
-    return env[process.env.NODE_ENV];
-  } else {
-    var node_env = environment();
-    return env[node_env];
-  }
+var envVars = require('./config.json')[currentEnv];
+
+function port() {
+  return argv.p || argv.port || process.env.PORT || 8000;
 }
 
 function iBridge() {
-  var tmpIBridge = env.iBridge;
-  if (environment() === 'test') tmpIBridge.hostname = ip.address();
-  return tmpIBridge;
+  return envVars.iBridge;
 }
 
 function parse() {
-  if (environment() === 'test') {
-    return env.parse.production;
-  } else {
-    return env.parse.development;
-  }
+  return envVars.parse;
 }
-var bridges = env.bridges;
+
+function redis() {
+  return envVars.redis;
+}
+
+var bridges = envVars.bridges;
 
 module .exports = {
   port: port(),
-  env: environment(),
-  envVars: envVars(),
+  env: currentEnv,
+  envVars: envVars,
   iBridge: iBridge(),
   parse: parse(),
+  redis: redis(),
   bridges: bridges
 };

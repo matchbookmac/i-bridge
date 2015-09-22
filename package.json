@@ -22,6 +22,7 @@
   "author": "Ian MacDonald & Bob Ellis",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^0.8.5",
     "bluebird": "^2.10.1",
     "boom": "^2.9.0",
     "chalk": "^1.1.1",
@@ -35,6 +36,7 @@
     "lodash": "^3.10.1",
     "lout": "^7.1.0",
     "mysql": "2.8.0",
+    "redis": "^2.0.0",
     "request": "^2.63.0",
     "sequelize": "^3.9.0",
     "socket.io": "^1.3.7",

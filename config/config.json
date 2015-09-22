@@ -1,62 +1,152 @@
 {
-  "iBridge": {
-    "port": 8000,
-    "path": "/bridges/statuses",
-    "method": "POST",
-    "headers": {
-      "Content-Type": "application/json",
-      "Content-Length": 1,
-      "Authorization": "Bearer 1234"
-    }
-  },
-  "parse": {
-    "development" : {
-      "uri": "https://api.parse.com/1/push",
-      "headers": {
-        "X-Parse-Application-Id": "3auqJUgZz2edaX8bUDrB1TRoUaVxPaWZ4gSAFzYq",
-        "X-Parse-REST-API-Key": "3MRH51tSlpsIcfUB2sFuS6o8YLaTSCJuX8NHtl2P",
-        "Content-Type": "application/json"
-      }
-    },
-    "production" : {
-      "uri": "https://api.parse.com/1/push",
-      "headers": {
-        "X-Parse-Application-Id": "3auqJUgZz2edaX8bUDrB1TRoUaVxPaWZ4gSAFzYq",
-        "X-Parse-REST-API-Key": "3MRH51tSlpsIcfUB2sFuS6o8YLaTSCJuX8NHtl2P",
-        "Content-Type": "application/json"
-      }
-    }
-  },
-  "bridges": {
-    "hawthorne": {
-      "status": false,
-      "scheduledLift": null
-    },
-    "morrison": {
-      "status": false,
-      "scheduledLift": null
-    },
-    "burnside": {
-      "status": false,
-      "scheduledLift": null
-    },
-    "broadway": {
-      "status": false,
-      "scheduledLift": null
-    },
-    "cuevas crossing": {
-      "status": false,
-      "scheduledLift": null
-    },
-    "changed": {
-      "bridge": null,
-      "item": null
-    }
-  },
   "development": {
-    "foo": "bar"
+    "redis": {
+      "password": "8524c7ba484f5b3f709cfc4bf0f0b28bf4ccda57627ca6b742304c3d95c2602585c2dedca1a30190f00607ced2e41e07"
+    },
+    "parse": {
+      "uri": "https://api.parse.com/1/push",
+      "headers": {
+        "X-Parse-Application-Id": "3auqJUgZz2edaX8bUDrB1TRoUaVxPaWZ4gSAFzYq",
+        "X-Parse-REST-API-Key": "3MRH51tSlpsIcfUB2sFuS6o8YLaTSCJuX8NHtl2P",
+        "Content-Type": "application/json"
+      }
+    },
+    "iBridge": {
+      "hostname": "127.0.0.1",
+      "port": 8000,
+      "path": "/bridges/statuses",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json",
+        "Content-Length": 1,
+        "Authorization": "Bearer user@example.com:1234"
+      }
+    },
+    "bridges": {
+      "hawthorne": {
+        "status": false,
+        "scheduledLift": null
+      },
+      "morrison": {
+        "status": false,
+        "scheduledLift": null
+      },
+      "burnside": {
+        "status": false,
+        "scheduledLift": null
+      },
+      "broadway": {
+        "status": false,
+        "scheduledLift": null
+      },
+      "cuevas crossing": {
+        "status": false,
+        "scheduledLift": null
+      },
+      "changed": {
+        "bridge": null,
+        "item": null
+      }
+    }
+  },
+  "test": {
+    "redis": {
+      "password": "8524c7ba484f5b3f709cfc4bf0f0b28bf4ccda57627ca6b742304c3d95c2602585c2dedca1a30190f00607ced2e41e07"
+    },
+    "parse" : {
+      "uri": "https://api.parse.com/1/push",
+      "headers": {
+        "X-Parse-Application-Id": "3auqJUgZz2edaX8bUDrB1TRoUaVxPaWZ4gSAFzYq",
+        "X-Parse-REST-API-Key": "3MRH51tSlpsIcfUB2sFuS6o8YLaTSCJuX8NHtl2P",
+        "Content-Type": "application/json"
+      }
+    },
+    "iBridge": {
+      "hostname": "127.0.0.1",
+      "port": 8000,
+      "path": "/bridges/statuses",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json",
+        "Content-Length": 1,
+        "Authorization": "Bearer user@example.com:1234"
+      }
+    },
+    "bridges": {
+      "hawthorne": {
+        "status": false,
+        "scheduledLift": null
+      },
+      "morrison": {
+        "status": false,
+        "scheduledLift": null
+      },
+      "burnside": {
+        "status": false,
+        "scheduledLift": null
+      },
+      "broadway": {
+        "status": false,
+        "scheduledLift": null
+      },
+      "cuevas crossing": {
+        "status": false,
+        "scheduledLift": null
+      },
+      "baileys bridge": {
+        "status": false,
+        "scheduledLift": null
+      },
+      "changed": {
+        "bridge": null,
+        "item": null
+      }
+    }
   },
   "production": {
-    "foo": "bar"
+    "redis": {
+      "password": "8524c7ba484f5b3f709cfc4bf0f0b28bf4ccda57627ca6b742304c3d95c2602585c2dedca1a30190f00607ced2e41e07"
+    },
+    "parse" : {
+      "uri": "https://api.parse.com/1/push",
+      "headers": {
+        "X-Parse-Application-Id": "3auqJUgZz2edaX8bUDrB1TRoUaVxPaWZ4gSAFzYq",
+        "X-Parse-REST-API-Key": "3MRH51tSlpsIcfUB2sFuS6o8YLaTSCJuX8NHtl2P",
+        "Content-Type": "application/json"
+      }
+    },
+    "iBridge": {
+      "hostname": "api.multco.us",
+      "port": 443,
+      "path": "/bridges/statuses",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json",
+        "Content-Length": 1,
+        "Authorization": "Bearer user@example.com:1234"
+      }
+    },
+    "bridges": {
+      "hawthorne": {
+        "status": false,
+        "scheduledLift": null
+      },
+      "morrison": {
+        "status": false,
+        "scheduledLift": null
+      },
+      "burnside": {
+        "status": false,
+        "scheduledLift": null
+      },
+      "broadway": {
+        "status": false,
+        "scheduledLift": null
+      },
+      "changed": {
+        "bridge": null,
+        "item": null
+      }
+    }
   }
 }

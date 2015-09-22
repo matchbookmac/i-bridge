@@ -1,16 +1,15 @@
-require('./config/logging');
 var Hapi            = require('hapi');
 var path            = require('path');
 var fs              = require('fs');
+var bcrypt          = require('bcrypt');
 var util            = require('util');
 var stream          = require('stream');
 var logger          = require('./config/logging');
-var User            = require('./models/index').user;
 var serverConfig    = require('./config/config');
 
 var options = {
   port: serverConfig.port,
-  uri: 'https://api.multco.us:443',
+  uri: 'https://'+serverConfig.iBridge.hostname+':'+serverConfig.port+'',
   routes: {
     cors: true
   }
@@ -26,6 +25,7 @@ var plugins = [
     }
   }
 ];
+// Setup new Hapi server
 var server = new Hapi.Server();
 server.connection(options);
 var io = require('socket.io')(server.listener);
@@ -58,6 +58,18 @@ var eventEmitters = {
 };
 eventEmitters.bridgeSSE.setMaxListeners(0);
 
+// Redis for auth
+var redis = require("redis");
+var redisStore = redis.createClient();
+if (serverConfig.redis.password) {
+  redisStore.auth(serverConfig.redis.password, function (err, res) {
+    if (err) return logger.error('Problem connecting to redis: '+ err);
+    logger.info('Connected to Redis at: '+ redisStore.address);
+  });
+} else {
+  logger.info('Connected to Redis at: '+ redisStore.address);
+}
+
 server.register(plugins, function (err) {
   if (err) logger.error(err);
   server.on('response', function (request) {
@@ -77,15 +89,30 @@ server.register(plugins, function (err) {
 });
 
 server.auth.strategy('simple', 'bearer-access-token', {
+  allowMultipleHeaders: true,
   validateFunc: function (token, callback) {
-    var request = this;
-    var user    = User.findWithToken(token, function (user) {
-      if (user) {
-        callback(null, true, { user: user.email, token: token });
-      } else {
-        callback(null, false, { user: null, token: token });
-      }
+    var credentials = token.split(':');
+    var email = credentials[0];
+    var secret = credentials[1];
+    // Find user by email
+    redisStore.get(email, function (err, hashToken) {
+      if (err) errorResponse(err);
+      // Compare the stored hash with the token provided
+      bcrypt.compare(secret, hashToken, function(err, res) {
+        if (err) errorResponse(err);
+        if (res) {
+          logger.info('User: '+ email +' has authenticated');
+          return callback(null, true, { user: email, token: secret });
+        } else {
+          logger.warn('User: '+ email +' failed authentication');
+          return callback(null, false, { user: email, token: secret });
+        }
+      });
     });
+    function errorResponse(err) {
+      logger.error(err);
+      return callback(null, false, { user: null, token: secret });
+    }
   }
 });
 
