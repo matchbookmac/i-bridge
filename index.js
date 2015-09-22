@@ -70,7 +70,7 @@ server.register(plugins, function (err) {
       request.response.statusCode
     );
     // Ignore AWS load balancer pings so they don't bloat the logs
-    if (remoteAddress != '10.131.1.236' || '10.131.0.75') {
+    if (remoteAddress != '10.131.1.236' && remoteAddress != '10.131.0.75') {
       logger.info(logString);
     }
   });
