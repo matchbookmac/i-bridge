@@ -45,8 +45,9 @@ module.exports = function (eventEmitters) {
                   estimatedLiftTime: joi.date().required()
                 })
               )
-            }))
+            })),
         },
+        cors: false,
         auth: 'simple',
         description: 'Endpoint to receive status updates from a-bridge',
         notes: 'Requires an object with one or more keys, where each key is an object with the keys `status` and `scheduledLift`. `status` is a boolean, and `scheduledLift` is an object with the keys `type`, `estimatedLiftTime`, and `requestTime` Authentication is specified by an access token as a query parameter, i.e. `/bridges/events/actual?access_token=1234`.',
