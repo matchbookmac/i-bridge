@@ -23,7 +23,7 @@ module.exports = function (request, reply) {
     ScheduledEvent.findAll(params)
       .then(function (rows) {
         var response = reply(rows);
-        response.header('Access-Control-Allow-Origin', '*');
+        // response.header('Access-Control-Allow-Origin', '*');
       })
       .catch(errorResponse);
   }

@@ -8,7 +8,13 @@ var logger          = require('./config/logging');
 var User            = require('./models/index').user;
 var serverConfig    = require('./config/config');
 
-var options         = { port: serverConfig.port };
+var options = {
+  port: serverConfig.port,
+  uri: 'https://api.multco.us:443',
+  routes: {
+    cors: true
+  }
+};
 
 var plugins = [
   { register: require('inert') },

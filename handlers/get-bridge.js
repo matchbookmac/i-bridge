@@ -14,6 +14,6 @@ module.exports = function (request, reply) {
       actualCount: bridge.actualCount,
       scheduledCount: bridge.scheduledCount
     });
-    response.header('Access-Control-Allow-Origin', '*');
+    // response.header('Access-Control-Allow-Origin', '*');
   });
 };

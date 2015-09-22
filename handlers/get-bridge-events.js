@@ -38,7 +38,7 @@ module.exports = function (request, reply) {
         actualEvents: results[0],
         scheduledEvents: results[1]
       });
-      response.header('Access-Control-Allow-Origin', '*');
+      // response.header('Access-Control-Allow-Origin', '*');
     }).catch(errorResponse);
   }
 
