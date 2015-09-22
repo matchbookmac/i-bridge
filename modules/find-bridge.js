@@ -16,7 +16,7 @@ module.exports = function findBridge(request, callback) {
       }
     }).then(function (bridge) {
       callback(null, bridge);
-    }).catch(function (error) {
+    }).catch(function (err) {
       callback(err, null);
     });
   } else {
