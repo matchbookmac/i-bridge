@@ -26,7 +26,7 @@ module.exports = function (request, reply) {
       actualParams.limit = limit;
       scheduledParams.limit = limit;
     }
-    // TODO: this doesn't parse if actual or scheduled is not in the path
+
     actualParams = require('../modules/create-date-params')(actualParams, request);
     scheduledParams = require('../modules/create-date-params')(scheduledParams, request);
 
