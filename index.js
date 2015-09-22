@@ -61,14 +61,17 @@ eventEmitters.bridgeSSE.setMaxListeners(0);
 server.register(plugins, function (err) {
   if (err) logger.error(err);
   server.on('response', function (request) {
+    var remoteAddress = request.headers['x-forwarded-for'] || request.info.remoteAddress;
     var logString = util.format("%s [%s] %s %s - %s",
       (new Date()).getTime(),
-      request.headers['x-forwarded-for'] || request.info.remoteAddress,
+      remoteAddress,
       request.method,
       request.url.path,
       request.response.statusCode
     );
-    logger.info(logString);
+    if (remoteAddress !== '10.131.1.236' || '10.131.0.75') {
+      logger.info(logString);
+    }
   });
 });
 
