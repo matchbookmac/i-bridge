@@ -71,7 +71,7 @@ module.exports = function (eventEmitters) {
     {
       method: 'GET',
       path: '/bridges/events',
-      handler: require('./handlers/get-all-events'),
+      handler: require('./handlers/get-bridge-events'),
       config: {
         description: 'Lists all events, both scheduled and actual',
         notes: 'An object with the keys: actualEvents and scheduledEvents, their values are what is generated from /bridges/events/actual, and /bridges/events/scheduled',

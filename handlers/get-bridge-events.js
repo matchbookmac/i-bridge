@@ -15,21 +15,18 @@ module.exports = function (request, reply) {
   function findEvents(err, bridge) {
     if (err) return errorResponse(err);
 
-    var actualParams = {
-      order: 'upTime DESC',
-      where: {
-        bridgeId: bridge.id
-      }
-    };
-    var scheduledParams = {
-      order: 'estimatedLiftTime DESC',
-      where: {
-        bridgeId: bridge.id
-      }
-    };
+    var actualParams = { order: 'upTime DESC' };
+    var scheduledParams = { order: 'estimatedLiftTime DESC' };
 
-    if (limit) actualParams.limit = limit;
-    if (limit) scheduledParams.limit = limit;
+    if (bridge) {
+      scheduledParams.where = { bridgeId: bridge.id };
+      actualParams.where = { bridgeId: bridge.id };
+    }
+    if (limit) {
+      actualParams.limit = limit;
+      scheduledParams.limit = limit;
+    }
+    
     actualParams = require('../modules/create-date-params')(actualParams, request);
     scheduledParams = require('../modules/create-date-params')(scheduledParams, request);
 
