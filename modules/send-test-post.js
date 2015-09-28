@@ -1,7 +1,13 @@
-var injector = require('electrolyte');
 var argv     = require('minimist')(process.argv.slice(2));
-var options  = {};
-var bridges  = require('../config/config').bridges;
+
+var injector = require('electrolyte');
+injector.loader(injector.node('config'));
+injector.loader(injector.node('modules'));
+var mockPost = injector.create('./mock-post');
+var config   = injector.create('config');
+var bridges  = config.bridges;
+
+var options     = {};
 
 var bridge      = argv.b || argv.bridge;
 var hostname    = argv.h || argv.hostname;
@@ -64,6 +70,4 @@ if (path)     options.path     = path;
 if (method)   options.method   = method;
 if (headers)  options.headers  = headers;
 
-injector.loader(injector.node('modules'));
-var mockPost = injector.create('mock-post');
 mockPost(message, options);

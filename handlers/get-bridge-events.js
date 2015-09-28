@@ -1,14 +1,14 @@
 var _       = require('lodash');
 var Promise = require("bluebird");
 
-exports = module.exports = function (logger, db) {
+exports = module.exports = function (logger, db, findBridge, createDateParams) {
   var Bridge         = db.bridge;
   var ActualEvent    = db.actualEvent;
   var ScheduledEvent = db.scheduledEvent;
-  var getBridgeEvents = function (request, reply) {
-    var limit = parseInt(request.params.limit);
+  var getBridgeEvents = function (requestParams, next) {
+    var limit = parseInt(requestParams.limit);
 
-    require('../modules/find-bridge')(request, findEvents);
+    findBridge(requestParams.bridge, findEvents);
 
     function findEvents(err, bridge) {
       if (err) return errorResponse(err);
@@ -25,14 +25,14 @@ exports = module.exports = function (logger, db) {
         scheduledParams.limit = limit;
       }
 
-      actualParams = require('../modules/create-date-params')(actualParams, request);
-      scheduledParams = require('../modules/create-date-params')(scheduledParams, request);
+      actualParams = createDateParams(actualParams, requestParams);
+      scheduledParams = createDateParams(scheduledParams, requestParams);
 
       Promise.all([
         ActualEvent.findAll(actualParams),
         ScheduledEvent.findAll(scheduledParams)
       ]).then(function (results) {
-        var response = reply({
+        next(null, {
           actualEvents: results[0],
           scheduledEvents: results[1]
         });
@@ -40,12 +40,12 @@ exports = module.exports = function (logger, db) {
     }
 
     function errorResponse(err) {
-      reply(boom.badRequest(err));
-      logger.error('There was an error finding events for %s: %s', request.params.bridge, err);
+      next(err, null);
+      logger.error('There was an error finding events for %s: %s', requestParams.bridge, err);
     }
   };
   return getBridgeEvents;
 };
 
 exports['@singleton'] = true;
-exports['@require'] = [ 'logger', 'database' ];
+exports['@require'] = [ 'logger', 'database', 'find-bridge', 'create-date-params' ];

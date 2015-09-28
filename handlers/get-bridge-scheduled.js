@@ -1,10 +1,8 @@
-var              _ = require('lodash');
-var boom           = require('boom');
-var db             = require('../models/index');
-var Bridge         = db.bridge;
-var ScheduledEvent = db.scheduledEvent;
+var _ = require('lodash');
 
-exports = module.exports = function (logger) {
+exports = module.exports = function (logger, db) {
+  var Bridge         = db.bridge;
+  var ScheduledEvent = db.scheduledEvent;
   var getBridgeScheduled = function (request, reply) {
     var limit = parseInt(request.params.limit);
 
@@ -35,4 +33,4 @@ exports = module.exports = function (logger) {
 };
 
 exports['@singleton'] = true;
-exports['@require'] = [ 'logger' ];
+exports['@require'] = [ 'logger', 'database' ];

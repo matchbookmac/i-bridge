@@ -1,9 +1,8 @@
-var _              = require('lodash');
-var db             = require('../models/index');
-var Bridge         = db.bridge;
+var _ = require('lodash');
 
-exports = module.exports = function (logger) {
-  var getBridges = function (request, reply) {
+exports = module.exports = function (logger, db) {
+  var Bridge         = db.bridge;
+  var getBridges = function (next) {
     Bridge.findAll({
       where: {
         name: {
@@ -11,7 +10,7 @@ exports = module.exports = function (logger) {
         }
       }
     }).then(function (rows) {
-      var response = reply(_.map(rows, function (bridge) {
+      next(null, _.map(rows, function (bridge) {
         return {
           name: bridge.name,
           id: bridge.id,
@@ -23,7 +22,7 @@ exports = module.exports = function (logger) {
       }));
     })
     .catch(function (err) {
-      reply(err);
+      next(err, null);
       logger.error('There was an error finding bridges: ' + err);
     });
   };
@@ -31,4 +30,4 @@ exports = module.exports = function (logger) {
 };
 
 exports['@singleton'] = true;
-exports['@require'] = [ 'logger' ];
+exports['@require'] = [ 'logger', 'database' ];

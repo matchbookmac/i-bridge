@@ -1,23 +1,27 @@
-var serverConfig = require('../config/config');
+exports = module.exports = function (serverConfig) {
+  var getSSE = function (request, reply, eventEmitters) {
+    var bridgeStatuses = serverConfig.bridges;
+    var response = reply(eventEmitters.bridgeSSE);
+    response.code(200)
+            .type('text/event-stream')
+            .header('Connection', 'keep-alive')
+            .header('Cache-Control', 'no-cache')
+            .header('Content-Encoding', 'identity')
+            .header('Access-Control-Allow-Origin', '*');
 
-module.exports = function (request, reply, eventEmitters) {
-  var bridgeStatuses = serverConfig.bridges;
-  var response = reply(eventEmitters.bridgeSSE);
-  response.code(200)
-          .type('text/event-stream')
-          .header('Connection', 'keep-alive')
-          .header('Cache-Control', 'no-cache')
-          .header('Content-Encoding', 'identity')
-          .header('Access-Control-Allow-Origin', '*');
+    setTimeout(function () {
+      eventEmitters.bridgeSSE.write('event: bridge data\ndata: ' + JSON.stringify(bridgeStatuses) + '\n\nretry: 1000\n');
+    }, 1000);
 
-  setTimeout(function () {
-    eventEmitters.bridgeSSE.write('event: bridge data\ndata: ' + JSON.stringify(bridgeStatuses) + '\n\nretry: 1000\n');
-  }, 1000);
-
-  var interval = setInterval(function () {
-    eventEmitters.bridgeSSE.write(': stay-alive\n\n');
-  }, 20000);
-  request.once('disconnect', function () {
-    clearInterval(interval);
-  });
+    var interval = setInterval(function () {
+      eventEmitters.bridgeSSE.write(': stay-alive\n\n');
+    }, 20000);
+    request.once('disconnect', function () {
+      clearInterval(interval);
+    });
+  };
+  return getSSE;
 };
+
+exports['@singleton'] = true;
+exports['@require'] = [ 'config' ];

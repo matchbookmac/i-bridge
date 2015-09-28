@@ -1,7 +1,5 @@
-var db             = require('../models/index');
-var ActualEvent    = db.actualEvent;
-
-exports = module.exports = function (logger) {
+exports = module.exports = function (logger, db) {
+  var ActualEvent    = db.actualEvent;
   var getBridgesActual = function (request, reply) {
     var limit = parseInt(request.params.limit);
     var params = { order: 'upTime DESC' };
@@ -20,4 +18,4 @@ exports = module.exports = function (logger) {
 };
 
 exports['@singleton'] = true;
-exports['@require'] = [ 'logger' ];
+exports['@require'] = [ 'logger', 'database' ];

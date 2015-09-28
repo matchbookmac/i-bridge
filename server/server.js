@@ -5,13 +5,9 @@ var bcrypt          = require('bcrypt');
 var util            = require('util');
 var stream          = require('stream');
 var injector        = require('electrolyte');
-var serverConfig    = require('../config/config');
 
-injector.loader(injector.node('handlers'));
 
-var getBridgeActual = injector.create('get-bridge-actual');
-
-exports = module.exports = function (logger) {
+exports = module.exports = function (serverConfig, logger, routes, methods) {
   var options = {
     port: serverConfig.port,
     uri: 'https://'+serverConfig.iBridge.hostname+':'+serverConfig.port+'',
@@ -42,9 +38,6 @@ exports = module.exports = function (logger) {
       partition: 'cache'
     }
   });
-  server.method('getBridgeActual', getBridgeActual, {
-    cache: { expiresIn: 30 * 1000, generateTimeout: 500 }
-  });
   server.connection(options);
   var io = require('socket.io')(server.listener);
   var bridgeEventSocket = io.on('connection', function (socket) {
@@ -70,11 +63,11 @@ exports = module.exports = function (logger) {
     logger.info(logString);
   });
 
-  var eventEmitters = {
+  server.eventEmitters = {
     bridgeEventSocket:  bridgeEventSocket,
     bridgeSSE:          new stream.PassThrough()
   };
-  eventEmitters.bridgeSSE.setMaxListeners(0);
+  server.eventEmitters.bridgeSSE.setMaxListeners(0);
 
   // Redis for auth
   var redis = require("redis");
@@ -127,10 +120,11 @@ exports = module.exports = function (logger) {
     }
   });
 
-  server.route(require('../routes')(eventEmitters));
+  methods(server);
+  routes(server);
 
   return server;
 };
 
 exports['@singleton'] = true;
-exports['@require'] = ['logger'];
+exports['@require'] = [ 'config', 'logger', 'routes', 'methods' ];

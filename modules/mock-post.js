@@ -1,8 +1,8 @@
 var http     = require('http');
-var iBridge  = require('../config/config').iBridge;
 var ip       = require('ip');
 
-exports = module.exports = function (logger) {
+exports = module.exports = function (config, logger) {
+  var iBridge  = config.iBridge;
   var mockPost = function (bridgeData, options, callback){
     bridgeData = JSON.stringify(bridgeData);
     var response = '';
@@ -45,4 +45,4 @@ exports = module.exports = function (logger) {
 };
 
 exports['@singleton'] = true;
-exports['@require'] = [ 'logger' ];
+exports['@require'] = [ 'config', 'logger' ];

@@ -2,7 +2,7 @@ var request  = require('request');
 var _        = require('lodash');
 var strftime = require('strftime');
 
-exports = module.exports = function (logger) {
+exports = module.exports = function (config, logger) {
   var postToParse = function (bridgeStatuses) {
     var changedBridge = bridgeStatuses.changed.bridge;
     var changedItem = bridgeStatuses.changed.item;
@@ -27,7 +27,7 @@ exports = module.exports = function (logger) {
         "sound": "default"
       }
     });
-    var options = require('../config/config').parse;
+    var options = config.parse;
     options.form = data;
 
     function callback(error, response, body) {
@@ -48,4 +48,4 @@ exports = module.exports = function (logger) {
 };
 
 exports['@singleton'] = true;
-exports['@require'] = ['logger'];
+exports['@require'] = [ 'config', 'logger' ];

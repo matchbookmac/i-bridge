@@ -1,11 +1,14 @@
+var injector   = require('electrolyte');
+var findBridge = injector.create('../modules/find-bridge');
+
 exports = module.exports = function (logger) {
-  var getBridge = function (request, reply) {
-    require('../modules/find-bridge')(request, function (err, bridge) {
+  var getBridge = function (bridge, next) {
+    findBridge(bridge, function (err, bridge) {
       if (err) {
-        reply(err);
-        return logger.error('There was an error finding bridge: ' + err);
+        next(err, null);
+        return logger.error('There was an error finding bridge: ', bridge, err);
       }
-      var response = reply({
+      next(null, {
         name: bridge.name,
         id: bridge.id,
         totalUpTime: bridge.totalUpTime,

@@ -36,12 +36,17 @@ function redis() {
 
 var bridges = envVars.bridges;
 
-module .exports = {
-  port: port(),
-  env: currentEnv,
-  envVars: envVars,
-  iBridge: iBridge(),
-  parse: parse(),
-  redis: redis(),
-  bridges: bridges
+exports = module.exports = function () {
+  var config = {
+    port: port(),
+    env: currentEnv,
+    envVars: envVars,
+    iBridge: iBridge(),
+    parse: parse(),
+    redis: redis(),
+    bridges: bridges
+  };
+  return config;
 };
+
+exports['@singleton'] = true;

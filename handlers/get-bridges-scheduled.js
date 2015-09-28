@@ -1,7 +1,5 @@
-var db             = require('../models/index');
-var ScheduledEvent = db.scheduledEvent;
-
-exports = module.exports = function (logger) {
+exports = module.exports = function (logger, db) {
+  var ScheduledEvent = db.scheduledEvent;
   var getBridgesScheduled = function (request, reply) {
     var limit = parseInt(request.params.limit);
     var params = { order: 'estimatedLiftTime DESC' };
@@ -20,4 +18,4 @@ exports = module.exports = function (logger) {
 };
 
 exports['@singleton'] = true;
-exports['@require'] = [ 'logger' ];
+exports['@require'] = [ 'logger', 'database' ];
