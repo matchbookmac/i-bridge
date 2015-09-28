@@ -24,7 +24,7 @@ module .exports = function (bridgeStatuses) {
     ],
     "data": {
       "alert": alert,
-      "sound": ""
+      "sound": "default"
     }
   });
   var options = require('../config/config').parse;
