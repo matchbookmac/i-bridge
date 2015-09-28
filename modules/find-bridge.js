@@ -2,17 +2,17 @@ var _              = require('lodash');
 var db             = require('../models/index');
 var Bridge         = db.bridge;
 
-module.exports = function findBridge(request, callback) {
-  if (request.params.bridge) {
-    if (isNaN(parseInt(request.params.bridge))) {
-      var bridge = '%';
-      _.forIn(request.params.bridge.split(/[\W\d]+/), function (bridgeName) {
-        bridge += (bridgeName+'%');
+module.exports = function findBridge(bridge, callback) {
+  if (bridge) {
+    if (isNaN(parseInt(bridge))) {
+      var bridgeString = '%';
+      _.forIn(bridge.split(/[\W\d]+/), function (bridgeName) {
+        bridgeString += (bridgeName+'%');
       });
       Bridge.findOne({
         where: {
           name: {
-            $like: bridge
+            $like: bridgeString
           }
         }
       }).then(function (bridge) {
@@ -21,7 +21,7 @@ module.exports = function findBridge(request, callback) {
         callback(err, null);
       });
     } else {
-      var bridgeId = parseInt(request.params.bridge);
+      var bridgeId = parseInt(bridge);
       Bridge.findOne({
         where: {
           id: bridgeId

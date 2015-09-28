@@ -1,34 +1,34 @@
 var _              = require('lodash');
 
-module.exports = function createDateParams(params, request) {
-  if (!params) params = {};
+module.exports = function createDateParams(queryParams, requestParams) {
+  if (!queryParams) queryParams = {};
   // RegEx pattern: http://regexr.com/3br9n
   var filter = request.path.match(/(events|actual|scheduled)\/(before|after|between).+/);
   if (filter) {
     filter = _.remove(filter[0].split("/"));
-    var date = new Date(request.params.date);
-    var startDate = new Date(request.params.startDate);
-    var endDate = new Date(request.params.endDate);
+    var date = new Date(requestParams.date);
+    var startDate = new Date(requestParams.startDate);
+    var endDate = new Date(requestParams.endDate);
     var parameterName;
-    if (filter[0] == 'actual' || (filter[0] == 'events' && params.order.includes('upTime'))) {
-      params.where = params.where || { upTime: {} };
+    if (filter[0] == 'actual' || (filter[0] == 'events' && queryParams.order.includes('upTime'))) {
+      queryParams.where = queryParams.where || { upTime: {} };
       parameterName = 'upTime';
-    } else if (filter[0] == 'scheduled' || (filter[0] == 'events' && params.order.includes('estimatedLiftTime'))) {
-      params.where = params.where || { requestTime: {} };
+    } else if (filter[0] == 'scheduled' || (filter[0] == 'events' && queryParams.order.includes('estimatedLiftTime'))) {
+      queryParams.where = queryParams.where || { requestTime: {} };
       parameterName = 'requestTime';
     }
     switch (filter[1]) {
       case "before":
-        params.where[parameterName] = { $lt: date };
+        queryParams.where[parameterName] = { $lt: date };
         break;
       case "after":
-        params.where[parameterName] = { $gt: date };
+        queryParams.where[parameterName] = { $gt: date };
         break;
       case "between":
-        params.where[parameterName] = { $between: [startDate, endDate] };
+        queryParams.where[parameterName] = { $between: [startDate, endDate] };
         break;
       default:
     }
   }
-  return params;
+  return queryParams;
 };

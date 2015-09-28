@@ -1,5 +1,5 @@
+var injector = require('electrolyte');
 var argv     = require('minimist')(process.argv.slice(2));
-var testPost = require('./mock-post');
 var options  = {};
 var bridges  = require('../config/config').bridges;
 
@@ -64,4 +64,6 @@ if (path)     options.path     = path;
 if (method)   options.method   = method;
 if (headers)  options.headers  = headers;
 
-testPost(message, options);
+injector.loader(injector.node('modules'));
+var mockPost = injector.create('mock-post');
+mockPost(message, options);

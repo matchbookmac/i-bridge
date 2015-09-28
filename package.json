@@ -27,6 +27,7 @@
     "boom": "^2.9.0",
     "catbox-redis": "^1.0.5",
     "chalk": "^1.1.1",
+    "electrolyte": "0.0.6",
     "h2o2": "^4.0.1",
     "handlebars": "^3.0.3",
     "hapi": "^10.1.0",

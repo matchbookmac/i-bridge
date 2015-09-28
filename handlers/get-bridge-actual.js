@@ -1,34 +1,37 @@
-var _              = require('lodash');
-var boom           = require('boom');
-var db             = require('../models/index');
-var Bridge         = db.bridge;
-var ActualEvent    = db.actualEvent;
-var logger         = require('../config/logging');
+var _ = require('lodash');
 
-module.exports = function (request, reply) {
-  var limit = parseInt(request.params.limit);
+exports = module.exports = function (logger, db) {
+  var Bridge         = db.bridge;
+  var ActualEvent    = db.actualEvent;
+  var getBridgeActual = function (params, next) {
+    limit = parseInt(params.limit);
 
-  require('../modules/find-bridge')(request, findActualEvents);
+    require('../modules/find-bridge')(params.bridge, findActualEvents);
 
-  function findActualEvents(err, bridge) {
-    if (err) return errorResponse(err);
-    var params = {
-      order: 'upTime DESC',
-      where: {
-        bridgeId: bridge.id
-      }
-    };
-    if (limit) params.limit = limit;
-    params = require('../modules/create-date-params')(params, request);
-    ActualEvent.findAll(params)
-      .then(function (rows) {
-        var response = reply(rows);
-      })
-      .catch(errorResponse);
-  }
+    function findActualEvents(err, bridge) {
+      if (err) return errorResponse(err);
+      var queryParams = {
+        order: 'upTime DESC',
+        where: {
+          bridgeId: bridge.id
+        }
+      };
+      if (limit) queryParams.limit = limit;
+      params = require('../modules/create-date-params')(queryParams, params);
+      ActualEvent.findAll(queryParams)
+        .then(function (rows) {
+          next(null, rows);
+        })
+        .catch(errorResponse);
+    }
 
-  function errorResponse(err) {
-    reply(boom.badRequest(err));
-    logger.error('There was an error finding events for %s: %s', request.params.bridge, err);
-  }
+    function errorResponse(err) {
+      next(err, null);
+      logger.error('There was an error finding events for %s: %s', params.bridge, err);
+    }
+  };
+  return getBridgeActual;
 };
+
+exports['@singleton'] = true;
+exports['@require'] = [ 'logger', 'database' ];
