@@ -11,10 +11,13 @@ var options = {
   port: serverConfig.port,
   uri: 'https://'+serverConfig.iBridge.hostname+':'+serverConfig.port+'',
   routes: {
-    cors: true
+    cors: true,
+    cache: {
+      expiresIn: 30 * 1000,
+      privacy: 'private'
+    }
   }
 };
-
 var plugins = [
   { register: require('inert') },
   { register: require('vision') },
@@ -26,7 +29,14 @@ var plugins = [
   }
 ];
 // Setup new Hapi server
-var server = new Hapi.Server();
+var server = new Hapi.Server({
+  cache: {
+    engine: require('catbox-redis'),
+    host: serverConfig.redis.host,
+    port: serverConfig.redis.port,
+    partition: 'cache'
+  }
+});
 server.connection(options);
 var io = require('socket.io')(server.listener);
 var bridgeEventSocket = io.on('connection', function (socket) {
@@ -61,14 +71,7 @@ eventEmitters.bridgeSSE.setMaxListeners(0);
 // Redis for auth
 var redis = require("redis");
 var redisStore = redis.createClient(serverConfig.redis.port, serverConfig.redis.host);
-if (serverConfig.redis.password) {
-  redisStore.auth(serverConfig.redis.password, function (err, res) {
-    if (err) return logger.error('Problem connecting to redis: '+ err);
-    logger.info('Connected to Redis at: '+ redisStore.address);
-  });
-} else {
-  logger.info('Connected to Redis at: '+ redisStore.address);
-}
+logger.info('Connected to Redis at: '+ redisStore.address);
 
 server.register(plugins, function (err) {
   if (err) logger.error(err);
