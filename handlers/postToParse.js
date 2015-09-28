@@ -9,9 +9,9 @@ module .exports = function (bridgeStatuses) {
   var alert, status, alertDate;
   if (changedItem === 'status') {
     if (bridgeStatuses[changedBridge].status) {
-      status = ': lift started, traffic blocked.';
+      status = ': lift started.';
     } else {
-      status = ': lift complete, open for traffic.';
+      status = ': lift complete.';
     }
     alert = _.startCase(changedBridge) + status;
   } else {
