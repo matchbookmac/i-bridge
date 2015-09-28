@@ -23,7 +23,8 @@ module .exports = function (bridgeStatuses) {
       _.capitalize(_.camelCase(changedBridge))
     ],
     "data": {
-      "alert": alert
+      "alert": alert,
+      "sound": ""
     }
   });
   var options = require('../config/config').parse;
