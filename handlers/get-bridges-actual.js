@@ -1,16 +1,16 @@
-exports = module.exports = function (logger, db) {
+exports = module.exports = function (logger, db, createDateParams) {
   var ActualEvent    = db.actualEvent;
-  var getBridgesActual = function (request, reply) {
+  var getBridgesActual = function (request, next) {
     var limit = parseInt(request.params.limit);
     var params = { order: 'upTime DESC' };
     if (limit) params.limit = limit;
-    params = require('../modules/create-date-params')(params, request);
+    params = createDateParams(params, request);
     ActualEvent.findAll(params)
       .then(function (rows) {
-        var response = reply(rows);
+        var response = next(null, rows);
       })
       .catch(function (err) {
-        reply(err);
+        next(err, null);
         logger.error('There was an error finding bridge events: ' + err);
       });
   };
@@ -18,4 +18,4 @@ exports = module.exports = function (logger, db) {
 };
 
 exports['@singleton'] = true;
-exports['@require'] = [ 'logger', 'database' ];
+exports['@require'] = [ 'logger', 'database', 'create-date-params' ];

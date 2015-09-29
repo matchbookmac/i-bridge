@@ -5,10 +5,10 @@ exports = module.exports = function (logger, db, findBridge, createDateParams) {
   var Bridge         = db.bridge;
   var ActualEvent    = db.actualEvent;
   var ScheduledEvent = db.scheduledEvent;
-  var getBridgeEvents = function (requestParams, next) {
-    var limit = parseInt(requestParams.limit);
+  var getBridgeEvents = function (request, next) {
+    var limit = parseInt(request.params.limit);
 
-    findBridge(requestParams.bridge, findEvents);
+    findBridge(request.params.bridge, findEvents);
 
     function findEvents(err, bridge) {
       if (err) return errorResponse(err);
@@ -25,8 +25,8 @@ exports = module.exports = function (logger, db, findBridge, createDateParams) {
         scheduledParams.limit = limit;
       }
 
-      actualParams = createDateParams(actualParams, requestParams);
-      scheduledParams = createDateParams(scheduledParams, requestParams);
+      actualParams = createDateParams(actualParams, request);
+      scheduledParams = createDateParams(scheduledParams, request);
 
       Promise.all([
         ActualEvent.findAll(actualParams),
@@ -41,7 +41,7 @@ exports = module.exports = function (logger, db, findBridge, createDateParams) {
 
     function errorResponse(err) {
       next(err, null);
-      logger.error('There was an error finding events for %s: %s', requestParams.bridge, err);
+      logger.error('There was an error finding events for %s: %s', request.params.bridge, err);
     }
   };
   return getBridgeEvents;

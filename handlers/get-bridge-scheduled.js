@@ -1,12 +1,12 @@
 var _ = require('lodash');
 
-exports = module.exports = function (logger, db) {
+exports = module.exports = function (logger, db, findBridge, createDateParams) {
   var Bridge         = db.bridge;
   var ScheduledEvent = db.scheduledEvent;
-  var getBridgeScheduled = function (request, reply) {
+  var getBridgeScheduled = function (request, next) {
     var limit = parseInt(request.params.limit);
 
-    require('../modules/find-bridge')(request, findScheduledEvents);
+    findBridge(request.params.bridge, findScheduledEvents);
 
     function findScheduledEvents(err, bridge) {
       if (err) return errorResponse(err);
@@ -17,15 +17,15 @@ exports = module.exports = function (logger, db) {
         }
       };
       if (limit) params.limit = limit;
-      params = require('../modules/create-date-params')(params, request);
+      params = createDateParams(params, request);
       ScheduledEvent.findAll(params)
         .then(function (rows) {
-          var response = reply(rows);
+          var response = next(null, rows);
         })
         .catch(errorResponse);
     }
     function errorResponse(err) {
-      reply(boom.badRequest(err));
+      next(err, null);
       logger.error('There was an error finding events for '+ request.params.bridge +': '+ err);
     }
   };
@@ -33,4 +33,4 @@ exports = module.exports = function (logger, db) {
 };
 
 exports['@singleton'] = true;
-exports['@require'] = [ 'logger', 'database' ];
+exports['@require'] = [ 'logger', 'database', 'find-bridge', 'create-date-params' ];

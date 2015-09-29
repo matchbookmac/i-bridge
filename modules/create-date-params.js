@@ -1,15 +1,15 @@
 var _ = require('lodash');
 
 exports = module.exports = function () {
-  function createDateParams(queryParams, requestParams) {
+  function createDateParams(queryParams, request) {
     if (!queryParams) queryParams = {};
     // RegEx pattern: http://regexr.com/3br9n
     var filter = request.path.match(/(events|actual|scheduled)\/(before|after|between).+/);
     if (filter) {
       filter = _.remove(filter[0].split("/"));
-      var date = new Date(requestParams.date);
-      var startDate = new Date(requestParams.startDate);
-      var endDate = new Date(requestParams.endDate);
+      var date = new Date(request.params.date);
+      var startDate = new Date(request.params.startDate);
+      var endDate = new Date(request.params.endDate);
       var parameterName;
       if (filter[0] == 'actual' || (filter[0] == 'events' && queryParams.order.includes('upTime'))) {
         queryParams.where = queryParams.where || { upTime: {} };

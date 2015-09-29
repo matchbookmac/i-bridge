@@ -103,7 +103,7 @@ exports = module.exports = function (logger, handlers) {
         method: 'GET',
         path: '/bridges/events',
         handler: function (request, reply) {
-          server.methods.getBridgeEvents(request.params, function (err, result) {
+          server.methods.getBridgeEvents(request, function (err, result) {
             if (err) {
               reply(boom.badRequest(err));
             } else {
@@ -121,7 +121,15 @@ exports = module.exports = function (logger, handlers) {
       {
         method: 'GET',
         path: '/bridges/events/before/{date*}',
-        handler: require('../handlers/get-bridge-events'),
+        handler: function (request, reply) {
+          server.methods.getBridgeEvents(request, function (err, result) {
+            if (err) {
+              reply(boom.badRequest(err));
+            } else {
+              reply(result);
+            }
+          });
+        },
         config: {
           validate: {
             params: {
@@ -137,7 +145,15 @@ exports = module.exports = function (logger, handlers) {
       {
         method: 'GET',
         path: '/bridges/events/after/{date*}',
-        handler: require('../handlers/get-bridge-events'),
+        handler: function (request, reply) {
+          server.methods.getBridgeEvents(request, function (err, result) {
+            if (err) {
+              reply(boom.badRequest(err));
+            } else {
+              reply(result);
+            }
+          });
+        },
         config: {
           validate: {
             params: {
@@ -153,7 +169,15 @@ exports = module.exports = function (logger, handlers) {
       {
         method: 'GET',
         path: '/bridges/events/between/{startDate}/{endDate*}',
-        handler: require('../handlers/get-bridge-events'),
+        handler: function (request, reply) {
+          server.methods.getBridgeEvents(request, function (err, result) {
+            if (err) {
+              reply(boom.badRequest(err));
+            } else {
+              reply(result);
+            }
+          });
+        },
         config: {
           validate: {
             params: {
@@ -170,7 +194,15 @@ exports = module.exports = function (logger, handlers) {
       {
         method: 'GET',
         path: '/bridges/events/actual',
-        handler: require('../handlers/get-bridges-actual'),
+        handler: function (request, reply) {
+          server.methods.getBridgesActual(request, function (err, result) {
+            if (err) {
+              reply(boom.badRequest(err));
+            } else {
+              reply(result);
+            }
+          });
+        },
         config: {
           description: 'Lists actual bridge lift events in a fancy view',
           notes: 'Array of objects with the keys `bridge`, `upTime`, and `downTime`',
@@ -181,7 +213,15 @@ exports = module.exports = function (logger, handlers) {
       {
         method: 'GET',
         path: '/bridges/events/actual/{limit*}',
-        handler: require('../handlers/get-bridges-actual'),
+        handler: function (request, reply) {
+          server.methods.getBridgesActual(request, function (err, result) {
+            if (err) {
+              reply(boom.badRequest(err));
+            } else {
+              reply(result);
+            }
+          });
+        },
         config: {
           validate: {
             params: {
@@ -197,7 +237,15 @@ exports = module.exports = function (logger, handlers) {
       {
         method: 'GET',
         path: '/bridges/events/actual/before/{date*}',
-        handler: require('../handlers/get-bridges-actual'),
+        handler: function (request, reply) {
+          server.methods.getBridgesActual(request, function (err, result) {
+            if (err) {
+              reply(boom.badRequest(err));
+            } else {
+              reply(result);
+            }
+          });
+        },
         config: {
           validate: {
             params: {
@@ -213,7 +261,15 @@ exports = module.exports = function (logger, handlers) {
       {
         method: 'GET',
         path: '/bridges/events/actual/after/{date*}',
-        handler: require('../handlers/get-bridges-actual'),
+        handler: function (request, reply) {
+          server.methods.getBridgesActual(request, function (err, result) {
+            if (err) {
+              reply(boom.badRequest(err));
+            } else {
+              reply(result);
+            }
+          });
+        },
         config: {
           validate: {
             params: {
@@ -229,7 +285,15 @@ exports = module.exports = function (logger, handlers) {
       {
         method: 'GET',
         path: '/bridges/events/actual/between/{startDate}/{endDate*}',
-        handler: require('../handlers/get-bridges-actual'),
+        handler: function (request, reply) {
+          server.methods.getBridgesActual(request, function (err, result) {
+            if (err) {
+              reply(boom.badRequest(err));
+            } else {
+              reply(result);
+            }
+          });
+        },
         config: {
           validate: {
             params: {
@@ -270,7 +334,15 @@ exports = module.exports = function (logger, handlers) {
       {
         method: 'GET',
         path: '/bridges/{bridge}/events',
-        handler: require('../handlers/get-bridge-events'),
+        handler: function (request, reply) {
+          server.methods.getBridgeEvents(request, function (err, result) {
+            if (err) {
+              reply(boom.badRequest(err));
+            } else {
+              reply(result);
+            }
+          });
+        },
         config: {
           validate: {
             params: {
@@ -286,7 +358,15 @@ exports = module.exports = function (logger, handlers) {
       {
         method: 'GET',
         path: '/bridges/{bridge}/events/before/{date*}',
-        handler: require('../handlers/get-bridge-events'),
+        handler: function (request, reply) {
+          server.methods.getBridgeEvents(request, function (err, result) {
+            if (err) {
+              reply(boom.badRequest(err));
+            } else {
+              reply(result);
+            }
+          });
+        },
         config: {
           validate: {
             params: {
@@ -303,7 +383,15 @@ exports = module.exports = function (logger, handlers) {
       {
         method: 'GET',
         path: '/bridges/{bridge}/events/after/{date*}',
-        handler: require('../handlers/get-bridge-events'),
+        handler: function (request, reply) {
+          server.methods.getBridgeEvents(request, function (err, result) {
+            if (err) {
+              reply(boom.badRequest(err));
+            } else {
+              reply(result);
+            }
+          });
+        },
         config: {
           validate: {
             params: {
@@ -320,7 +408,15 @@ exports = module.exports = function (logger, handlers) {
       {
         method: 'GET',
         path: '/bridges/{bridge}/events/between/{startDate}/{endDate*}',
-        handler: require('../handlers/get-bridge-events'),
+        handler: function (request, reply) {
+          server.methods.getBridgeEvents(request, function (err, result) {
+            if (err) {
+              reply(boom.badRequest(err));
+            } else {
+              reply(result);
+            }
+          });
+        },
         config: {
           validate: {
             params: {
@@ -339,7 +435,7 @@ exports = module.exports = function (logger, handlers) {
         method: 'GET',
         path: '/bridges/{bridge}/events/actual/{limit*}',
         handler: function (request, reply) {
-          server.methods.getBridgeActual(request.params, function (err, result) {
+          server.methods.getBridgeActual(request, function (err, result) {
             if (err) {
               reply(boom.badRequest(err));
             } else {
@@ -350,6 +446,7 @@ exports = module.exports = function (logger, handlers) {
         config: {
           validate: {
             params: {
+              bridge: joi.string().allow(bridgeOptions),
               limit: joi.number().integer()
             }
           },
@@ -364,7 +461,7 @@ exports = module.exports = function (logger, handlers) {
         method: 'GET',
         path: '/bridges/{bridge}/events/actual/before/{date*}',
         handler: function (request, reply) {
-          server.methods.getBridgeActual(request.params, function (err, result) {
+          server.methods.getBridgeActual(request, function (err, result) {
             if (err) {
               reply(boom.badRequest(err));
             } else {
@@ -389,7 +486,7 @@ exports = module.exports = function (logger, handlers) {
         method: 'GET',
         path: '/bridges/{bridge}/events/actual/after/{date*}',
         handler: function (request, reply) {
-          server.methods.getBridgeActual(request.params, function (err, result) {
+          server.methods.getBridgeActual(request, function (err, result) {
             if (err) {
               reply(boom.badRequest(err));
             } else {
@@ -414,7 +511,7 @@ exports = module.exports = function (logger, handlers) {
         method: 'GET',
         path: '/bridges/{bridge}/events/actual/between/{startDate}/{endDate*}',
         handler: function (request, reply) {
-          server.methods.getBridgeActual(request.params, function (err, result) {
+          server.methods.getBridgeActual(request, function (err, result) {
             if (err) {
               reply(boom.badRequest(err));
             } else {
@@ -439,7 +536,15 @@ exports = module.exports = function (logger, handlers) {
       {
         method: 'GET',
         path: '/bridges/events/scheduled',
-        handler: require('../handlers/get-bridges-scheduled'),
+        handler: function (request, reply) {
+          server.methods.getBridgesScheduled(request, function (err, result) {
+            if (err) {
+              reply(boom.badRequest(err));
+            } else {
+              reply(result);
+            }
+          });
+        },
         config: {
           // auth: 'simple',
           description: 'Lists scheduled bridge lift events from l-bridge in fancy view',
@@ -451,7 +556,15 @@ exports = module.exports = function (logger, handlers) {
       {
         method: 'GET',
         path: '/bridges/events/scheduled/{limit*}',
-        handler: require('../handlers/get-bridges-scheduled'),
+        handler: function (request, reply) {
+          server.methods.getBridgesScheduled(request, function (err, result) {
+            if (err) {
+              reply(boom.badRequest(err));
+            } else {
+              reply(result);
+            }
+          });
+        },
         config: {
           validate: {
             params: {
@@ -468,7 +581,15 @@ exports = module.exports = function (logger, handlers) {
       {
         method: 'GET',
         path: '/bridges/events/scheduled/before/{date*}',
-        handler: require('../handlers/get-bridges-scheduled'),
+        handler: function (request, reply) {
+          server.methods.getBridgesScheduled(request, function (err, result) {
+            if (err) {
+              reply(boom.badRequest(err));
+            } else {
+              reply(result);
+            }
+          });
+        },
         config: {
           validate: {
             params: {
@@ -484,7 +605,15 @@ exports = module.exports = function (logger, handlers) {
       {
         method: 'GET',
         path: '/bridges/events/scheduled/after/{date*}',
-        handler: require('../handlers/get-bridges-scheduled'),
+        handler: function (request, reply) {
+          server.methods.getBridgesScheduled(request, function (err, result) {
+            if (err) {
+              reply(boom.badRequest(err));
+            } else {
+              reply(result);
+            }
+          });
+        },
         config: {
           validate: {
             params: {
@@ -500,7 +629,15 @@ exports = module.exports = function (logger, handlers) {
       {
         method: 'GET',
         path: '/bridges/events/scheduled/between/{startDate}/{endDate*}',
-        handler: require('../handlers/get-bridges-scheduled'),
+        handler: function (request, reply) {
+          server.methods.getBridgesScheduled(request, function (err, result) {
+            if (err) {
+              reply(boom.badRequest(err));
+            } else {
+              reply(result);
+            }
+          });
+        },
         config: {
           validate: {
             params: {
@@ -517,7 +654,15 @@ exports = module.exports = function (logger, handlers) {
       {
         method: 'GET',
         path: '/bridges/{bridge}/events/scheduled/{limit*}',
-        handler: require('../handlers/get-bridge-scheduled'),
+        handler: function (request, reply) {
+          server.methods.getBridgeScheduled(request, function (err, result) {
+            if (err) {
+              reply(boom.badRequest(err));
+            } else {
+              reply(result);
+            }
+          });
+        },
         config: {
           validate: {
             params: {
@@ -535,7 +680,15 @@ exports = module.exports = function (logger, handlers) {
       {
         method: 'GET',
         path: '/bridges/{bridge}/events/scheduled/before/{date*}',
-        handler: require('../handlers/get-bridge-scheduled'),
+        handler: function (request, reply) {
+          server.methods.getBridgeScheduled(request, function (err, result) {
+            if (err) {
+              reply(boom.badRequest(err));
+            } else {
+              reply(result);
+            }
+          });
+        },
         config: {
           validate: {
             params: {
@@ -552,7 +705,15 @@ exports = module.exports = function (logger, handlers) {
       {
         method: 'GET',
         path: '/bridges/{bridge}/events/scheduled/after/{date*}',
-        handler: require('../handlers/get-bridge-scheduled'),
+        handler: function (request, reply) {
+          server.methods.getBridgeScheduled(request, function (err, result) {
+            if (err) {
+              reply(boom.badRequest(err));
+            } else {
+              reply(result);
+            }
+          });
+        },
         config: {
           validate: {
             params: {
@@ -569,7 +730,15 @@ exports = module.exports = function (logger, handlers) {
       {
         method: 'GET',
         path: '/bridges/{bridge}/events/scheduled/between/{startDate}/{endDate*}',
-        handler: require('../handlers/get-bridge-scheduled'),
+        handler: function (request, reply) {
+          server.methods.getBridgeScheduled(request, function (err, result) {
+            if (err) {
+              reply(boom.badRequest(err));
+            } else {
+              reply(result);
+            }
+          });
+        },
         config: {
           validate: {
             params: {
