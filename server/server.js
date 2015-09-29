@@ -1,6 +1,6 @@
 var Hapi = require('hapi');
 
-exports = module.exports = function (serverConfig, logger, routes, methods, sockets, plugins, onResponse, auth) {
+exports = module.exports = function (serverConfig, routes, methods, sockets, plugins, onResponse, auth) {
   // Setup new Hapi server
   var server = new Hapi.Server({
     cache: {
@@ -22,7 +22,7 @@ exports = module.exports = function (serverConfig, logger, routes, methods, sock
       }
     }
   });
-  
+
   // Setup server with modular components. The order of these does matter
   sockets(server);
   plugins(server);
@@ -35,4 +35,4 @@ exports = module.exports = function (serverConfig, logger, routes, methods, sock
 };
 
 exports['@singleton'] = true;
-exports['@require'] = [ 'config', 'logger', 'routes', 'methods', 'sockets', 'plugins', 'response-log', 'auth' ];
+exports['@require'] = [ 'config', 'routes', 'methods', 'sockets', 'plugins', 'response-log', 'auth' ];
