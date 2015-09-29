@@ -1,7 +1,7 @@
 {
-  "name": "test-snmp-api",
+  "name": "Multnomah County Bridge Data API",
   "version": "0.0.1",
-  "description": "Test API for receiving posts from snmp relay and providing them to a web api",
+  "description": "API for Multnomah County moveable bridge data",
   "main": "index.js",
   "scripts": {
     "test": "gulp test && mocha --reporter nyan",
@@ -15,8 +15,8 @@
     "url": "https://multco.git.beanstalkapp.com/a-bridgeapp.git"
   },
   "keywords": [
-    "test",
-    "snmp",
+    "multco",
+    "bridges",
     "api"
   ],
   "author": "Ian MacDonald & Bob Ellis",

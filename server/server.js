@@ -6,7 +6,6 @@ var util            = require('util');
 var stream          = require('stream');
 var injector        = require('electrolyte');
 
-
 exports = module.exports = function (serverConfig, logger, routes, methods) {
   var options = {
     port: serverConfig.port,
