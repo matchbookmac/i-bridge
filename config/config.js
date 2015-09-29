@@ -1,4 +1,3 @@
-var env     = require('./config.json');
 var ip      = require('ip');
 var argv    = require('minimist')(process.argv.slice(2));
 

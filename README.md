@@ -1,61 +1,93 @@
 ## Requirements
 
-- Node.js >= 0.10.x
+- Node.js >= 4.0.0
   - `sudo apt-get nodejs` on ubuntu
-- npm >= 1.4.28
+- npm >= 2.14.2
 - mySQL 5.6
+- Redis
 
 ## Deployment
 
-For "deploying" on a-bridge (a-bridge.internal.mcix.us)
+For "deploying" on i-bridge (i-bridge.internal.mcix.us)
+
+If i-bridge is already configured and has production code:
+
+```console
+cd /opt/i-bridge
+sudo git pull
+sudo chown -R www-data:www-data .
+sudo npm i
+npm restart
+```
 
 If starting from scratch:
 
 ```console
-git clone https://multco.git.beanstalkapp.com/a-bridgeapp.git
-cd a-bridgeapp
-npm install
-npm install -g forever nodemon jshint sequelize-cli gulp
+cd /opt
+git clone https://multco.git.beanstalkapp.com/i-bridgeapp.git i-bridge
+sudo chown -R www-data:www-data i-bridge/
+cd i-bridge/
+sudo npm install
+sudo npm install -g jshint sequelize-cli gulp
 ```
 
-We are using upstart to run the node server as a daemon in production. Those commands are used for `npm run {start/stop}`.
+We are using upstart to run the node server as a daemon in production. Those commands are used for `npm run {start/stop/restart}`.
+
+The upstart file is in `/etc/init/i-bridge.conf`
+```shell
+#!upstart
+# using upstart http://upstart.ubuntu.com/getting-started.html and node forever  https://github.com/nodejitsu/forever/
+
+description "i-bridge node app"
+author      "Multnomah County"
+
+start on runlevel [2345]
+stop on runlevel [!2345]
+
+respawn
+respawn limit 20 5
+
+limit nofile 32768 32768
+
+script
+    export HOME="/root"
+    chdir /opt/i-bridge
+    exec sudo -u www-data PORT=8080 NODE_ENV=production /usr/local/bin/node /opt/i-bridge/index.js >> /opt/i-bridge/logs/app.log 2>&1
+end script
+
+pre-start script
+    echo "`date -u +%Y-%m-%dT%T.%3NZ`: starting" >> /opt/i-bridge/logs/app.log
+end script
+
+pre-stop script
+    echo "[`date -u +%Y-%m-%dT%T.%3NZ`]: stopping" >> /opt/i-bridge/logs/app.log
+end script
+```
 
 ### Start server:
 
 *Production:*
 ```console
-sudo service node-i-bridge start
+sudo start i-bridge
 ```
 or after making changes:
 ```console
-sudo service node-i-bridge restart
+sudo stop i-bridge
+sudo start i-bridge
+```
+OR
+```console
+npm restart
 ```
 
-*Development (with jshint):*
+*Development (with jshint and nodemon):*
 ```console
 npm start
-```
-
-### Available Tasks
-A list of tasks available to make your life easier
-
-```console
-npm test
-npm start
-npm run-script prod-start
-npm stop
-gulp db:create
-gulp db:drop
-gulp db:migrate
-gulp db:migrate:production
-gulp db:test:prepare
-gulp db:seed
-gulp db:seed:production
 ```
 
 ### Testing:
 
-#### Run test suite:
+<!-- #### Run test suite:
 
 If running for the first time, or on a new instance of the server:
 ```console
@@ -66,9 +98,9 @@ Then
 
 ```console
 npm test
-```
+``` -->
 
-#### To send a test post to a-bridge:
+#### To send a test post to i-bridge:
 
 *Bridge Up*
 ```console
@@ -123,7 +155,7 @@ The following options are available only for scheduled event mocks.
 
                     ~~ HTTP POST request options ~~
 
--h | --hostname  : IP Address for where a-bridge instance is located.
+-h | --hostname  : IP Address for where i-bridge instance is located.
                    Default is the ip for your machine.
 -H | --headers   : Headers for HTTP method. Defaults are:
 
@@ -151,13 +183,6 @@ Any other arguments without `-` or `--` will be sent as an array of values assig
 Extraneous options with `-` or `--` that are not listed above will be ignored.
 ```
 
-<!-- TODO
-push notifications for cordova
-move sockets to i-bridge
-lock up i and a bridge
-async functions for l-bridge and others
-rip out mobile, users, and index routes
-create splash or re-route index page -->
 
 Testing auth strategy
 
