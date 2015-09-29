@@ -1,5 +1,5 @@
 {
-  "name": "Multnomah County Bridge Data API",
+  "name": "multco.us-bridge-API",
   "version": "0.0.1",
   "description": "API for Multnomah County moveable bridge data",
   "main": "index.js",
