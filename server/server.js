@@ -11,11 +11,11 @@ exports = module.exports = function (serverConfig, logger, routes, methods) {
     port: serverConfig.port,
     uri: 'https://'+serverConfig.iBridge.hostname+':'+serverConfig.port+'',
     routes: {
-      cors: true,
-      cache: {
-        expiresIn: 30 * 1000,
-        privacy: 'private'
-      }
+      cors: true
+      // cache: {
+      //   expiresIn: 30 * 1000,
+      //   privacy: 'private'
+      // }
     }
   };
   var plugins = [
@@ -53,8 +53,7 @@ exports = module.exports = function (serverConfig, logger, routes, methods) {
     });
 
     socket.emit('bridge data', serverConfig.bridges);
-    var logString = util.format("%s [%s] %s sent from %s",
-      (new Date()).getTime(),
+    var logString = util.format("[%s] %s sent from %s",
       socket.handshake.headers['x-forwarded-for'] || socket.handshake.address,
       "socket",
       socket.handshake.headers.referer
@@ -77,8 +76,7 @@ exports = module.exports = function (serverConfig, logger, routes, methods) {
     if (err) logger.error(err);
     server.on('response', function (request) {
       var remoteAddress = request.headers['x-forwarded-for'] || request.info.remoteAddress;
-      var logString = util.format("%s [%s] %s %s - %s",
-        (new Date()).getTime(),
+      var logString = util.format("[%s] %s %s - %s",
         remoteAddress,
         request.method,
         request.url.path,
