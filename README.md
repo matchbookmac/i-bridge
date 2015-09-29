@@ -19,6 +19,17 @@ sudo chown -R www-data:www-data .
 sudo npm i
 npm restart
 ```
+To make this a little easier, you can write a function in your ~/.profile to take car of this automatically:
+```shell
+deploy ()
+{
+  cd /opt/i-bridge
+  sudo git pull
+  sudo chown -R www-data:www-data .
+  sudo npm i
+  npm restart
+}
+```
 
 If starting from scratch:
 
