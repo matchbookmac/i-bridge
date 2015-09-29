@@ -113,7 +113,7 @@ curl -H "Authorization: Bearer user@example.com:1234" http://localhost:8000/brid
 ```
 
 In prod, the same will work at https://api.multco.us/bridges, but the auth email:token combo is:
-multco-developer@multco.us:dec240df75102ea88e6074e509d96511
+multco-developer@multco.us:2966e6828420dae37f4f616e74941a7e
 
 #### To send a test post to i-bridge:
 
