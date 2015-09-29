@@ -37,7 +37,7 @@ exports = module.exports = function (logger, handlers) {
           },
           description: 'Server-Sent events outlet',
           notes: 'Follows: https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events.\n Emits an `event: bridge data` when first connected to, and a `bridge data` event when the status of a bridge changes. The `bridge data` event is followed by a `data: {JSON}` line containing the bridge event data. There is a stay-alive event every 20s as: `: stay-alive\n\n`.',
-          tags: ['auth', 'notification']
+          tags: ['notification']
         }
       },
 
@@ -93,6 +93,7 @@ exports = module.exports = function (logger, handlers) {
           });
         },
         config: {
+          auth: 'simple',
           description: 'Array of all bridges',
           notes: 'Derived from unique entries for bridge name in bridge events',
           tags: ['api', 'json']
@@ -112,6 +113,7 @@ exports = module.exports = function (logger, handlers) {
           });
         },
         config: {
+          auth: 'simple',
           description: 'Lists all events, both scheduled and actual',
           notes: 'An object with the keys: actualEvents and scheduledEvents, their values are what is generated from /bridges/events/actual, and /bridges/events/scheduled',
           tags: ['api', 'json']
@@ -131,6 +133,7 @@ exports = module.exports = function (logger, handlers) {
           });
         },
         config: {
+          auth: 'simple',
           validate: {
             params: {
               date: joi.date()
@@ -155,6 +158,7 @@ exports = module.exports = function (logger, handlers) {
           });
         },
         config: {
+          auth: 'simple',
           validate: {
             params: {
               date: joi.date()
@@ -179,6 +183,7 @@ exports = module.exports = function (logger, handlers) {
           });
         },
         config: {
+          auth: 'simple',
           validate: {
             params: {
               startDate: joi.date(),
@@ -204,6 +209,7 @@ exports = module.exports = function (logger, handlers) {
           });
         },
         config: {
+          auth: 'simple',
           description: 'Lists actual bridge lift events in a fancy view',
           notes: 'Array of objects with the keys `bridge`, `upTime`, and `downTime`',
           tags: ['api', 'json']
@@ -223,6 +229,7 @@ exports = module.exports = function (logger, handlers) {
           });
         },
         config: {
+          auth: 'simple',
           validate: {
             params: {
               limit: joi.number().integer()
@@ -247,6 +254,7 @@ exports = module.exports = function (logger, handlers) {
           });
         },
         config: {
+          auth: 'simple',
           validate: {
             params: {
               date: joi.date()
@@ -271,6 +279,7 @@ exports = module.exports = function (logger, handlers) {
           });
         },
         config: {
+          auth: 'simple',
           validate: {
             params: {
               date: joi.date()
@@ -295,6 +304,7 @@ exports = module.exports = function (logger, handlers) {
           });
         },
         config: {
+          auth: 'simple',
           validate: {
             params: {
               startDate: joi.date(),
@@ -320,6 +330,7 @@ exports = module.exports = function (logger, handlers) {
           });
         },
         config: {
+          auth: 'simple',
           validate: {
             params: {
               bridge: joi.string().valid(bridgeOptions)
@@ -344,6 +355,7 @@ exports = module.exports = function (logger, handlers) {
           });
         },
         config: {
+          auth: 'simple',
           validate: {
             params: {
               bridge: joi.string().allow(bridgeOptions)
@@ -368,6 +380,7 @@ exports = module.exports = function (logger, handlers) {
           });
         },
         config: {
+          auth: 'simple',
           validate: {
             params: {
               bridge: joi.string().allow(bridgeOptions),
@@ -393,6 +406,7 @@ exports = module.exports = function (logger, handlers) {
           });
         },
         config: {
+          auth: 'simple',
           validate: {
             params: {
               bridge: joi.string().allow(bridgeOptions),
@@ -418,6 +432,7 @@ exports = module.exports = function (logger, handlers) {
           });
         },
         config: {
+          auth: 'simple',
           validate: {
             params: {
               bridge: joi.string().allow(bridgeOptions),
@@ -444,13 +459,13 @@ exports = module.exports = function (logger, handlers) {
           });
         },
         config: {
+          auth: 'simple',
           validate: {
             params: {
               bridge: joi.string().allow(bridgeOptions),
               limit: joi.number().integer()
             }
           },
-          // auth: 'simple',
           description: 'Returns last x lift events for given bridge if limit param is provided. If limit param is not provided, it returns all entries. Non-numbers are ignored',
           notes: 'Authentication is specified by an access token as a query parameter, i.e. `/bridges/events/actual?access_token=1234`.',
           tags: ['api', 'json']
@@ -470,6 +485,7 @@ exports = module.exports = function (logger, handlers) {
           });
         },
         config: {
+          auth: 'simple',
           validate: {
             params: {
               bridge: joi.string().allow(bridgeOptions),
@@ -495,6 +511,7 @@ exports = module.exports = function (logger, handlers) {
           });
         },
         config: {
+          auth: 'simple',
           validate: {
             params: {
               bridge: joi.string().allow(bridgeOptions),
@@ -520,6 +537,7 @@ exports = module.exports = function (logger, handlers) {
           });
         },
         config: {
+          auth: 'simple',
           validate: {
             params: {
               bridge: joi.string().allow(bridgeOptions),
@@ -546,7 +564,7 @@ exports = module.exports = function (logger, handlers) {
           });
         },
         config: {
-          // auth: 'simple',
+          auth: 'simple',
           description: 'Lists scheduled bridge lift events from l-bridge in fancy view',
           notes: 'Array of objects with the keys `bridgeId`, `type`, `requestTime`, and `estimatedLiftTime`',
           tags: ['api', 'json']
@@ -566,12 +584,12 @@ exports = module.exports = function (logger, handlers) {
           });
         },
         config: {
+          auth: 'simple',
           validate: {
             params: {
               limit: joi.number().integer()
             }
           },
-          // auth: 'simple',
           description: 'Lists scheduled bridge lift events from l-bridge in json',
           notes: 'Array of objects with the keys `bridgeId`, `type`, `requestTime`, and `estimatedLiftTime`',
           tags: ['api', 'json']
@@ -591,6 +609,7 @@ exports = module.exports = function (logger, handlers) {
           });
         },
         config: {
+          auth: 'simple',
           validate: {
             params: {
               date: joi.date()
@@ -615,6 +634,7 @@ exports = module.exports = function (logger, handlers) {
           });
         },
         config: {
+          auth: 'simple',
           validate: {
             params: {
               date: joi.date()
@@ -639,6 +659,7 @@ exports = module.exports = function (logger, handlers) {
           });
         },
         config: {
+          auth: 'simple',
           validate: {
             params: {
               startDate: joi.date(),
@@ -664,13 +685,13 @@ exports = module.exports = function (logger, handlers) {
           });
         },
         config: {
+          auth: 'simple',
           validate: {
             params: {
               bridge: joi.string().allow(bridgeOptions),
               limit: joi.number().integer()
             }
           },
-          // auth: 'simple',
           description: 'Returns last x scheduled lift events for given bridge if limit param is provided. If limit param is not provided, it returns all entries. Non-numbers are ignored',
           notes: 'Authentication is specified by an access token as a query parameter, i.e. `/bridges/events/actual?access_token=1234`.',
           tags: ['api', 'json']
@@ -690,6 +711,7 @@ exports = module.exports = function (logger, handlers) {
           });
         },
         config: {
+          auth: 'simple',
           validate: {
             params: {
               bridge: joi.string().allow(bridgeOptions),
@@ -715,6 +737,7 @@ exports = module.exports = function (logger, handlers) {
           });
         },
         config: {
+          auth: 'simple',
           validate: {
             params: {
               bridge: joi.string().allow(bridgeOptions),
@@ -740,6 +763,7 @@ exports = module.exports = function (logger, handlers) {
           });
         },
         config: {
+          auth: 'simple',
           validate: {
             params: {
               bridge: joi.string().allow(bridgeOptions),

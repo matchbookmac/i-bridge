@@ -98,18 +98,22 @@ npm start
 
 ### Testing:
 
-<!-- #### Run test suite:
-
-If running for the first time, or on a new instance of the server:
-```console
-gulp db:test:prepare
+To hit an api endpoint in dev, you will need to authenticate.
+Using either the access_token query approach `?access_token=user@example.com:1234`:
+http://localhost:8000/bridges/hawthorne?access_token=user@example.com:1234
+or as a header in your request:
+```shell
+{
+  "Authorization": "Bearer user@example.com:1234"
+}
+```
+i.e.:
+```shell
+curl -H "Authorization: Bearer user@example.com:1234" http://localhost:8000/bridges/hawthorne
 ```
 
-Then
-
-```console
-npm test
-``` -->
+In prod, the same will work at https://api.multco.us/bridges, but the auth email:token combo is:
+multco-developer@multco.us:898c8cc87ea8402b1adcc2220f21312e
 
 #### To send a test post to i-bridge:
 
