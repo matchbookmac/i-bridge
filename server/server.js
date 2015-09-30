@@ -13,7 +13,7 @@ exports = module.exports = function (serverConfig, routes, methods, sockets, plu
 
   server.connection({
     port: serverConfig.port,
-    uri: 'https://'+serverConfig.iBridge.hostname+':'+serverConfig.port+'',
+    uri: 'https://'+serverConfig.iBridge.hostname+'/bridges',
     routes: {
       cors: true,
       cache: {
@@ -22,7 +22,6 @@ exports = module.exports = function (serverConfig, routes, methods, sockets, plu
       }
     }
   });
-
   // Setup server with modular components. The order of these does matter
   sockets(server);
   plugins(server);
