@@ -10,9 +10,10 @@ exports = module.exports = function (config, logger) {
     if (changedItem === 'status') {
       if (bridgeStatuses[changedBridge].status) {
         status = ': lift started.';
+        lastFive = ' lift started test data ';
       } else {
         status = ': lift complete.';
-        lastFive = 'Test';
+        lastFive = ' lift complete test data ';
       }
       alert = _.startCase(changedBridge) + status;
     } else {
