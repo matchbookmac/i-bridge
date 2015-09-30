@@ -27,23 +27,28 @@
     "bridges": {
       "hawthorne": {
         "status": false,
-        "scheduledLift": null
+        "scheduledLift": null,
+        "lastFive": null
       },
       "morrison": {
         "status": false,
-        "scheduledLift": null
+        "scheduledLift": null,
+        "lastFive": null
       },
       "burnside": {
         "status": false,
-        "scheduledLift": null
+        "scheduledLift": null,
+        "lastFive": null
       },
       "broadway": {
         "status": false,
-        "scheduledLift": null
+        "scheduledLift": null,
+        "lastFive": null
       },
       "cuevas crossing": {
         "status": false,
-        "scheduledLift": null
+        "scheduledLift": null,
+        "lastFive": null
       },
       "changed": {
         "bridge": null,

@@ -12,6 +12,7 @@ exports = module.exports = function (config, logger) {
         status = ': lift started.';
       } else {
         status = ': lift complete.';
+        lastFive = 'Test';
       }
       alert = _.startCase(changedBridge) + status;
     } else {
