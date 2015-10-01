@@ -114,6 +114,345 @@ exports = module.exports = function (logger, handlers) {
 
       {
         method: 'GET',
+        path: '/bridges/{bridge}',
+        handler: function (request, reply) {
+          server.methods.getBridge(request.params.bridge, function (err, result) {
+            if (err) {
+              reply(boom.badRequest(err));
+            } else {
+              reply(result);
+            }
+          });
+        },
+        config: {
+          auth: 'simple',
+          validate: {
+            params: {
+              bridge: joi.string().valid(bridgeOptions)
+            }
+          },
+          description: 'Lists data for a specified bridge',
+          notes: 'Return value is an object with the keys: name, id, totalUpTime, avgUpTime, actualCount, and scheduledCount.\n - totalUpTime is the cumulative time the bridge has been in a lifted state since the start of recording.\n - avgUpTime is the totalUpTime divided by the actualCount.\n - actualCount is the total number of recorded lift events.\n - scheduledCount is the number of lifts that have been scheduled for this bridge',
+          tags: ['api', 'json']
+        }
+      },
+
+      {
+        method: 'GET',
+        path: '/bridges/{bridge}/events',
+        handler: function (request, reply) {
+          server.methods.getBridgeEvents(request, function (err, result) {
+            if (err) {
+              reply(boom.badRequest(err));
+            } else {
+              reply(result);
+            }
+          });
+        },
+        config: {
+          auth: 'simple',
+          validate: {
+            params: {
+              bridge: joi.string().valid(bridgeOptions)
+            }
+          },
+          description: 'Lists all events, both scheduled and actual for a given bridge',
+          notes: 'An object with the keys: bridgeEvents and scheduledEvents, their values are what is generated returned',
+          tags: ['api', 'json']
+        }
+      },
+
+      {
+        method: 'GET',
+        path: '/bridges/{bridge}/events/actual/{limit*}',
+        handler: function (request, reply) {
+          server.methods.getBridgeActual(request, function (err, result) {
+            if (err) {
+              reply(boom.badRequest(err));
+            } else {
+              reply(result);
+            }
+          });
+        },
+        config: {
+          auth: 'simple',
+          validate: {
+            params: {
+              bridge: joi.string().valid(bridgeOptions),
+              limit: joi.number().integer()
+            }
+          },
+          description: 'Returns last x lift events for given bridge if limit param is provided. If limit param is not provided, it returns all entries. Non-numbers are ignored',
+          notes: 'Authentication is specified by an access token as a query parameter, i.e. `/bridges/events/actual?access_token=1234`.',
+          tags: ['api', 'json']
+        }
+      },
+
+      {
+        method: 'GET',
+        path: '/bridges/{bridge}/events/actual/after/{date*}',
+        handler: function (request, reply) {
+          server.methods.getBridgeActual(request, function (err, result) {
+            if (err) {
+              reply(boom.badRequest(err));
+            } else {
+              reply(result);
+            }
+          });
+        },
+        config: {
+          auth: 'simple',
+          validate: {
+            params: {
+              bridge: joi.string().valid(bridgeOptions),
+              date: joi.date()
+            }
+          },
+          description: 'Lists actual bridge lift events in after given date (non-inclusive) for a given bridge.',
+          notes: 'Array of objects with the keys `bridgeId`, `upTime`, and `downTime`. Date must be given in a format that `new Date()` can parse.',
+          tags: ['api', 'json']
+        }
+      },
+
+      {
+        method: 'GET',
+        path: '/bridges/{bridge}/events/actual/before/{date*}',
+        handler: function (request, reply) {
+          server.methods.getBridgeActual(request, function (err, result) {
+            if (err) {
+              reply(boom.badRequest(err));
+            } else {
+              reply(result);
+            }
+          });
+        },
+        config: {
+          auth: 'simple',
+          validate: {
+            params: {
+              bridge: joi.string().valid(bridgeOptions),
+              date: joi.date()
+            }
+          },
+          description: 'Lists actual bridge lift events in before given date (non-inclusive) for a given bridge.',
+          notes: 'Array of objects with the keys `bridgeId`, `upTime`, and `downTime`. Date must be given in a format that `new Date()` can parse.',
+          tags: ['api', 'json']
+        }
+      },
+
+      {
+        method: 'GET',
+        path: '/bridges/{bridge}/events/actual/between/{startDate}/{endDate*}',
+        handler: function (request, reply) {
+          server.methods.getBridgeActual(request, function (err, result) {
+            if (err) {
+              reply(boom.badRequest(err));
+            } else {
+              reply(result);
+            }
+          });
+        },
+        config: {
+          auth: 'simple',
+          validate: {
+            params: {
+              bridge: joi.string().valid(bridgeOptions),
+              startDate: joi.date(),
+              endDate: joi.date()
+            }
+          },
+          description: 'Lists actual bridge lift events between two given dates (non-inclusive) for a given bridge.',
+          notes: 'Array of objects with the keys `bridgeId`, `upTime`, and `downTime`. Date must be given in a format that `new Date()` can parse.',
+          tags: ['api', 'json']
+        }
+      },
+
+      {
+        method: 'GET',
+        path: '/bridges/{bridge}/events/after/{date*}',
+        handler: function (request, reply) {
+          server.methods.getBridgeEvents(request, function (err, result) {
+            if (err) {
+              reply(boom.badRequest(err));
+            } else {
+              reply(result);
+            }
+          });
+        },
+        config: {
+          auth: 'simple',
+          validate: {
+            params: {
+              bridge: joi.string().valid(bridgeOptions),
+              date: joi.date()
+            }
+          },
+          description: 'Lists all events, both scheduled and actual for a given bridge after given date (non-inclusive).',
+          notes: 'An object with the keys: actualEvents and scheduledEvents, their values are what is generated from /bridges/{bridge}events/actual, and /bridges/{bridge}/events/scheduled',
+          tags: ['api', 'json']
+        }
+      },
+
+      {
+        method: 'GET',
+        path: '/bridges/{bridge}/events/before/{date*}',
+        handler: function (request, reply) {
+          server.methods.getBridgeEvents(request, function (err, result) {
+            if (err) {
+              reply(boom.badRequest(err));
+            } else {
+              reply(result);
+            }
+          });
+        },
+        config: {
+          auth: 'simple',
+          validate: {
+            params: {
+              bridge: joi.string().valid(bridgeOptions),
+              date: joi.date()
+            }
+          },
+          description: 'Lists all events, both scheduled and actual for a given bridge before given date (non-inclusive).',
+          notes: 'An object with the keys: actualEvents and scheduledEvents, their values are what is generated from /bridges/{bridge}events/actual, and /bridges/{bridge}/events/scheduled',
+          tags: ['api', 'json']
+        }
+      },
+
+      {
+        method: 'GET',
+        path: '/bridges/{bridge}/events/between/{startDate}/{endDate*}',
+        handler: function (request, reply) {
+          server.methods.getBridgeEvents(request, function (err, result) {
+            if (err) {
+              reply(boom.badRequest(err));
+            } else {
+              reply(result);
+            }
+          });
+        },
+        config: {
+          auth: 'simple',
+          validate: {
+            params: {
+              bridge: joi.string().valid(bridgeOptions),
+              startDate: joi.date(),
+              endDate: joi.date()
+            }
+          },
+          description: 'Lists all events, both scheduled and actual for a given bridge between two given dates (non-inclusive).',
+          notes: 'An object with the keys: actualEvents and scheduledEvents, their values are what is generated from /bridges/{bridge}events/actual, and /bridges/{bridge}/events/scheduled',
+          tags: ['api', 'json']
+        }
+      },
+
+      {
+        method: 'GET',
+        path: '/bridges/{bridge}/events/scheduled/{limit*}',
+        handler: function (request, reply) {
+          server.methods.getBridgeScheduled(request, function (err, result) {
+            if (err) {
+              reply(boom.badRequest(err));
+            } else {
+              reply(result);
+            }
+          });
+        },
+        config: {
+          auth: 'simple',
+          validate: {
+            params: {
+              bridge: joi.string().valid(bridgeOptions),
+              limit: joi.number().integer()
+            }
+          },
+          description: 'Returns last x scheduled lift events for given bridge if limit param is provided. If limit param is not provided, it returns all entries. Non-numbers are ignored',
+          notes: 'Authentication is specified by an access token as a query parameter, i.e. `/bridges/events/actual?access_token=1234`.',
+          tags: ['api', 'json']
+        }
+      },
+
+      {
+        method: 'GET',
+        path: '/bridges/{bridge}/events/scheduled/after/{date*}',
+        handler: function (request, reply) {
+          server.methods.getBridgeScheduled(request, function (err, result) {
+            if (err) {
+              reply(boom.badRequest(err));
+            } else {
+              reply(result);
+            }
+          });
+        },
+        config: {
+          auth: 'simple',
+          validate: {
+            params: {
+              bridge: joi.string().valid(bridgeOptions),
+              date: joi.date()
+            }
+          },
+          description: 'Lists scheduled bridge lift events in after given date (non-inclusive) for a given bridge.',
+          notes: 'Array of objects with the keys `bridgeId`, `type`, `requestTime`, and `estimatedLiftTime`. Date must be given in a format that `new Date()` can parse.',
+          tags: ['api', 'json']
+        }
+      },
+
+      {
+        method: 'GET',
+        path: '/bridges/{bridge}/events/scheduled/before/{date*}',
+        handler: function (request, reply) {
+          server.methods.getBridgeScheduled(request, function (err, result) {
+            if (err) {
+              reply(boom.badRequest(err));
+            } else {
+              reply(result);
+            }
+          });
+        },
+        config: {
+          auth: 'simple',
+          validate: {
+            params: {
+              bridge: joi.string().valid(bridgeOptions),
+              date: joi.date()
+            }
+          },
+          description: 'Lists scheduled bridge lift events in before given date (non-inclusive) for a given bridge.',
+          notes: 'Array of objects with the keys `bridgeId`, `type`, `requestTime`, and `estimatedLiftTime`. Date must be given in a format that `new Date()` can parse.',
+          tags: ['api', 'json']
+        }
+      },
+
+      {
+        method: 'GET',
+        path: '/bridges/{bridge}/events/scheduled/between/{startDate}/{endDate*}',
+        handler: function (request, reply) {
+          server.methods.getBridgeScheduled(request, function (err, result) {
+            if (err) {
+              reply(boom.badRequest(err));
+            } else {
+              reply(result);
+            }
+          });
+        },
+        config: {
+          auth: 'simple',
+          validate: {
+            params: {
+              bridge: joi.string().valid(bridgeOptions),
+              startDate: joi.date(),
+              endDate: joi.date()
+            }
+          },
+          description: 'Lists scheduled bridge lift events between two given dates (non-inclusive) for a given bridge.',
+          notes: 'Array of objects with the keys `bridgeId`, `type`, `requestTime`, and `estimatedLiftTime`. Date must be given in a format that `new Date()` can parse.',
+          tags: ['api', 'json']
+        }
+      },
+
+      {
+        method: 'GET',
         path: '/bridges/events',
         handler: function (request, reply) {
           server.methods.getBridgeEvents(request, function (err, result) {
@@ -127,82 +466,6 @@ exports = module.exports = function (logger, handlers) {
         config: {
           auth: 'simple',
           description: 'Lists all events, both scheduled and actual',
-          notes: 'An object with the keys: actualEvents and scheduledEvents, their values are what is generated from /bridges/events/actual, and /bridges/events/scheduled',
-          tags: ['api', 'json']
-        }
-      },
-
-      {
-        method: 'GET',
-        path: '/bridges/events/before/{date*}',
-        handler: function (request, reply) {
-          server.methods.getBridgeEvents(request, function (err, result) {
-            if (err) {
-              reply(boom.badRequest(err));
-            } else {
-              reply(result);
-            }
-          });
-        },
-        config: {
-          auth: 'simple',
-          validate: {
-            params: {
-              date: joi.date()
-            }
-          },
-          description: 'Lists all bridge lift and scheduled events before given date (non-inclusive).',
-          notes: 'An object with the keys: actualEvents and scheduledEvents, their values are what is generated from /bridges/events/actual, and /bridges/events/scheduled',
-          tags: ['api', 'json']
-        }
-      },
-
-      {
-        method: 'GET',
-        path: '/bridges/events/after/{date*}',
-        handler: function (request, reply) {
-          server.methods.getBridgeEvents(request, function (err, result) {
-            if (err) {
-              reply(boom.badRequest(err));
-            } else {
-              reply(result);
-            }
-          });
-        },
-        config: {
-          auth: 'simple',
-          validate: {
-            params: {
-              date: joi.date()
-            }
-          },
-          description: 'Lists all bridge lift and scheduled after given date (non-inclusive).',
-          notes: 'An object with the keys: actualEvents and scheduledEvents, their values are what is generated from /bridges/events/actual, and /bridges/events/scheduled',
-          tags: ['api', 'json']
-        }
-      },
-
-      {
-        method: 'GET',
-        path: '/bridges/events/between/{startDate}/{endDate*}',
-        handler: function (request, reply) {
-          server.methods.getBridgeEvents(request, function (err, result) {
-            if (err) {
-              reply(boom.badRequest(err));
-            } else {
-              reply(result);
-            }
-          });
-        },
-        config: {
-          auth: 'simple',
-          validate: {
-            params: {
-              startDate: joi.date(),
-              endDate: joi.date()
-            }
-          },
-          description: 'Lists all bridge lift and scheduled events between two given dates (non-inclusive).',
           notes: 'An object with the keys: actualEvents and scheduledEvents, their values are what is generated from /bridges/events/actual, and /bridges/events/scheduled',
           tags: ['api', 'json']
         }
@@ -255,31 +518,6 @@ exports = module.exports = function (logger, handlers) {
 
       {
         method: 'GET',
-        path: '/bridges/events/actual/before/{date*}',
-        handler: function (request, reply) {
-          server.methods.getBridgesActual(request, function (err, result) {
-            if (err) {
-              reply(boom.badRequest(err));
-            } else {
-              reply(result);
-            }
-          });
-        },
-        config: {
-          auth: 'simple',
-          validate: {
-            params: {
-              date: joi.date()
-            }
-          },
-          description: 'Lists actual bridge lift events in before given date (non-inclusive).',
-          notes: 'Array of objects with the keys `bridgeId`, `upTime`, and `downTime`. Date must be given in a format that `new Date()` can parse.',
-          tags: ['api', 'json']
-        }
-      },
-
-      {
-        method: 'GET',
         path: '/bridges/events/actual/after/{date*}',
         handler: function (request, reply) {
           server.methods.getBridgesActual(request, function (err, result) {
@@ -298,6 +536,31 @@ exports = module.exports = function (logger, handlers) {
             }
           },
           description: 'Lists actual bridge lift events in after given date (non-inclusive).',
+          notes: 'Array of objects with the keys `bridgeId`, `upTime`, and `downTime`. Date must be given in a format that `new Date()` can parse.',
+          tags: ['api', 'json']
+        }
+      },
+
+      {
+        method: 'GET',
+        path: '/bridges/events/actual/before/{date*}',
+        handler: function (request, reply) {
+          server.methods.getBridgesActual(request, function (err, result) {
+            if (err) {
+              reply(boom.badRequest(err));
+            } else {
+              reply(result);
+            }
+          });
+        },
+        config: {
+          auth: 'simple',
+          validate: {
+            params: {
+              date: joi.date()
+            }
+          },
+          description: 'Lists actual bridge lift events in before given date (non-inclusive).',
           notes: 'Array of objects with the keys `bridgeId`, `upTime`, and `downTime`. Date must be given in a format that `new Date()` can parse.',
           tags: ['api', 'json']
         }
@@ -331,32 +594,7 @@ exports = module.exports = function (logger, handlers) {
 
       {
         method: 'GET',
-        path: '/bridges/{bridge}',
-        handler: function (request, reply) {
-          server.methods.getBridge(request.params.bridge, function (err, result) {
-            if (err) {
-              reply(boom.badRequest(err));
-            } else {
-              reply(result);
-            }
-          });
-        },
-        config: {
-          auth: 'simple',
-          validate: {
-            params: {
-              bridge: joi.string().valid(bridgeOptions)
-            }
-          },
-          description: 'Lists data for a specified bridge',
-          notes: 'An object with the keys: name, id, totalUpTime, avgUpTime, actualCount, and scheduledCount.\n - totalUpTime is the cumulative time the bridge has been in a lifted state since the start of recording.\n - avgUpTime is the totalUpTime divided by the actualCount.\n - actualCount is the total number of recorded lift events.\n - scheduledCount is the number of lifts that have been scheduled for this bridge',
-          tags: ['api', 'json']
-        }
-      },
-
-      {
-        method: 'GET',
-        path: '/bridges/{bridge}/events',
+        path: '/bridges/events/after/{date*}',
         handler: function (request, reply) {
           server.methods.getBridgeEvents(request, function (err, result) {
             if (err) {
@@ -370,44 +608,18 @@ exports = module.exports = function (logger, handlers) {
           auth: 'simple',
           validate: {
             params: {
-              bridge: joi.string().valid(bridgeOptions)
-            }
-          },
-          description: 'Lists all events, both scheduled and actual for a given bridge',
-          notes: 'An object with the keys: bridgeEvents and scheduledEvents, their values are what is generated returned',
-          tags: ['api', 'json']
-        }
-      },
-
-      {
-        method: 'GET',
-        path: '/bridges/{bridge}/events/before/{date*}',
-        handler: function (request, reply) {
-          server.methods.getBridgeEvents(request, function (err, result) {
-            if (err) {
-              reply(boom.badRequest(err));
-            } else {
-              reply(result);
-            }
-          });
-        },
-        config: {
-          auth: 'simple',
-          validate: {
-            params: {
-              bridge: joi.string().valid(bridgeOptions),
               date: joi.date()
             }
           },
-          description: 'Lists all events, both scheduled and actual for a given bridge before given date (non-inclusive).',
-          notes: 'An object with the keys: actualEvents and scheduledEvents, their values are what is generated from /bridges/{bridge}events/actual, and /bridges/{bridge}/events/scheduled',
+          description: 'Lists all bridge lift and scheduled after given date (non-inclusive).',
+          notes: 'An object with the keys: actualEvents and scheduledEvents, their values are what is generated from /bridges/events/actual, and /bridges/events/scheduled',
           tags: ['api', 'json']
         }
       },
 
       {
         method: 'GET',
-        path: '/bridges/{bridge}/events/after/{date*}',
+        path: '/bridges/events/before/{date*}',
         handler: function (request, reply) {
           server.methods.getBridgeEvents(request, function (err, result) {
             if (err) {
@@ -421,19 +633,18 @@ exports = module.exports = function (logger, handlers) {
           auth: 'simple',
           validate: {
             params: {
-              bridge: joi.string().valid(bridgeOptions),
               date: joi.date()
             }
           },
-          description: 'Lists all events, both scheduled and actual for a given bridge after given date (non-inclusive).',
-          notes: 'An object with the keys: actualEvents and scheduledEvents, their values are what is generated from /bridges/{bridge}events/actual, and /bridges/{bridge}/events/scheduled',
+          description: 'Lists all bridge lift and scheduled events before given date (non-inclusive).',
+          notes: 'An object with the keys: actualEvents and scheduledEvents, their values are what is generated from /bridges/events/actual, and /bridges/events/scheduled',
           tags: ['api', 'json']
         }
       },
 
       {
         method: 'GET',
-        path: '/bridges/{bridge}/events/between/{startDate}/{endDate*}',
+        path: '/bridges/events/between/{startDate}/{endDate*}',
         handler: function (request, reply) {
           server.methods.getBridgeEvents(request, function (err, result) {
             if (err) {
@@ -447,118 +658,12 @@ exports = module.exports = function (logger, handlers) {
           auth: 'simple',
           validate: {
             params: {
-              bridge: joi.string().valid(bridgeOptions),
               startDate: joi.date(),
               endDate: joi.date()
             }
           },
-          description: 'Lists all events, both scheduled and actual for a given bridge between two given dates (non-inclusive).',
-          notes: 'An object with the keys: actualEvents and scheduledEvents, their values are what is generated from /bridges/{bridge}events/actual, and /bridges/{bridge}/events/scheduled',
-          tags: ['api', 'json']
-        }
-      },
-
-      {
-        method: 'GET',
-        path: '/bridges/{bridge}/events/actual/{limit*}',
-        handler: function (request, reply) {
-          server.methods.getBridgeActual(request, function (err, result) {
-            if (err) {
-              reply(boom.badRequest(err));
-            } else {
-              reply(result);
-            }
-          });
-        },
-        config: {
-          auth: 'simple',
-          validate: {
-            params: {
-              bridge: joi.string().valid(bridgeOptions),
-              limit: joi.number().integer()
-            }
-          },
-          description: 'Returns last x lift events for given bridge if limit param is provided. If limit param is not provided, it returns all entries. Non-numbers are ignored',
-          notes: 'Authentication is specified by an access token as a query parameter, i.e. `/bridges/events/actual?access_token=1234`.',
-          tags: ['api', 'json']
-        }
-      },
-
-      {
-        method: 'GET',
-        path: '/bridges/{bridge}/events/actual/before/{date*}',
-        handler: function (request, reply) {
-          server.methods.getBridgeActual(request, function (err, result) {
-            if (err) {
-              reply(boom.badRequest(err));
-            } else {
-              reply(result);
-            }
-          });
-        },
-        config: {
-          auth: 'simple',
-          validate: {
-            params: {
-              bridge: joi.string().valid(bridgeOptions),
-              date: joi.date()
-            }
-          },
-          description: 'Lists actual bridge lift events in before given date (non-inclusive) for a given bridge.',
-          notes: 'Array of objects with the keys `bridgeId`, `upTime`, and `downTime`. Date must be given in a format that `new Date()` can parse.',
-          tags: ['api', 'json']
-        }
-      },
-
-      {
-        method: 'GET',
-        path: '/bridges/{bridge}/events/actual/after/{date*}',
-        handler: function (request, reply) {
-          server.methods.getBridgeActual(request, function (err, result) {
-            if (err) {
-              reply(boom.badRequest(err));
-            } else {
-              reply(result);
-            }
-          });
-        },
-        config: {
-          auth: 'simple',
-          validate: {
-            params: {
-              bridge: joi.string().valid(bridgeOptions),
-              date: joi.date()
-            }
-          },
-          description: 'Lists actual bridge lift events in after given date (non-inclusive) for a given bridge.',
-          notes: 'Array of objects with the keys `bridgeId`, `upTime`, and `downTime`. Date must be given in a format that `new Date()` can parse.',
-          tags: ['api', 'json']
-        }
-      },
-
-      {
-        method: 'GET',
-        path: '/bridges/{bridge}/events/actual/between/{startDate}/{endDate*}',
-        handler: function (request, reply) {
-          server.methods.getBridgeActual(request, function (err, result) {
-            if (err) {
-              reply(boom.badRequest(err));
-            } else {
-              reply(result);
-            }
-          });
-        },
-        config: {
-          auth: 'simple',
-          validate: {
-            params: {
-              bridge: joi.string().valid(bridgeOptions),
-              startDate: joi.date(),
-              endDate: joi.date()
-            }
-          },
-          description: 'Lists actual bridge lift events between two given dates (non-inclusive) for a given bridge.',
-          notes: 'Array of objects with the keys `bridgeId`, `upTime`, and `downTime`. Date must be given in a format that `new Date()` can parse.',
+          description: 'Lists all bridge lift and scheduled events between two given dates (non-inclusive).',
+          notes: 'An object with the keys: actualEvents and scheduledEvents, their values are what is generated from /bridges/events/actual, and /bridges/events/scheduled',
           tags: ['api', 'json']
         }
       },
@@ -610,31 +715,6 @@ exports = module.exports = function (logger, handlers) {
 
       {
         method: 'GET',
-        path: '/bridges/events/scheduled/before/{date*}',
-        handler: function (request, reply) {
-          server.methods.getBridgesScheduled(request, function (err, result) {
-            if (err) {
-              reply(boom.badRequest(err));
-            } else {
-              reply(result);
-            }
-          });
-        },
-        config: {
-          auth: 'simple',
-          validate: {
-            params: {
-              date: joi.date()
-            }
-          },
-          description: 'Lists scheduled bridge lift events in before given date (non-inclusive).',
-          notes: 'Array of objects with the keys `bridgeId`, `type`, `requestTime`, and `estimatedLiftTime`. Date must be given in a format that `new Date()` can parse.',
-          tags: ['api', 'json']
-        }
-      },
-
-      {
-        method: 'GET',
         path: '/bridges/events/scheduled/after/{date*}',
         handler: function (request, reply) {
           server.methods.getBridgesScheduled(request, function (err, result) {
@@ -653,6 +733,31 @@ exports = module.exports = function (logger, handlers) {
             }
           },
           description: 'Lists scheduled bridge lift events in after given date (non-inclusive).',
+          notes: 'Array of objects with the keys `bridgeId`, `type`, `requestTime`, and `estimatedLiftTime`. Date must be given in a format that `new Date()` can parse.',
+          tags: ['api', 'json']
+        }
+      },
+
+      {
+        method: 'GET',
+        path: '/bridges/events/scheduled/before/{date*}',
+        handler: function (request, reply) {
+          server.methods.getBridgesScheduled(request, function (err, result) {
+            if (err) {
+              reply(boom.badRequest(err));
+            } else {
+              reply(result);
+            }
+          });
+        },
+        config: {
+          auth: 'simple',
+          validate: {
+            params: {
+              date: joi.date()
+            }
+          },
+          description: 'Lists scheduled bridge lift events in before given date (non-inclusive).',
           notes: 'Array of objects with the keys `bridgeId`, `type`, `requestTime`, and `estimatedLiftTime`. Date must be given in a format that `new Date()` can parse.',
           tags: ['api', 'json']
         }
@@ -679,111 +784,6 @@ exports = module.exports = function (logger, handlers) {
             }
           },
           description: 'Lists scheduled bridge lift events between two given dates (non-inclusive).',
-          notes: 'Array of objects with the keys `bridgeId`, `type`, `requestTime`, and `estimatedLiftTime`. Date must be given in a format that `new Date()` can parse.',
-          tags: ['api', 'json']
-        }
-      },
-
-      {
-        method: 'GET',
-        path: '/bridges/{bridge}/events/scheduled/{limit*}',
-        handler: function (request, reply) {
-          server.methods.getBridgeScheduled(request, function (err, result) {
-            if (err) {
-              reply(boom.badRequest(err));
-            } else {
-              reply(result);
-            }
-          });
-        },
-        config: {
-          auth: 'simple',
-          validate: {
-            params: {
-              bridge: joi.string().valid(bridgeOptions),
-              limit: joi.number().integer()
-            }
-          },
-          description: 'Returns last x scheduled lift events for given bridge if limit param is provided. If limit param is not provided, it returns all entries. Non-numbers are ignored',
-          notes: 'Authentication is specified by an access token as a query parameter, i.e. `/bridges/events/actual?access_token=1234`.',
-          tags: ['api', 'json']
-        }
-      },
-
-      {
-        method: 'GET',
-        path: '/bridges/{bridge}/events/scheduled/before/{date*}',
-        handler: function (request, reply) {
-          server.methods.getBridgeScheduled(request, function (err, result) {
-            if (err) {
-              reply(boom.badRequest(err));
-            } else {
-              reply(result);
-            }
-          });
-        },
-        config: {
-          auth: 'simple',
-          validate: {
-            params: {
-              bridge: joi.string().valid(bridgeOptions),
-              date: joi.date()
-            }
-          },
-          description: 'Lists scheduled bridge lift events in before given date (non-inclusive) for a given bridge.',
-          notes: 'Array of objects with the keys `bridgeId`, `type`, `requestTime`, and `estimatedLiftTime`. Date must be given in a format that `new Date()` can parse.',
-          tags: ['api', 'json']
-        }
-      },
-
-      {
-        method: 'GET',
-        path: '/bridges/{bridge}/events/scheduled/after/{date*}',
-        handler: function (request, reply) {
-          server.methods.getBridgeScheduled(request, function (err, result) {
-            if (err) {
-              reply(boom.badRequest(err));
-            } else {
-              reply(result);
-            }
-          });
-        },
-        config: {
-          auth: 'simple',
-          validate: {
-            params: {
-              bridge: joi.string().valid(bridgeOptions),
-              date: joi.date()
-            }
-          },
-          description: 'Lists scheduled bridge lift events in after given date (non-inclusive) for a given bridge.',
-          notes: 'Array of objects with the keys `bridgeId`, `type`, `requestTime`, and `estimatedLiftTime`. Date must be given in a format that `new Date()` can parse.',
-          tags: ['api', 'json']
-        }
-      },
-
-      {
-        method: 'GET',
-        path: '/bridges/{bridge}/events/scheduled/between/{startDate}/{endDate*}',
-        handler: function (request, reply) {
-          server.methods.getBridgeScheduled(request, function (err, result) {
-            if (err) {
-              reply(boom.badRequest(err));
-            } else {
-              reply(result);
-            }
-          });
-        },
-        config: {
-          auth: 'simple',
-          validate: {
-            params: {
-              bridge: joi.string().valid(bridgeOptions),
-              startDate: joi.date(),
-              endDate: joi.date()
-            }
-          },
-          description: 'Lists scheduled bridge lift events between two given dates (non-inclusive) for a given bridge.',
           notes: 'Array of objects with the keys `bridgeId`, `type`, `requestTime`, and `estimatedLiftTime`. Date must be given in a format that `new Date()` can parse.',
           tags: ['api', 'json']
         }
