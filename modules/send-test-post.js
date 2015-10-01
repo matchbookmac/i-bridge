@@ -3,7 +3,7 @@ var argv     = require('minimist')(process.argv.slice(2));
 var injector = require('electrolyte');
 injector.loader(injector.node('config'));
 injector.loader(injector.node('modules'));
-var mockPost = injector.create('./mock-post');
+var mockPost = injector.create('mock-post');
 var config   = injector.create('config');
 var bridges  = config.bridges;
 
@@ -31,13 +31,15 @@ message.changed.bridge = 'baileys bridge';
 if (bridge) {
   message[bridge] = {
     status: status,
-    scheduledLift: null
+    scheduledLift: null,
+    lastFive: null
   };
   message.changed.bridge = bridge;
 } else {
   message['baileys bridge'] = {
     status: status,
-    scheduledLift: null
+    scheduledLift: null,
+    lastFive: null
   };
 }
 

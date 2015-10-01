@@ -66,6 +66,14 @@ exports = module.exports = function (logger, handlers) {
                     requestTime: joi.date().required(),
                     estimatedLiftTime: joi.date().required()
                   })
+                ),
+                "lastFive": joi.alternatives().try(
+                  null,
+                  joi.array().items(joi.object({
+                    type: joi.string(),
+                    requestTime: joi.date().required(),
+                    estimatedLiftTime: joi.date().required()
+                  }))
                 )
               })),
           },
