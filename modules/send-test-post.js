@@ -97,7 +97,7 @@ if (scheduled) {
       .catch(function (err) {
         logger.info(err);
         logger.info('Could not find events for bridge:', message.changed.bridge);
-        message.lastFive = null;
+        message[message.changed.bridge].lastFive = null;
       });
   }).catch(function (err) {
     logger.info(err);
