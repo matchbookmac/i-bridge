@@ -59,22 +59,26 @@ exports = module.exports = function (logger, handlers) {
             }).min(1)
               .pattern(/\w+/, joi.object({
                 "status": joi.boolean().required(),
-                "scheduledLift": joi.alternatives().try(
+                "scheduledLift": joi.alternatives([
                   null,
                   joi.object({
                     type: joi.string(),
                     requestTime: joi.date().required(),
                     estimatedLiftTime: joi.date().required()
                   })
-                ),
-                "lastFive": joi.alternatives().try(
+                ]),
+                "lastFive": joi.alternatives([
                   null,
-                  joi.array().items(joi.object({
-                    type: joi.string(),
-                    requestTime: joi.date().required(),
-                    estimatedLiftTime: joi.date().required()
-                  }))
-                )
+                  joi.array().min(0).items()
+                  .items(joi.object({
+                    id: joi.number().integer(),
+                    bridgeId: joi.number().integer(),
+                    upTime: joi.date().required(),
+                    downTime: joi.date().required(),
+                    createdAt: joi.date().required(),
+                    updatedAt: joi.date().required()
+                  })).single()
+                ])
               })),
           },
           cors: false,

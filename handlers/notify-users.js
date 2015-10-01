@@ -3,7 +3,6 @@ var util = require('util');
 exports = module.exports = function (serverConfig, postToParse) {
   var notifyUsers = function (bridgeStatuses, eventEmitters) {
     serverConfig.bridges = bridgeStatuses;
-    console.log(bridgeStatuses);
     // Websockets endpoint notification
     eventEmitters.bridgeEventSocket.emit('bridge data', bridgeStatuses);
     // server sent events endpoint notification
