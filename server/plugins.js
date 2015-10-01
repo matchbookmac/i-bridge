@@ -1,12 +1,29 @@
-exports = module.exports = function (logger) {
+exports = module.exports = function (logger, config) {
   var addServerPlugins = function (server) {
     var plugins = [
       { register: require('inert') },
       { register: require('vision') },
       { register: require('hapi-auth-bearer-token') },
-      { register: require('lout'),
+      { register: require('hapi-swaggered'),
         options: {
-          endpoint: '/bridges/docs'
+          info: {
+            title: "Multnomah County Bridges",
+            description: "Lift Data API",
+            version: config.version,
+          }
+        }
+      },
+      { register: require('hapi-swaggered-ui'),
+        options: {
+          title: "Multnomah County Bridges Lift Data API",
+          path: '/bridges/docs',
+          // basePath: 'https://'+config.iBridge.hostname+'/bridges',
+          authorization: {
+            scope: 'query',
+            field: 'access_token',
+            defaultValue: 'email:token',
+            placeholder: 'Enter your API token here'
+          }
         }
       }
     ];
@@ -18,4 +35,4 @@ exports = module.exports = function (logger) {
 };
 
 exports['@singleton'] = true;
-exports['@require'] = [ 'logger' ];
+exports['@require'] = [ 'logger', 'config' ];

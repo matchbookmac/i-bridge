@@ -33,6 +33,10 @@ function redis() {
   return envVars.redis;
 }
 
+function version() {
+  return require('../package.json').version;
+}
+
 var bridges = envVars.bridges;
 
 exports = module.exports = function () {
@@ -43,6 +47,7 @@ exports = module.exports = function () {
     iBridge: iBridge(),
     parse: parse(),
     redis: redis(),
+    version: version(),
     bridges: bridges
   };
   return config;

@@ -370,7 +370,7 @@ exports = module.exports = function (logger, handlers) {
           auth: 'simple',
           validate: {
             params: {
-              bridge: joi.string().allow(bridgeOptions)
+              bridge: joi.string().valid(bridgeOptions)
             }
           },
           description: 'Lists all events, both scheduled and actual for a given bridge',
@@ -395,7 +395,7 @@ exports = module.exports = function (logger, handlers) {
           auth: 'simple',
           validate: {
             params: {
-              bridge: joi.string().allow(bridgeOptions),
+              bridge: joi.string().valid(bridgeOptions),
               date: joi.date()
             }
           },
@@ -421,7 +421,7 @@ exports = module.exports = function (logger, handlers) {
           auth: 'simple',
           validate: {
             params: {
-              bridge: joi.string().allow(bridgeOptions),
+              bridge: joi.string().valid(bridgeOptions),
               date: joi.date()
             }
           },
@@ -447,7 +447,7 @@ exports = module.exports = function (logger, handlers) {
           auth: 'simple',
           validate: {
             params: {
-              bridge: joi.string().allow(bridgeOptions),
+              bridge: joi.string().valid(bridgeOptions),
               startDate: joi.date(),
               endDate: joi.date()
             }
@@ -474,7 +474,7 @@ exports = module.exports = function (logger, handlers) {
           auth: 'simple',
           validate: {
             params: {
-              bridge: joi.string().allow(bridgeOptions),
+              bridge: joi.string().valid(bridgeOptions),
               limit: joi.number().integer()
             }
           },
@@ -500,7 +500,7 @@ exports = module.exports = function (logger, handlers) {
           auth: 'simple',
           validate: {
             params: {
-              bridge: joi.string().allow(bridgeOptions),
+              bridge: joi.string().valid(bridgeOptions),
               date: joi.date()
             }
           },
@@ -526,7 +526,7 @@ exports = module.exports = function (logger, handlers) {
           auth: 'simple',
           validate: {
             params: {
-              bridge: joi.string().allow(bridgeOptions),
+              bridge: joi.string().valid(bridgeOptions),
               date: joi.date()
             }
           },
@@ -552,7 +552,7 @@ exports = module.exports = function (logger, handlers) {
           auth: 'simple',
           validate: {
             params: {
-              bridge: joi.string().allow(bridgeOptions),
+              bridge: joi.string().valid(bridgeOptions),
               startDate: joi.date(),
               endDate: joi.date()
             }
@@ -700,7 +700,7 @@ exports = module.exports = function (logger, handlers) {
           auth: 'simple',
           validate: {
             params: {
-              bridge: joi.string().allow(bridgeOptions),
+              bridge: joi.string().valid(bridgeOptions),
               limit: joi.number().integer()
             }
           },
@@ -726,7 +726,7 @@ exports = module.exports = function (logger, handlers) {
           auth: 'simple',
           validate: {
             params: {
-              bridge: joi.string().allow(bridgeOptions),
+              bridge: joi.string().valid(bridgeOptions),
               date: joi.date()
             }
           },
@@ -752,7 +752,7 @@ exports = module.exports = function (logger, handlers) {
           auth: 'simple',
           validate: {
             params: {
-              bridge: joi.string().allow(bridgeOptions),
+              bridge: joi.string().valid(bridgeOptions),
               date: joi.date()
             }
           },
@@ -778,7 +778,7 @@ exports = module.exports = function (logger, handlers) {
           auth: 'simple',
           validate: {
             params: {
-              bridge: joi.string().allow(bridgeOptions),
+              bridge: joi.string().valid(bridgeOptions),
               startDate: joi.date(),
               endDate: joi.date()
             }
