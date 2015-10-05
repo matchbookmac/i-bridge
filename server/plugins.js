@@ -24,6 +24,9 @@ exports = module.exports = function (logger, config) {
             field: 'access_token',
             defaultValue: 'email:token',
             placeholder: 'Enter your API token here'
+          },
+          swaggerOptions: {
+            validatorUrl: false
           }
         }
       }
