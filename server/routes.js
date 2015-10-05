@@ -1,6 +1,8 @@
 var path                = require('path');
 var joi                 = require('joi');
 var boom                = require('boom');
+var util                = require('util');
+
 var bridgeOptions = [
   'Hawthorne',
   'hawthorne',
@@ -45,7 +47,7 @@ exports = module.exports = function (logger, handlers) {
         method: 'POST',
         path: '/bridges/statuses',
         handler: function (request, reply) {
-          logger.info(require('util').inspect(request.payload));
+          logger.info(util.inspect(request.payload));
           handlers.notifyUsers(request.payload, server.eventEmitters);
           reply('statuses received');
         },
@@ -63,20 +65,21 @@ exports = module.exports = function (logger, handlers) {
                   joi.object({
                     type: joi.string(),
                     requestTime: joi.date().required(),
-                    estimatedLiftTime: joi.date().required()
+                    estimatedLiftTime: joi.date().required(),
+                    bridgeId: joi.number().integer()
                   })
                 ),
-                "lastFive": joi.array().min(0)
-                  .items(joi.object({
+                "lastFive": joi.array().min(0).items(
+                  joi.object({
                     id: joi.number().integer(),
                     bridgeId: joi.number().integer(),
                     upTime: joi.date().required(),
                     downTime: joi.date().required(),
                     createdAt: joi.date().required(),
                     updatedAt: joi.date().required()
-                  })).single()
-                })
-              )
+                  })
+                )
+              }))
           },
           cors: false,
           auth: 'simple',
