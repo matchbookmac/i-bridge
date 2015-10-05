@@ -157,7 +157,7 @@ exports = module.exports = function (logger, handlers) {
             }
           },
           description: 'Scheduled and actual events for a bridge',
-          notes: 'Return value is an object with the keys: \n - actualEvents\n  - scheduledEvents\nTheir values are what is generated from:\n - /bridges/{bridge}/events/scheduled\n - /bridges/{bridge}/events/actual',
+          notes: 'Return value is an object with the keys: \n - actualEvents\n - scheduledEvents\nTheir values are what is generated from:\n - /bridges/{bridge}/events/scheduled\n - /bridges/{bridge}/events/actual',
           tags: ['api', 'json']
         }
       },
@@ -288,7 +288,7 @@ exports = module.exports = function (logger, handlers) {
             }
           },
           description: 'Scheduled and actual events for a bridge after date',
-          notes: 'Return value is an object with the keys: \n - actualEvents\n  - scheduledEvents\nTheir values are what is generated from:\n - /bridges/{bridge}/events/actual\n - /bridges/{bridge}/events/scheduled',
+          notes: 'Return value is an object with the keys: \n - actualEvents\n - scheduledEvents\nTheir values are what is generated from:\n - /bridges/{bridge}/events/actual\n - /bridges/{bridge}/events/scheduled',
           tags: ['api', 'json']
         }
       },
@@ -314,7 +314,7 @@ exports = module.exports = function (logger, handlers) {
             }
           },
           description: 'Scheduled and actual events for a bridge before date',
-          notes: 'Return value is an object with the keys: \n - actualEvents\n  - scheduledEvents\nTheir values are what is generated from:\n - /bridges/{bridge}/events/actual\n - /bridges/{bridge}/events/scheduled',
+          notes: 'Return value is an object with the keys: \n - actualEvents\n - scheduledEvents\nTheir values are what is generated from:\n - /bridges/{bridge}/events/actual\n - /bridges/{bridge}/events/scheduled',
           tags: ['api', 'json']
         }
       },
@@ -341,7 +341,7 @@ exports = module.exports = function (logger, handlers) {
             }
           },
           description: 'Scheduled and actual events for a bridge between dates',
-          notes: 'Return value is an object with the keys: \n - actualEvents\n  - scheduledEvents\nTheir values are what is generated from:\n - /bridges/{bridge}/events/actual\n - /bridges/{bridge}/events/scheduled',
+          notes: 'Return value is an object with the keys: \n - actualEvents\n - scheduledEvents\nTheir values are what is generated from:\n - /bridges/{bridge}/events/actual\n - /bridges/{bridge}/events/scheduled',
           tags: ['api', 'json']
         }
       },
@@ -466,7 +466,7 @@ exports = module.exports = function (logger, handlers) {
         config: {
           auth: 'simple',
           description: 'Scheduled and actual events for all bridges',
-          notes: 'Return value is an object with the keys: \n - actualEvents\n  - scheduledEvents\nTheir values are what is generated from:\n - /bridges/events/scheduled\n - /bridges/events/actual',
+          notes: 'Return value is an object with the keys: \n - actualEvents\n - scheduledEvents\nTheir values are what is generated from:\n - /bridges/events/scheduled\n - /bridges/events/actual',
           tags: ['api', 'json']
         }
       },
@@ -486,7 +486,7 @@ exports = module.exports = function (logger, handlers) {
         config: {
           auth: 'simple',
           description: 'Actual lift events for all bridges',
-          notes: 'Return value is an array of objects, each with the keys:\n - id: integer corresponding id of the record\n - bridgeId: integer corresponding to the bridge\'s id\n  - upTime: timestamp corresponding to when the event started\n - downTime: timestamp corresponding to when the event ended.\n Returns last x lift events for given bridge if limit param is provided. If limit param is not provided, it returns all entries. Non-numbers are ignored',
+          notes: 'Return value is an array of objects, each with the keys:\n - id: integer corresponding id of the record\n - bridgeId: integer corresponding to the bridge\'s id\n - upTime: timestamp corresponding to when the event started\n - downTime: timestamp corresponding to when the event ended.\n Returns last x lift events for given bridge if limit param is provided. If limit param is not provided, it returns all entries. Non-numbers are ignored',
           tags: ['api', 'json']
         }
       },
@@ -536,7 +536,7 @@ exports = module.exports = function (logger, handlers) {
             }
           },
           description: 'Actual lift events for all bridges after date',
-          notes: 'Return value is an array of objects, each with the keys:\n - id: integer corresponding id of the record\n - bridgeId: integer corresponding to the bridge\'s id\n  - upTime: timestamp corresponding to when the event started\n - downTime: timestamp corresponding to when the event ended.',
+          notes: 'Return value is an array of objects, each with the keys:\n - id: integer corresponding id of the record\n - bridgeId: integer corresponding to the bridge\'s id\n - upTime: timestamp corresponding to when the event started\n - downTime: timestamp corresponding to when the event ended.',
           tags: ['api', 'json']
         }
       },
@@ -561,7 +561,7 @@ exports = module.exports = function (logger, handlers) {
             }
           },
           description: 'Actual lift events for all bridges before date',
-          notes: 'Return value is an array of objects, each with the keys:\n - id: integer corresponding id of the record\n - bridgeId: integer corresponding to the bridge\'s id\n  - upTime: timestamp corresponding to when the event started\n - downTime: timestamp corresponding to when the event ended.',
+          notes: 'Return value is an array of objects, each with the keys:\n - id: integer corresponding id of the record\n - bridgeId: integer corresponding to the bridge\'s id\n - upTime: timestamp corresponding to when the event started\n - downTime: timestamp corresponding to when the event ended.',
           tags: ['api', 'json']
         }
       },
@@ -587,7 +587,7 @@ exports = module.exports = function (logger, handlers) {
             }
           },
           description: 'Actual lift events for all bridges between dates',
-          notes: 'Return value is an array of objects, each with the keys:\n - id: integer corresponding id of the record\n - bridgeId: integer corresponding to the bridge\'s id\n  - upTime: timestamp corresponding to when the event started\n - downTime: timestamp corresponding to when the event ended.',
+          notes: 'Return value is an array of objects, each with the keys:\n - id: integer corresponding id of the record\n - bridgeId: integer corresponding to the bridge\'s id\n - upTime: timestamp corresponding to when the event started\n - downTime: timestamp corresponding to when the event ended.',
           tags: ['api', 'json']
         }
       },
@@ -612,7 +612,7 @@ exports = module.exports = function (logger, handlers) {
             }
           },
           description: 'Actual and scheduled lift events for all bridges after date',
-          notes: 'Return value is an object with the keys: \n - actualEvents\n  - scheduledEvents\nTheir values are what is generated from:\n - /bridges/events/scheduled/after/{date}\n - /bridges/events/actual/after/{date}',
+          notes: 'Return value is an object with the keys: \n - actualEvents\n - scheduledEvents\nTheir values are what is generated from:\n - /bridges/events/scheduled/after/{date}\n - /bridges/events/actual/after/{date}',
           tags: ['api', 'json']
         }
       },
@@ -637,7 +637,7 @@ exports = module.exports = function (logger, handlers) {
             }
           },
           description: 'Actual and scheduled lift events for all bridges before date',
-          notes: 'Return value is an object with the keys: \n - actualEvents\n  - scheduledEvents\nTheir values are what is generated from:\n - /bridges/events/scheduled/after/{date}\n - /bridges/events/actual/after/{date}',
+          notes: 'Return value is an object with the keys: \n - actualEvents\n - scheduledEvents\nTheir values are what is generated from:\n - /bridges/events/scheduled/after/{date}\n - /bridges/events/actual/after/{date}',
           tags: ['api', 'json']
         }
       },
@@ -663,7 +663,7 @@ exports = module.exports = function (logger, handlers) {
             }
           },
           description: 'Actual and scheduled lift events for all bridges between dates',
-          notes: 'Return value is an object with the keys: \n - actualEvents\n  - scheduledEvents\nTheir values are what is generated from:\n - /bridges/events/scheduled/between/{startDate}/{endDate}\n - /bridges/events/actual/between/{startDate}/{endDate}',
+          notes: 'Return value is an object with the keys: \n - actualEvents\n - scheduledEvents\nTheir values are what is generated from:\n - /bridges/events/scheduled/between/{startDate}/{endDate}\n - /bridges/events/actual/between/{startDate}/{endDate}',
           tags: ['api', 'json']
         }
       },
