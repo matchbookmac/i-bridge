@@ -183,7 +183,7 @@ exports = module.exports = function (logger, handlers) {
             }
           },
           description: 'Actual lift events for given bridge',
-          notes: 'Return value is an array of objects, each with the keys:\n - id: integer corresponding id of the record\n - bridgeId: integer corresponding to the bridge\'s id\n - upTime: timestamp corresponding to when the event started\n - downTime: timestamp corresponding to when the event ended\nReturns last x lift events for given bridge if limit param is provided. If limit param is not provided, it returns all entries. Non-numbers are ignored',
+          notes: 'Return value is an array of objects, each with the keys:\n - id: integer corresponding id of the record\n - bridgeId: integer corresponding to the bridge\'s id\n - upTime: timestamp corresponding to when the event started\n - downTime: timestamp corresponding to when the event ended\n\nReturns last x lift events for given bridge if limit param is provided. If limit param is not provided, it returns all entries. Non-numbers are ignored',
           tags: ['api', 'json']
         }
       },
@@ -367,7 +367,7 @@ exports = module.exports = function (logger, handlers) {
             }
           },
           description: 'Scheduled lift events for given bridge',
-          notes: 'Return value is an array of objects, each with the keys:\n - id: integer corresponding id of the record\n - bridgeId: integer corresponding to the bridge\'s id\n - requestTime: timestamp corresponding to when the request for a lift was received\n - estimatedLiftTime: timestamp corresponding to when requester expected the lift to occur\nReturns last x lift events for given bridge if limit param is provided. If limit param is not provided, it returns all entries. Non-numbers are ignored',
+          notes: 'Return value is an array of objects, each with the keys:\n - id: integer corresponding id of the record\n - bridgeId: integer corresponding to the bridge\'s id\n - requestTime: timestamp corresponding to when the request for a lift was received\n - estimatedLiftTime: timestamp corresponding to when requester expected the lift to occur\n\nReturns last x lift events for given bridge if limit param is provided. If limit param is not provided, it returns all entries. Non-numbers are ignored',
           tags: ['api', 'json']
         }
       },
@@ -485,8 +485,8 @@ exports = module.exports = function (logger, handlers) {
         },
         config: {
           auth: 'simple',
-          description: 'Lists actual bridge lift events in a fancy view',
-          notes: 'Array of objects with the keys `bridge`, `upTime`, and `downTime`',
+          description: 'Actual lift events for all bridges',
+          notes: 'Return value is an array of objects, each with the keys:\n - id: integer corresponding id of the record\n - bridgeId: integer corresponding to the bridge\'s id\n  - upTime: timestamp corresponding to when the event started\n - downTime: timestamp corresponding to when the event ended.\n Returns last x lift events for given bridge if limit param is provided. If limit param is not provided, it returns all entries. Non-numbers are ignored',
           tags: ['api', 'json']
         }
       },
@@ -510,8 +510,8 @@ exports = module.exports = function (logger, handlers) {
               limit: joi.number().integer()
             }
           },
-          description: 'Lists actual bridge lift events in json',
-          notes: 'Array of objects with the keys `bridge`, `upTime`, and `downTime`',
+          description: 'Actual lift events for all bridges',
+          notes: 'Return value is an array of objects, each with the keys:\n - id: integer corresponding id of the record\n - bridgeId: integer corresponding to the bridge\'s id\n - upTime: timestamp corresponding to when the event started\n - downTime: timestamp corresponding to when the event ended.\n\nReturns last x lift events for given bridge if limit param is provided. If limit param is not provided, it returns all entries. Non-numbers are ignored',
           tags: ['api', 'json']
         }
       },
@@ -535,8 +535,8 @@ exports = module.exports = function (logger, handlers) {
               date: joi.date()
             }
           },
-          description: 'Lists actual bridge lift events in after given date (non-inclusive).',
-          notes: 'Array of objects with the keys `bridgeId`, `upTime`, and `downTime`. Date must be given in a format that `new Date()` can parse.',
+          description: 'Actual lift events for all bridges after date',
+          notes: 'Return value is an array of objects, each with the keys:\n - id: integer corresponding id of the record\n - bridgeId: integer corresponding to the bridge\'s id\n  - upTime: timestamp corresponding to when the event started\n - downTime: timestamp corresponding to when the event ended.',
           tags: ['api', 'json']
         }
       },
@@ -560,8 +560,8 @@ exports = module.exports = function (logger, handlers) {
               date: joi.date()
             }
           },
-          description: 'Lists actual bridge lift events in before given date (non-inclusive).',
-          notes: 'Array of objects with the keys `bridgeId`, `upTime`, and `downTime`. Date must be given in a format that `new Date()` can parse.',
+          description: 'Actual lift events for all bridges before date',
+          notes: 'Return value is an array of objects, each with the keys:\n - id: integer corresponding id of the record\n - bridgeId: integer corresponding to the bridge\'s id\n  - upTime: timestamp corresponding to when the event started\n - downTime: timestamp corresponding to when the event ended.',
           tags: ['api', 'json']
         }
       },
@@ -586,8 +586,8 @@ exports = module.exports = function (logger, handlers) {
               endDate: joi.date()
             }
           },
-          description: 'Lists actual bridge lift events between two given dates (non-inclusive).',
-          notes: 'Array of objects with the keys `bridgeId`, `upTime`, and `downTime`. Date must be given in a format that `new Date()` can parse.',
+          description: 'Actual lift events for all bridges between dates',
+          notes: 'Return value is an array of objects, each with the keys:\n - id: integer corresponding id of the record\n - bridgeId: integer corresponding to the bridge\'s id\n  - upTime: timestamp corresponding to when the event started\n - downTime: timestamp corresponding to when the event ended.',
           tags: ['api', 'json']
         }
       },
@@ -611,8 +611,8 @@ exports = module.exports = function (logger, handlers) {
               date: joi.date()
             }
           },
-          description: 'Lists all bridge lift and scheduled after given date (non-inclusive).',
-          notes: 'An object with the keys: actualEvents and scheduledEvents, their values are what is generated from /bridges/events/actual, and /bridges/events/scheduled',
+          description: 'Actual and scheduled lift events for all bridges after date',
+          notes: 'Return value is an object with the keys: \n - actualEvents\n  - scheduledEvents\nTheir values are what is generated from:\n - /bridges/events/scheduled/after/{date}\n - /bridges/events/actual/after/{date}',
           tags: ['api', 'json']
         }
       },
@@ -636,8 +636,8 @@ exports = module.exports = function (logger, handlers) {
               date: joi.date()
             }
           },
-          description: 'Lists all bridge lift and scheduled events before given date (non-inclusive).',
-          notes: 'An object with the keys: actualEvents and scheduledEvents, their values are what is generated from /bridges/events/actual, and /bridges/events/scheduled',
+          description: 'Actual and scheduled lift events for all bridges before date',
+          notes: 'Return value is an object with the keys: \n - actualEvents\n  - scheduledEvents\nTheir values are what is generated from:\n - /bridges/events/scheduled/after/{date}\n - /bridges/events/actual/after/{date}',
           tags: ['api', 'json']
         }
       },
@@ -662,8 +662,8 @@ exports = module.exports = function (logger, handlers) {
               endDate: joi.date()
             }
           },
-          description: 'Lists all bridge lift and scheduled events between two given dates (non-inclusive).',
-          notes: 'An object with the keys: actualEvents and scheduledEvents, their values are what is generated from /bridges/events/actual, and /bridges/events/scheduled',
+          description: 'Actual and scheduled lift events for all bridges between dates',
+          notes: 'Return value is an object with the keys: \n - actualEvents\n  - scheduledEvents\nTheir values are what is generated from:\n - /bridges/events/scheduled/between/{startDate}/{endDate}\n - /bridges/events/actual/between/{startDate}/{endDate}',
           tags: ['api', 'json']
         }
       },
@@ -682,8 +682,8 @@ exports = module.exports = function (logger, handlers) {
         },
         config: {
           auth: 'simple',
-          description: 'Lists scheduled bridge lift events from l-bridge in fancy view',
-          notes: 'Array of objects with the keys `bridgeId`, `type`, `requestTime`, and `estimatedLiftTime`',
+          description: 'Scheduled lift events for all bridges',
+          notes: 'Return value is an array of objects, each with the keys:\n - id: integer corresponding id of the record\n - bridgeId: integer corresponding to the bridge\'s id\n - requestTime: timestamp corresponding to when the request for a lift was received\n - estimatedLiftTime: timestamp corresponding to when requester expected the lift to occur',
           tags: ['api', 'json']
         }
       },
@@ -707,8 +707,8 @@ exports = module.exports = function (logger, handlers) {
               limit: joi.number().integer()
             }
           },
-          description: 'Lists scheduled bridge lift events from l-bridge in json',
-          notes: 'Array of objects with the keys `bridgeId`, `type`, `requestTime`, and `estimatedLiftTime`',
+          description: 'Scheduled lift events for all bridges',
+          notes: 'Return value is an array of objects, each with the keys:\n - id: integer corresponding id of the record\n - bridgeId: integer corresponding to the bridge\'s id\n - requestTime: timestamp corresponding to when the request for a lift was received\n - estimatedLiftTime: timestamp corresponding to when requester expected the lift to occur.\n\nReturns last x lift events for given bridge if limit param is provided. If limit param is not provided, it returns all entries. Non-numbers are ignored',
           tags: ['api', 'json']
         }
       },
@@ -732,8 +732,8 @@ exports = module.exports = function (logger, handlers) {
               date: joi.date()
             }
           },
-          description: 'Lists scheduled bridge lift events in after given date (non-inclusive).',
-          notes: 'Array of objects with the keys `bridgeId`, `type`, `requestTime`, and `estimatedLiftTime`. Date must be given in a format that `new Date()` can parse.',
+          description: 'Scheduled lift events for all bridges after date',
+          notes: 'Return value is an array of objects, each with the keys:\n - id: integer corresponding id of the record\n - bridgeId: integer corresponding to the bridge\'s id\n - requestTime: timestamp corresponding to when the request for a lift was received\n - estimatedLiftTime: timestamp corresponding to when requester expected the lift to occur.',
           tags: ['api', 'json']
         }
       },
@@ -757,8 +757,8 @@ exports = module.exports = function (logger, handlers) {
               date: joi.date()
             }
           },
-          description: 'Lists scheduled bridge lift events in before given date (non-inclusive).',
-          notes: 'Array of objects with the keys `bridgeId`, `type`, `requestTime`, and `estimatedLiftTime`. Date must be given in a format that `new Date()` can parse.',
+          description: 'Scheduled lift events for all bridges before date',
+          notes: 'Return value is an array of objects, each with the keys:\n - id: integer corresponding id of the record\n - bridgeId: integer corresponding to the bridge\'s id\n - requestTime: timestamp corresponding to when the request for a lift was received\n - estimatedLiftTime: timestamp corresponding to when requester expected the lift to occur.',
           tags: ['api', 'json']
         }
       },
@@ -783,8 +783,8 @@ exports = module.exports = function (logger, handlers) {
               endDate: joi.date()
             }
           },
-          description: 'Lists scheduled bridge lift events between two given dates (non-inclusive).',
-          notes: 'Array of objects with the keys `bridgeId`, `type`, `requestTime`, and `estimatedLiftTime`. Date must be given in a format that `new Date()` can parse.',
+          description: 'Scheduled lift events for all bridges before date',
+          notes: 'Return value is an array of objects, each with the keys:\n - id: integer corresponding id of the record\n - bridgeId: integer corresponding to the bridge\'s id\n - requestTime: timestamp corresponding to when the request for a lift was received\n - estimatedLiftTime: timestamp corresponding to when requester expected the lift to occur.',
           tags: ['api', 'json']
         }
       }
