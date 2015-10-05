@@ -8,6 +8,8 @@
 
 ## Deployment
 
+*DO NOT RESTART/DEPLOY CODE WHEN AN ACTUAL LIFT IS IN PROGRESS*
+
 For "deploying" on i-bridge (i-bridge.internal.mcix.us)
 
 If i-bridge is already configured and has production code:
