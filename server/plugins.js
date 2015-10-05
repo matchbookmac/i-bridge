@@ -6,6 +6,7 @@ exports = module.exports = function (logger, config) {
       { register: require('hapi-auth-bearer-token') },
       { register: require('hapi-swaggered'),
         options: {
+          schemes: ['https'],
           info: {
             title: "Multnomah County Bridges",
             description: "Lift Data API",
@@ -17,7 +18,7 @@ exports = module.exports = function (logger, config) {
         options: {
           title: "Multnomah County Bridges Lift Data API",
           path: '/bridges/docs',
-          // basePath: 'https://'+config.iBridge.hostname+'/bridges',
+          basePath: 'https://'+config.iBridge.hostname+'/bridges/docs',
           authorization: {
             scope: 'query',
             field: 'access_token',
