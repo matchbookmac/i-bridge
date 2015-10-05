@@ -18,7 +18,7 @@ exports = module.exports = function (logger, config) {
         options: {
           title: "Multnomah County Bridges Lift Data API",
           path: '/bridges/docs',
-          basePath: 'https://'+config.iBridge.hostname+'/bridges/docs',
+          // basePath: 'https://'+config.iBridge.hostname+'/bridges/docs',
           authorization: {
             scope: 'query',
             field: 'access_token',
