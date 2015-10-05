@@ -27,28 +27,28 @@
     "bridges": {
       "hawthorne": {
         "status": false,
-        "scheduledLift": null,
-        "lastFive": null
+        "scheduledLifts": [],
+        "lastFive": []
       },
       "morrison": {
         "status": false,
-        "scheduledLift": null,
-        "lastFive": null
+        "scheduledLifts": [],
+        "lastFive": []
       },
       "burnside": {
         "status": false,
-        "scheduledLift": null,
-        "lastFive": null
+        "scheduledLifts": [],
+        "lastFive": []
       },
       "broadway": {
         "status": false,
-        "scheduledLift": null,
-        "lastFive": null
+        "scheduledLifts": [],
+        "lastFive": []
       },
       "cuevas crossing": {
         "status": false,
-        "scheduledLift": null,
-        "lastFive": null
+        "scheduledLifts": [],
+        "lastFive": []
       },
       "changed": {
         "bridge": null,
@@ -84,33 +84,33 @@
     "bridges": {
       "hawthorne": {
         "status": false,
-        "scheduledLift": null,
-        "lastFive": null
+        "scheduledLifts": [],
+        "lastFive": []
       },
       "morrison": {
         "status": false,
-        "scheduledLift": null,
-        "lastFive": null
+        "scheduledLifts": [],
+        "lastFive": []
       },
       "burnside": {
         "status": false,
-        "scheduledLift": null,
-        "lastFive": null
+        "scheduledLifts": [],
+        "lastFive": []
       },
       "broadway": {
         "status": false,
-        "scheduledLift": null,
-        "lastFive": null
+        "scheduledLifts": [],
+        "lastFive": []
       },
       "cuevas crossing": {
         "status": false,
-        "scheduledLift": null,
-        "lastFive": null
+        "scheduledLifts": [],
+        "lastFive": []
       },
       "baileys bridge": {
         "status": false,
-        "scheduledLift": null,
-        "lastFive": null
+        "scheduledLifts": [],
+        "lastFive": []
       },
       "changed": {
         "bridge": null,
@@ -145,23 +145,23 @@
     "bridges": {
       "hawthorne": {
         "status": false,
-        "scheduledLift": null,
-        "lastFive": null
+        "scheduledLifts": [],
+        "lastFive": []
       },
       "morrison": {
         "status": false,
-        "scheduledLift": null,
-        "lastFive": null
+        "scheduledLifts": [],
+        "lastFive": []
       },
       "burnside": {
         "status": false,
-        "scheduledLift": null,
-        "lastFive": null
+        "scheduledLifts": [],
+        "lastFive": []
       },
       "broadway": {
         "status": false,
-        "scheduledLift": null,
-        "lastFive": null
+        "scheduledLifts": [],
+        "lastFive": []
       },
       "changed": {
         "bridge": null,

@@ -40,15 +40,15 @@ message.changed.bridge = 'baileys bridge';
 if (bridge) {
   message[bridge] = {
     status: status,
-    scheduledLift: null,
-    lastFive: null
+    scheduledLifts: [],
+    lastFive: []
   };
   message.changed.bridge = bridge;
 } else {
   message['baileys bridge'] = {
     status: status,
-    scheduledLift: null,
-    lastFive: null
+    scheduledLifts: [],
+    lastFive: []
   };
 }
 if (othMsgVals.length > 0) {
@@ -56,22 +56,22 @@ if (othMsgVals.length > 0) {
 }
 
 if (scheduled) {
- message.changed.item = 'scheduledLift';
+ message.changed.item = 'scheduledLifts';
  var todayUTC = Date.now() + 1000 * 60 * 60 * 2;
  var defaultLiftTime = new Date(0);
  defaultLiftTime.setUTCMilliseconds(todayUTC);
  if (bridge) {
-   message[bridge].scheduledLift = {
+   message[bridge].scheduledLifts.push({
      type:              !status   ? status   : "testing",
      requestTime:       timeStamp.toString(),
      estimatedLiftTime: liftTime ? liftTime : defaultLiftTime
-   };
+   });
  } else {
-   message['baileys bridge'].scheduledLift = {
+   message['baileys bridge'].scheduledLifts.push({
      type:              !status   ? status   : "testing",
      requestTime:       timeStamp.toString(),
      estimatedLiftTime: liftTime ? liftTime : defaultLiftTime
-   };
+   });
  }
  mockPost(message, options);
 } else if (lastFive) {
@@ -97,12 +97,12 @@ if (scheduled) {
       .catch(function (err) {
         logger.info(err);
         logger.info('Could not find events for bridge:', message.changed.bridge);
-        message[message.changed.bridge].lastFive = null;
+        message[message.changed.bridge].lastFive = [];
       });
   }).catch(function (err) {
     logger.info(err);
     logger.info('Could not find bridge:', message.changed.bridge);
-    message.lastFive = null;
+    message.lastFive = [];
   });
 } else {
   mockPost(message, options);

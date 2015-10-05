@@ -56,10 +56,10 @@ exports = module.exports = function (config, logger) {
             bridgeStatuses[bridgeName].lastFive = rows;
           })
           .catch(function (err) {
-            bridgeStatuses[bridgeName].lastFive = null;
+            bridgeStatuses[bridgeName].lastFive = [];
           });
       }).catch(function (err) {
-        bridgeStatuses[bridgeName].lastFive = null;
+        bridgeStatuses[bridgeName].lastFive = [];
       });
     }
   });
