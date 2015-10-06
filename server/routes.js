@@ -63,8 +63,8 @@ exports = module.exports = function (logger, handlers) {
                     type: joi.string(),
                     requestTime: joi.date().required(),
                     estimatedLiftTime: joi.date().required(),
-                    createdAt: joi.date().required(),
-                    updatedAt: joi.date().required()
+                    createdAt: joi.date(),
+                    updatedAt: joi.date()
                   })
                 ),
                 lastFive: joi.array().min(0).items(
@@ -73,8 +73,8 @@ exports = module.exports = function (logger, handlers) {
                     bridgeId: joi.number().integer(),
                     upTime: joi.date().required(),
                     downTime: joi.date().required(),
-                    createdAt: joi.date().required(),
-                    updatedAt: joi.date().required()
+                    createdAt: joi.date(),
+                    updatedAt: joi.date()
                   })
                 )
               }))
