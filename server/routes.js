@@ -54,9 +54,9 @@ exports = module.exports = function (logger, handlers) {
               })
             }).min(1)
               .pattern(/\w+/, joi.object({
-                "status": joi.boolean().required(),
-                "upTime": joi.date(),
-                "scheduledLifts": joi.array().min(0).items(
+                status: joi.boolean().required(),
+                upTime: joi.date(),
+                scheduledLifts: joi.array().min(0).items(
                   joi.object({
                     type: joi.string(),
                     requestTime: joi.date().required(),
@@ -64,7 +64,7 @@ exports = module.exports = function (logger, handlers) {
                     bridgeId: joi.number().integer()
                   })
                 ),
-                "lastFive": joi.array().min(0).items(
+                lastFive: joi.array().min(0).items(
                   joi.object({
                     id: joi.number().integer(),
                     bridgeId: joi.number().integer(),
