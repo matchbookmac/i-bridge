@@ -65,8 +65,14 @@ exports = module.exports = function (config, logger) {
             }
           })
         ]).then(function (results) {
-            bridgeStatuses[bridgeName].lastFive = results[0];
-            bridgeStatuses[bridgeName].scheduledLifts = results[1];
+          bridgeStatuses[bridgeName].lastFive = results[0];
+          bridgeStatuses[bridgeName].scheduledLifts = results[1];
+          bridgeStatuses[bridgeName].lastFive = bridgeStatuses[bridgeName].lastFive.map(function (event) {
+            return event.toJSON();
+          });
+          bridgeStatuses[bridgeName].scheduledLifts = bridgeStatuses[bridgeName].scheduledLifts.map(function (event) {
+            return event.toJSON();
+          });
           }).catch(errorResponse);
       }).catch(errorResponse);
     }
