@@ -11,13 +11,7 @@ var bridgeOptions = [
   'Burnside',
   'burnside',
   'Broadway',
-  'broadway',
-  'Cuevas Crossing',
-  'cuevas crossing',
-  'bailey\'s bridge',
-  'Bailey\'s Bridge',
-  'baileys bridge',
-  'Baileys Bridge'
+  'broadway'
 ];
 
 exports = module.exports = function (logger, handlers) {
