@@ -4,6 +4,7 @@ var fs        = require('fs');
 var path      = require('path');
 var Sequelize = require('sequelize');
 var _         = require('lodash');
+var Promise   = require('bluebird');
 
 exports = module.exports = function (config, logger) {
   var basename  = path.basename(module.filename);
@@ -46,21 +47,32 @@ exports = module.exports = function (config, logger) {
           name: bridgeName
         }
       }).then(function (bridge) {
-        ActualEvent.findAll({
-          order: 'upTime DESC',
-          where: {
-            bridgeId: bridge.id
-          },
-          limit: 5
-        }).then(function (rows) {
-            bridgeStatuses[bridgeName].lastFive = rows;
+        Promise.all([
+          ActualEvent.findAll({
+            order: 'upTime DESC',
+            where: {
+              bridgeId: bridge.id
+            },
+            limit: 5
+          }),
+          ScheduledEvent.findAll({
+            order: 'estimatedLiftTime DESC',
+            where: {
+              bridgeId: bridge.id,
+              estimatedLiftTime: {
+                $gt: new Date()
+              }
+            }
           })
-          .catch(function (err) {
-            bridgeStatuses[bridgeName].lastFive = [];
-          });
-      }).catch(function (err) {
-        bridgeStatuses[bridgeName].lastFive = [];
-      });
+        ]).then(function (results) {
+            bridgeStatuses[bridgeName].lastFive = results[0];
+            bridgeStatuses[bridgeName].scheduledLifts = results[1];
+            console.log(bridgeStatuses);
+          }).catch(errorResponse);
+      }).catch(errorResponse);
+    }
+    function errorResponse(err) {
+      logger.error('Problem populating last 5 and scheduledLifts');
     }
   });
 
