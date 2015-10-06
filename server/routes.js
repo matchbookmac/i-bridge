@@ -55,6 +55,7 @@ exports = module.exports = function (logger, handlers) {
             }).min(1)
               .pattern(/\w+/, joi.object({
                 "status": joi.boolean().required(),
+                "upTime": joi.date(),
                 "scheduledLifts": joi.array().min(0).items(
                   joi.object({
                     type: joi.string(),
