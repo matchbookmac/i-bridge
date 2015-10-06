@@ -17,7 +17,7 @@ exports = module.exports = function (config, logger) {
       alert = _.startCase(changedBridge) + status;
     } else {
       alertDate = new Date(_.last(bridgeStatuses[changedBridge].scheduledLifts).estimatedLiftTime);
-      alert = _.startCase(changedBridge)+ ': lift scheduled for ' + strftimePDT('%b %e, %Y at %I:%M %p', alertDate);
+      alert = _.startCase(changedBridge)+ ': lift scheduled for ' + strftimePDT('%a %m/%d, %Y at %I:%M %p', alertDate);
     }
     var data = JSON.stringify({
       "channels": [
