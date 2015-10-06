@@ -38,7 +38,7 @@ exports = module.exports = function (config, logger) {
   Bridge.hasMany(ActualEvent);
   Bridge.hasMany(ScheduledEvent);
 
-  // Populate lastFive for each bridge on startup b/c there's not a better place to do this right now
+  // Populate lastFive and pending scheduledLifts for each bridge on startup b/c there's not a better place to do this right now
   var bridgeStatuses = config.bridges;
   _.forOwn(bridgeStatuses, function (status, bridgeName) {
     if (bridgeName !== 'changed') {
