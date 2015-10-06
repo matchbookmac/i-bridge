@@ -56,7 +56,7 @@ exports = module.exports = function (config, logger) {
             limit: 5
           }),
           ScheduledEvent.findAll({
-            order: 'estimatedLiftTime DESC',
+            order: 'estimatedLiftTime ASC',
             where: {
               bridgeId: bridge.id,
               estimatedLiftTime: {
