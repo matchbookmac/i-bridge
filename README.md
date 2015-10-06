@@ -21,7 +21,7 @@ sudo chown -R www-data:www-data .
 sudo npm i
 npm restart
 ```
-To make this a little easier, you can write a function in your ~/.profile to take car of this automatically:
+To make this a little easier, you can write a function in your ~/.profile to take care of this automatically:
 ```shell
 deploy ()
 {
