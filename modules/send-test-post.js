@@ -59,8 +59,6 @@ if (scheduled) {
  message.changed.item = 'scheduledLifts';
  var today2hrDelay = Date.now() + 1000 * 60 * 60 * 2;
  var defaultLiftTime = new Date(today2hrDelay).toUTCString();
- console.log(timeStamp);
- console.log(defaultLiftTime);
  if (bridge) {
    message[bridge].scheduledLifts.push({
      type:              !status   ? status   : "testing",
