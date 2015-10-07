@@ -1,6 +1,7 @@
 var request  = require('request');
 var _        = require('lodash');
 var strftime = require('strftime');
+var strftimePDT = strftime.timezone('-0700');
 
 exports = module.exports = function (config, logger) {
   var postToParse = function (bridgeStatuses) {
@@ -16,7 +17,7 @@ exports = module.exports = function (config, logger) {
       alert = _.startCase(changedBridge) + status;
     } else {
       alertDate = new Date(_.last(bridgeStatuses[changedBridge].scheduledLifts).estimatedLiftTime);
-      alert = _.startCase(changedBridge)+ ': lift scheduled for ' + strftime('%a %m/%d, %Y at %I:%M %p', alertDate);
+      alert = _.startCase(changedBridge)+ ': lift scheduled for ' + strftimePDT('%a %m/%d, %Y at %I:%M %p', alertDate);
     }
     var data = JSON.stringify({
       "channels": [
