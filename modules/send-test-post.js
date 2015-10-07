@@ -19,7 +19,7 @@ var liftTime    = argv.l || argv.liftTime;
 var method      = argv.m || argv.method;
 var port        = argv.p || argv.port;
 var path        = argv.P || argv.path;
-var timeStamp   = argv.t || argv.timestamp || new Date();
+var timeStamp   = argv.t || argv.timestamp || new Date().toUTCString();
 var status      = argv.s || argv.status;
 var scheduled   = argv.S || argv.scheduled;
 var type        = argv.T || argv.type;
@@ -57,19 +57,20 @@ if (othMsgVals.length > 0) {
 
 if (scheduled) {
  message.changed.item = 'scheduledLifts';
- var todayUTC = Date.now() + 1000 * 60 * 60 * 2;
- var defaultLiftTime = new Date(0);
- defaultLiftTime.setUTCMilliseconds(todayUTC);
+ var today2hrDelay = Date.now() + 1000 * 60 * 60 * 2;
+ var defaultLiftTime = new Date(today2hrDelay).toUTCString();
+ console.log(timeStamp);
+ console.log(defaultLiftTime);
  if (bridge) {
    message[bridge].scheduledLifts.push({
      type:              !status   ? status   : "testing",
-     requestTime:       timeStamp.toString(),
+     requestTime:       timeStamp,
      estimatedLiftTime: liftTime ? liftTime : defaultLiftTime
    });
  } else {
    message['baileys bridge'].scheduledLifts.push({
      type:              !status   ? status   : "testing",
-     requestTime:       timeStamp.toString(),
+     requestTime:       timeStamp,
      estimatedLiftTime: liftTime ? liftTime : defaultLiftTime
    });
  }
